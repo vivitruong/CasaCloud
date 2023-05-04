@@ -3,11 +3,12 @@
 ## Database Schema Design
 
 `<insert database schema design here>`
+![Database Schema](/CasaCloud.png)
+
 
 ## API Documentation
 
-## USER AUTHENTICATION/AUTHORIZATION
-
+## FEATURE 0 : USER AUTHENTICATION/AUTHORIZATION
 ### All endpoints that require authentication
 
 All endpoints that require a current user to be logged in.
@@ -238,9 +239,9 @@ user's information.
     }
     ```
 
-## SPOTS
+## FEATURE 1: LISTTINGS
 
-### Get all Spots
+### Get all Listings
 
 Returns all the spots.
 
@@ -625,7 +626,7 @@ Deletes an existing spot.
     }
     ```
 
-## REVIEWS
+## FEATURE 2: REVIEWS
 
 ### Get all Reviews of the Current User
 
@@ -973,7 +974,7 @@ Delete an existing review.
     }
     ```
 
-## BOOKINGS
+## FEATURE 3: BOOKINGS
 
 ### Get all of the Current User's Bookings
 
@@ -1307,7 +1308,7 @@ Delete an existing booking.
     }
     ```
 
-## IMAGES
+## FEATURE 4 : IMAGES
 
 ### Delete a Spot Image
 
