@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');;
+const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -28,6 +28,8 @@ const validateSignup = [
   handleValidationErrors
 ];
 
+//Signup A User
+
 router.post(
     '/',
     validateSignup,
@@ -51,6 +53,26 @@ router.post(
       });
     }
   );
+  // Get current user
+  router.get('/users/:userId', requireAuth, async(req, res, next) => {
+    if(req.user) {
+      const userId = +req.user.id;
+      const currentScope = User.scope('current');
+      const curr = await currentScope.findByPk(userId);
+      const {id, firstName, lastName, email, username} = curr;
+      return res.json({
+        user: {
+          id, firstName, lastName, email, username,
+        },
+      });
+    } else {
+      return res.json({
+        user: null
+      })
+    }
+  });
+
+
 
 
 
