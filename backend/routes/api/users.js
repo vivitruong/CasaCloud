@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+const { handleValidationErrors, validateLogin, isUniqueEmail, isUniqueName } = require('../../utils/validation');
 
 const router = express.Router();
 
@@ -47,12 +47,14 @@ router.post(
       };
 
       await setTokenCookie(res, safeUser);
-
+      safeUser.token = req.cookies.token;
       return res.json({
         user: safeUser
       });
     }
   );
+
+
   // Get current user
   router.get('/users/:userId', requireAuth, async(req, res, next) => {
     if(req.user) {
@@ -70,6 +72,16 @@ router.post(
         user: null
       })
     }
+  });
+
+
+   //Get all user
+  router.get('/', async (req, res) => {
+  let users =  await User.findAll()
+
+  res.status(200)
+  res.json({users})
+
   });
 
 

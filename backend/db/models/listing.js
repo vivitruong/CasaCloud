@@ -11,7 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Listing.belongsTo(models.User, {foreignKey: 'hostId'})
+      Listing.belongsTo(models.User, {foreignKey: 'hostId'});
+      Listing.hasMany(models.Booking, {foreignKey: 'listingId'});
+      Listing.hasMany(models.Review, {foreignKey: 'listingId'});
+      Listing.hasMany(models.Image, {
+        foreignKey: 'imageableId',
+        constraints: false,
+        scope: {
+          imageableType: 'listingImage'
+        }
+
+      })
     }
   }
   Listing.init({
