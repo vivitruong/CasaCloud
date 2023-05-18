@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'imageableId',
         constraints: false,
         scope: {
-          imageableType: 'listingImage'
+          imageableType: 'Listing'
         }
 
       })
@@ -30,8 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false,
       validate: {
         notEmpty: true
-      },
-      onDelete: 'cascade'
+      }
     },
     address:{
       type: DataTypes.STRING,

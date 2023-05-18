@@ -1,8 +1,13 @@
 'use strict';
+let options = {};
+if( process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA
+}
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Listings', {
+    options.tableName = 'Listings';
+    await queryInterface.createTable(options, {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -13,7 +18,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'User'
+          model: 'Users'
         },
         onDelete: 'cascade'
       },

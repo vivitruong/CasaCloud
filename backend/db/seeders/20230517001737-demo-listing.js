@@ -1,17 +1,15 @@
 'use strict';
-
-const { describe } = require('mocha');
-
 let options = {};
 if(process.env.NODE_ENV === 'production'){
   options.schema = process.env.SCHEMA;
 }
 
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     options.tableName = 'Listings';
-    return queryInterface.bulkInsert(options, [
+    await queryInterface.bulkInsert(options, [
       {
         hostId: 1,
         address: '5050 Broadway Street',
@@ -48,26 +46,14 @@ module.exports = {
         description: 'Come and enjoy this unique spooky experience with this abandoned place!',
         price : 280.00
       },
-      {
-        hostId: 4,
-        address: '420 West Street',
-        city: 'San Francisco',
-        state: 'California',
-        country: 'United States of America',
-        lat: 57.243547,
-        lng: 48.165269,
-        name: 'Euphoria',
-        description: 'Mid-century-inspired decor with no food, no TV, no Internet for the best experience of your life',
-        price : 230.00
-      }
     ], {});
   },
 
   async down (queryInterface, Sequelize) {
-   options.tableName = 'Listings';
-   const Op = Sequelize.Op;
-   return queryInterface.bulkDelete(options, {
-    hostId: { [Op.in]: [1, 2, 3 ,4 ]}
-   }, {})
+    options.tableName = 'Listings';
+    const Op = Sequelize.Op;
+    return queryInterface.bulkDelete(options, {
+      hostId: { [Op.in]: [1, 2, 3] }
+    }, {})
   }
 };

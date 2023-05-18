@@ -62,7 +62,7 @@ router.get('/' , requireAuth,  async (req, res) => {
         return next(err);
     }
         const newList = await Listing.create({
-        ownerId: hostId,
+        hostId: hostId,
         address: address,
         city: city,
         state: state,

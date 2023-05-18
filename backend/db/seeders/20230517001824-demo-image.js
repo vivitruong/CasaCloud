@@ -11,7 +11,7 @@ module.exports = {
     await queryInterface.bulkInsert(options, [
       {
         reviewImage: 'https://imgur.com/gallery/aIVBQIb',
-        imageableId: 2,
+        imageableId: 1,
         imageableType: 'Review'
       },
       {
@@ -21,17 +21,17 @@ module.exports = {
       },
       {
         reviewImage: 'https://imgur.com/gallery/zCIky',
-        imageableId: 2,
-        imageableType: 'Review'
+        imageableId: 3,
+        imageableType: 'Listing'
       }
-    ])
+    ], {});
   },
 
   async down (queryInterface, Sequelize) {
     options.tableName = 'Images';
     const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
-      userId: { [Op.in]: [1, 2, 3] }
-    }, {});
+    return queryInterface.dropTable(options, {
+      imageableId: { [Op.in]: [1,2,3]}
+    }, {})
   }
 };

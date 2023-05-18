@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'imageableId',
         constraints: false,
         scope: {
-          imageableType: 'ReviewImage'
+          imageableType: 'Review'
         }
       });
       Review.belongsTo(models.User, {foreignKey: 'userId'})
