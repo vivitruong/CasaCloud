@@ -6,7 +6,7 @@ if( process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    options.tableName = 'Listings';
+    options.tableName = 'Bookings';
     await queryInterface.createTable(options, {
       id: {
         allowNull: false,
@@ -14,7 +14,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      hostId: {
+      listingId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Listings'
+        },
+        onDelete: 'cascade'
+      },
+      userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -22,42 +30,17 @@ module.exports = {
         },
         onDelete: 'cascade'
       },
-      address: {
-        type: Sequelize.STRING(100),
+      checkIn: {
+        type: Sequelize.DATE,
         allowNull: false
       },
-      city: {
-        type: Sequelize.STRING(100),
+      checkOut: {
+        type: Sequelize.DATE,
         allowNull: false
       },
-      state: {
-        type: Sequelize.STRING(50),
+      numGuest: {
+        type: Sequelize.INTEGER,
         allowNull: false
-      },
-      country: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      lat: {
-        type: Sequelize.DECIMAL,
-        allowNull:false
-      },
-      lng: {
-        type: Sequelize.DECIMAL,
-        allowNull: false
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      description: {
-        type: Sequelize.STRING
-      },
-      price: {
-        type: Sequelize.DECIMAL
-      },
-      previewImage: {
-        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -72,6 +55,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Listings');
+    await queryInterface.dropTable('Bookings');
   }
 };
