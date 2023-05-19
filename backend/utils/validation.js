@@ -1,4 +1,6 @@
-const { validationResult } = require('express-validator');
+const { validationResult , check } = require('express-validator');
+const { User } = require('../db/models');
+
 
 // middleware for formatting errors from express-validator middleware
 // (to customize, see express-validator's documentation)
@@ -21,17 +23,17 @@ const handleValidationErrors = (req, _res, next) => {
 };
 
 const validateBooking = [
-  check('startDate')
+  check('checkIn')
     .not().isEmpty()
     .isDate()
-    .withMessage('startDate is required and must be a date'),
-  check('startDate')
+    .withMessage('checkIn date is required and must be a date'),
+  check('checkIn')
     .isAfter(Date.Now)
-    .withMessage('startDate must be after the current date'),
-  check('endDate')
+    .withMessage('checkIn date must be after the current date'),
+  check('checkOut')
     .not().isEmpty()
     .isDate()
-    .withMessage('endDate is required and must be a date'),
+    .withMessage('checkOut date is required and must be a date'),
     handleValidationErrors
 ]
 const checkReview_stars = [
@@ -45,39 +47,44 @@ const checkReview_stars = [
   handleValidationErrors
 ]
 const handleBodyValidations = [
-  check('address')
-      .exists({ checkFalsy: true})
-      .withMessage('Street address is required'),
-  check('city')
-      .exists({ checkFalsy: true})
-      .withMessage('City is required'),
-  check('state')
-      .exists({ checkFalsy: true})
-      .withMessage('State is required'),
-  check('country')
-      .exists({ checkFalsy: true})
-      .withMessage('Country is required'),
-  check('lat')
-      .isFloat()
-      .not().isAlpha()
-      .withMessage('Latitude is not valid'),
-  check('lng')
-      .isFloat()
-      .not().isAlpha()
-      .withMessage('Longitude is not valid'),
-  check('name')
-      .isLength({ max: 50})
-      .withMessage('Name must be less than 50 characters'),
-  check('name')
-      .not().isEmpty()
-      .withMessage('Name cannot be empty'),
-  check('description')
-      .exists({ checkFalsy: true})
-      .withMessage('Description is required'),
-  check('price')
-      .exists({ checkFalsy: true})
-      .withMessage('Price per day is required'),
-  handleValidationErrors,
+  check("address")
+  .exists({ checkFalsy: true })
+  .notEmpty()
+  .withMessage("Street address is required"),
+check("city")
+  .exists({ checkFalsy: true })
+  .notEmpty()
+  .withMessage("City is required"),
+check("state")
+  .exists({ checkFalsy: true })
+  .notEmpty()
+  .withMessage("State is required"),
+check("country")
+  .exists({ checkFalsy: true })
+  .notEmpty()
+  .withMessage("Country is required"),
+check("lat")
+  .exists({ checkFalsy: true })
+  .notEmpty()
+  .withMessage("Latitude is not valid"),
+check("lng")
+  .exists({ checkFalsy: true })
+  .notEmpty()
+  .withMessage("Longitude is not valid"),
+check("name")
+  .exists({ checkFalsy: true })
+  .notEmpty()
+  .isLength({ max: 50 })
+  .withMessage("Name must be less than 50 characters"),
+check("description")
+  .exists({ checkFalsy: true })
+  .notEmpty()
+  .withMessage("Description is required"),
+check("price")
+  .exists({ checkFalsy: true })
+  .notEmpty()
+  .withMessage("Price per day is required"),
+  handleValidationErrors
 ]
 
 const validateSignup = [
