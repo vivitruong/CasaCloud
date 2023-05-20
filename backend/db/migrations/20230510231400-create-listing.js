@@ -23,15 +23,15 @@ module.exports = {
         onDelete: 'cascade'
       },
       address: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING,
         allowNull: false
       },
       city: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING,
         allowNull: false
       },
       state: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING,
         allowNull: false
       },
       country: {
@@ -57,7 +57,8 @@ module.exports = {
         type: Sequelize.DECIMAL
       },
       previewImage: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+
       },
       createdAt: {
         allowNull: false,

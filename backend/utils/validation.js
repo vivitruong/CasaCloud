@@ -46,45 +46,49 @@ const checkReview_stars = [
     .withMessage('Stars must be an integer from 1 to 5'),
   handleValidationErrors
 ]
-const handleBodyValidations = [
-  check("address")
-  .exists({ checkFalsy: true })
-  .notEmpty()
-  .withMessage("Street address is required"),
-check("city")
-  .exists({ checkFalsy: true })
-  .notEmpty()
-  .withMessage("City is required"),
-check("state")
-  .exists({ checkFalsy: true })
-  .notEmpty()
-  .withMessage("State is required"),
-check("country")
-  .exists({ checkFalsy: true })
-  .notEmpty()
-  .withMessage("Country is required"),
-check("lat")
-  .exists({ checkFalsy: true })
-  .notEmpty()
-  .withMessage("Latitude is not valid"),
-check("lng")
-  .exists({ checkFalsy: true })
-  .notEmpty()
-  .withMessage("Longitude is not valid"),
-check("name")
-  .exists({ checkFalsy: true })
-  .notEmpty()
-  .isLength({ max: 50 })
-  .withMessage("Name must be less than 50 characters"),
-check("description")
-  .exists({ checkFalsy: true })
-  .notEmpty()
-  .withMessage("Description is required"),
-check("price")
-  .exists({ checkFalsy: true })
-  .notEmpty()
-  .withMessage("Price per day is required"),
-  handleValidationErrors
+const handleListValidations = [
+  check('address')
+    .notEmpty()
+    .withMessage('Address is required')
+    .withMessage('Address must be at most 100 characters long'),
+  check('city')
+    .notEmpty()
+    .withMessage('City is required')
+    .withMessage('City must be at most 100 characters long'),
+  check('state')
+    .notEmpty()
+    .withMessage('State is required')
+    .withMessage('State must be at most 50 characters long'),
+  check('country')
+    .notEmpty()
+    .withMessage('Country is required'),
+  check('lat')
+    .notEmpty()
+    .withMessage('Latitude is required')
+    .isDecimal()
+    .withMessage('Latitude must be a decimal number')
+    .isFloat({ min: -90.999999, max: 90.999999 })
+    .withMessage('Latitude must be between -90.999999 and 90.999999'),
+  check('lng')
+    .notEmpty()
+    .withMessage('Longitude is required')
+    .isDecimal()
+    .withMessage('Longitude must be a decimal number')
+    .isFloat({ min: -180, max: 180 })
+    .withMessage('Longitude must be between -180 and 180'),
+  check('name')
+    .notEmpty()
+    .withMessage('Name is required'),
+  check('description')
+    .notEmpty()
+    .withMessage('Description is required'),
+  check('price')
+    .notEmpty()
+    .withMessage('Price is required')
+    .isDecimal()
+    .withMessage('Price must be a decimal number'),
+      handleValidationErrors
+
 ]
 
 const validateSignup = [
@@ -162,5 +166,5 @@ const isUniqueName = async (req, res, next) => {
 };
 
 module.exports = {
-  handleValidationErrors, isUniqueName, isUniqueEmail, validateLogin, validateSignup, handleBodyValidations, checkReview_stars, validateBooking
+  handleValidationErrors, isUniqueName, isUniqueEmail, validateLogin, validateSignup, handleListValidations, checkReview_stars, validateBooking
 };

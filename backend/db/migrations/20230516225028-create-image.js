@@ -13,21 +13,21 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      reviewImage: {
+      url: {
         type: Sequelize.STRING,
+        allowNull: false
+      },
+      previewImage: {
+        type: Sequelize.BOOLEAN,
         allowNull: false
       },
       imageableId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-          model: 'Listings', // Reference 'Listings' table
-          key: 'id'
-        },
-        onDelete: 'cascade'
+
       },
       imageableType: {
-        type: Sequelize.ENUM('Review', 'Listing'),
+        type: Sequelize.STRING,
         allowNull: false
       },
       createdAt: {
@@ -42,17 +42,7 @@ module.exports = {
       }
     });
 
-    // Add a separate constraint for referencing 'Reviews' table
-    await queryInterface.addConstraint('Images', {
-      fields: ['imageableId'],
-      type: 'foreign key',
-      name: 'fk_imageableId_reviews',
-      references: {
-        table: 'Reviews',
-        field: 'id'
-      },
-      onDelete: 'cascade'
-    });
+
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Images');

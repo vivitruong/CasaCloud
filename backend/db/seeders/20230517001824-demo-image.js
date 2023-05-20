@@ -10,18 +10,21 @@ module.exports = {
     options.tableName = 'Images';
     await queryInterface.bulkInsert(options, [
       {
-        reviewImage: 'https://imgur.com/gallery/aIVBQIb',
+        url: 'https://imgur.com/gallery/aIVBQIb',
+        previewImage: true,
         imageableId: 1,
         imageableType: 'Review'
       },
       {
-        reviewImage: 'https://imgur.com/gallery/TIUnB5f',
+        url: 'https://imgur.com/gallery/TIUnB5f',
         imageableId: 2,
+        previewImage: true,
         imageableType: 'Review'
       },
       {
-        reviewImage: 'https://imgur.com/gallery/zCIky',
+        url: 'https://imgur.com/gallery/zCIky',
         imageableId: 3,
+        previewImage: true,
         imageableType: 'Listing'
       }
     ], {});
