@@ -36,11 +36,11 @@ const validateBooking = [
     .withMessage('checkOut date is required and must be a date'),
     handleValidationErrors
 ]
-const checkReview_stars = [
+const checkReviewRating = [
   check('review')
     .not().isEmpty()
     .withMessage("Review text is required"),
-  check('stars')
+  check('rating')
     .not().isEmpty()
     .isNumeric()
     .withMessage('Stars must be an integer from 1 to 5'),
@@ -166,5 +166,5 @@ const isUniqueName = async (req, res, next) => {
 };
 
 module.exports = {
-  handleValidationErrors, isUniqueName, isUniqueEmail, validateLogin, validateSignup, handleListValidations, checkReview_stars, validateBooking
+  handleValidationErrors, isUniqueName, isUniqueEmail, validateLogin, validateSignup, handleListValidations, checkReviewRating, validateBooking
 };

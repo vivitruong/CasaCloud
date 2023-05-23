@@ -11,17 +11,12 @@ const router = express.Router();
 
 //delete an image for a Listing
 router.delete('/:imageId', requireAuth, restoreUser, async(req, res, next) => {
-    const imagesId =  req.params.id
-    console.log(imagesId)
-
-    const userId = req.user.id;
-
-    if(!userId) return res.status(401).json({ "message": "Authentication required", "statusCode": 401 })
-
-    const findImage = await Image.findOne({
-        where: {
-            id: imagesId
-        }
-    })
+    const reviewImageId = req.params.imageId;
+    const reviewImage = await Image.findByPk(reviewImageId);
+    await reviewImage.destroy();
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+    });
 })
 module.exports = router;

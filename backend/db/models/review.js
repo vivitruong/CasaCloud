@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         scope: {
           imageableType: 'Review'
         }
+
       });
       Review.belongsTo(models.User, {foreignKey: 'userId'})
       Review.belongsTo(models.Listing, {foreignKey: 'listingId'} )
@@ -46,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     bookingId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     }
   }, {
     sequelize,

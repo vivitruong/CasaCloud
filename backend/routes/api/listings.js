@@ -3,39 +3,46 @@ const { Op } = require('sequelize');
 const {check} = require('express-validator');
 const Sequelize = require("sequelize");
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const {User, Listing, Review, Image, Booking, sequelize} = require('../../db/models');
-const { handleValidationErrors, handleListValidations, checkReview_stars, validateBooking } = require('../../utils/validation');
-const listing = require('../../db/models/listing');
-const image = require('../../db/models/image');
+const {User, Listing, Review, Image, Booking} = require('../../db/models');
+const { handleValidationErrors, handleListValidations, checkReviewRating, validateBooking } = require('../../utils/validation');
+
+
 // const createStatsCollector = require('mocha/lib/stats-collector');
 
 
 const router = express.Router();
 
-// Add an Image to a list base on the list's id
+// Add an Image to a list base on the list's id(done)
 router.post('/:id/addImage', requireAuth, async (req, res, next) => {
-
-    let listId = req.params.id;
-    let {user}= req;
-    const {url , preview} = req.body
-
-    const list = await Listing.findByPk(listId);
-    if(!list){
-        res.status(404).json({message: "Listing coulnd't be found"})
+  let { url, previewImage } = req.body;
+  let listId = req.params.id;
+  let list = await Listing.findOne({
+    where: {
+      id: listId,
+      hostId: req.user.id
     }
+  });
+  if (!list) {
+    res.status(404);
+    return res.json({
+      message: "Spot couldnt be found",
+    });
+  }
+  const image = await Image.create({
+  imageableId: listId,
+  imageableType: 'Listings',
+  url,
+  previewImage
+  });
 
-    const img = await Image.create({
-        userId: user.id,
-        imageableId: listId,
-        imagebleType: "Listing",
-        url: url,
-        preview: preview
-    })
-     const imgObj = await Image.findOne({
-        where: { reviewImage: url},
-        attributes: ['imageableId', 'imageableType', 'reviewImage']
-     })
-    res.status(200).json(imgObj)
+  let imgObj = {
+    id: image.id,
+    imageableId: image.listId,
+    url: image.url,
+    previewImage: true
+  };
+  res.status(200);
+  return res.json(imgObj);
 })
 
 //Get all Listings owned by the Current User (done)
@@ -88,13 +95,9 @@ router.post('/:id/addImage', requireAuth, async (req, res, next) => {
     res.json(newList);
   });
 
-  //Edit a listing
+  //Edit a listing (done)
   router.put('/:id', requireAuth, handleListValidations, async (req, res, next) => {
-    const listId = +req.params.id;
-    if (isNaN(listId)) {
-      return res.status(400).json({ message: "Invalid listing ID" });
-    }
-    console.log(listId)
+    const listId = req.params.id;
 
     const list = await Listing.findByPk(listId);
 
@@ -123,44 +126,161 @@ router.post('/:id/addImage', requireAuth, async (req, res, next) => {
   });
 
 
-  //Delete a listing
+  //Delete a listing(done)
   router.delete('/:id', requireAuth, async (req, res, next) => {
-    let listId = +req.params.id;
-    const currentUser = req.user.id;
+    try {
+      const listingId = req.params.id;
+      console.log(listingId)
 
-    let list = await Listing.findByPk(listId);
+      const listing = await Listing.findByPk(listingId);
 
-    if(currentUser !== Listing.hostId){
-        const err = new Error("Authorization Error")
-        err.statusCode = 403;
-        next(err)
+      if (!listing) {
+        return res.status(404).json({
+          message: 'Listing not found'
+        });
+      }
+
+      await listing.destroy();
+
+      return res.status(200).json({
+        message: 'Successfully deleted'
+      });
+    } catch (error) {
+      return next(error);
     }
+  });
+
+  //Get all review by a Listing id (ask because the result i get is [])
+  router.get('/:id/reviews' , async (req, res, next) => {
+    const listId = req.params.id;
+  const list = await Listing.findByPk(listId);
+
+  if (list) {
+    const reviews = await Review.findAll({
+      where: { listingId: listId },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'firstName', 'lastName']
+        },
+        {
+          model: Image,
+          scope: 'Review',
+          attributes: ['id', 'url']
+        }
+      ]
+    });
+    console.log(listId + "-------" + reviews)
+
+    res.json({ Reviews: reviews });
+  } else {
+    res.status(404).json({
+      message: 'Listing could not be found'
+    });
+  }
+  });
+  //Create a review for a list base on list Id (have error of booking Id)
+  router.post('/:id/reviews', requireAuth, async (req, res, next) => {
+    const userId = req.user.id;
+    const listId = req.params.id;
+    const list = await Listing.findByPk(listId);
+
+
+
     if (!list) {
-      return res.json({
-        message: "Listing couldn't be found",
-        statusCode: 404,
+      return res.status(404).json({
+        message: "Listing could not be found"
       });
     }
 
-    list.destroy()
-     return res.json({ message: "Successfully Deleted", statusCode:200 });
+    const oldReview = await Review.findOne({
+      where: {
+        [Op.and]: [
+          { listingId: listId },
+          { userId }
+        ]
+      }
+    });
+    if(list.hostId === userId) {
+      return res.status(403).json({
+        message: "Host cannot write review for their own listing"
+      })
+    }
+
+    if (oldReview) {
+      return res.status(403).json({
+        message: "User already wrote a review for this listing"
+      });
+    } else {
+      const { review, rating } = req.body;
+
+      if (!review) {
+        return res.status(400).json({
+          message: "Review text is required"
+        });
+      }
+
+      try {
+        const createdReview = await Review.create({
+          userId: userId.id,
+          listingId: listId.id,
+          review: review,
+          rating: rating
+        });
+
+        return res.json(createdReview);
+      } catch (error) {
+        return res.status(500).json({
+          message: "An error occurred while creating the review",
+          error: error.message
+        });
+      }
+    }
   });
 
-  //Get all review by a Listing id
-  router.get('/:id/reviews' , async (req, res, next) => {
-
-  })
-
-
-//Get details Listing from an id
-  router.get('/:id', requireAuth, async (req, res, next) => {
-    const listId = +req.params.id;
 
 
 
+//Get details Listing from an id (Done //3)
+router.get('/:id', requireAuth, async (req, res, next) => {
+  const listId = req.params.id;
 
+  const list = await Listing.findByPk(listId, {
+    include: [
+      {
+        model: Review,
+        as: 'Reviews',
+        attributes: []
+      },
+      {
+        model: Image,
+        attributes: ['id', 'url', 'previewImage', ]
+      },
+      {
+        model: User,
+        as: 'Host',
+        attributes: ['id', 'firstName', 'lastName']
+      }
+    ],
+    attributes: {
+      include: [
+        [Sequelize.fn('ROUND', Sequelize.fn('AVG', Sequelize.col('Reviews.rating')), 2), 'avgStarRating']
+      ]
+    },
+    group: [
+      'Listing.id', 'Host.id', 'Images.id'
+    ],
+  });
 
-  })
+  if (list) {
+    res.json(list);
+  } else {
+    res.status(404).json({
+      message: "Listing couldn't be found"
+    });
+  }
+});
+
 
 //Get all Listing(done)
 router.get('/' , requireAuth,  async (req, res) => {

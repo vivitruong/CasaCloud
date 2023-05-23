@@ -3,18 +3,16 @@ const { Op } = require('sequelize');
 const {check} = require('express-validator');
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
 const {User, Listing, Review, Image, Booking} = require('../../db/models');
-const { handleValidationErrors, handleBodyValidations, checkReview_stars, validateBooking } = require('../../utils/validation');
+const { handleValidationErrors, handleBodyValidations, checkReviewRating, validateBooking } = require('../../utils/validation');
 // const createStatsCollector = require('mocha/lib/stats-collector');
 
 const router = express.Router();
 
 
 //Delete a review
-router.delete('/:reviewId', requireAuth, restoreUser, async (req, res, next) => {
+router.delete('/:id', requireAuth, restoreUser, async (req, res, next) => {
     const currentUser = req.user.id;
-    console.log(currentUser)
     const reviewId = req.params.id;
-    console.log(reviewId)
     const deleteReview = await Review.findByPk(reviewId);
 
     if (!currentUser) return res.status(401).json({ "message": "You're not logged in"})
@@ -27,34 +25,38 @@ router.delete('/:reviewId', requireAuth, restoreUser, async (req, res, next) => 
     }
 
 })
-//Edit a review
-router.put('/:reviewId', requireAuth, checkReview_stars, async (req, res, next) => {
-    const id = req.params.id;
-    console.log(id)
-    const { user } = req
-    if (!user) return res.status(401).json({ "message": "You're not logged in", "statusCode": 401 })
+//Edit a review (done)
+router.put('/:id', requireAuth, checkReviewRating, async (req, res, next) => {
+    try {
+        const reviewId = req.params.id;
+        const updateReview = await Review.findByPk(reviewId);
+        const { user } = req;
+        if(!user) return res.status(401).json({message: "You have to log in"});
 
-    const { review, rating } = req.body;
-
-    let updatedReview = await Review.findByPk(id)
-    if (!updatedReview) return res.status(404).json({ "message": "Review couldn't be found", "statusCode": 404 })
-
-    let reviewInfo = await Review.findOne({ where: { id }, raw: true })
-
-    const newReview = await updatedReview.set(
-        {
-            userId: user.dataValues.id,
-            listingId: reviewInfo.spotId,
-            review,
-            rating
+        if (!updateReview) {
+          return res.status(404).json({ message: "Review not found" });
         }
-    )
-    await newReview.save()
-    res.json(newReview)
 
+        const { review, rating } = req.body;
+
+        if (review) {
+          updateReview.review = review;
+        }
+
+        if (rating) {
+          updateReview.rating = rating;
+        }
+
+        await updateReview.save();
+
+        res.json(updateReview);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+      }
 
 })
-//Get all Reviews of the Current User (done)
+//Get all Reviews of the Current User
 router.get('/currentuser', requireAuth, async (req, res, next) => {
     const review = await Review.findAll({
         where: { userId: req.user.id},
@@ -72,9 +74,9 @@ router.get('/currentuser', requireAuth, async (req, res, next) => {
                 scope: 'Review',
                 attributes: ['id','url', 'previewImage', 'imageableId', 'imageableType']
             }
-        ]
+        ],
     });
-    return res.json(review);
+    return res.json({review});
 })
 
 module.exports = router;
