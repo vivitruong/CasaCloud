@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Listing.belongsTo(models.User, {foreignKey: 'hostId'});
+      Listing.belongsTo(models.User, {foreignKey: 'hostId', as: 'Host'});
       Listing.hasMany(models.Booking, {foreignKey: 'listingId'});
-      Listing.hasMany(models.Review, {foreignKey: 'listingId'});
+      Listing.hasMany(models.Review, {foreignKey: 'listingId', as: 'Reviews'});
       Listing.hasMany(models.Image, {
         foreignKey: 'imageableId',
         constraints: false,
@@ -36,7 +36,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        max: 100,
         notEmpty: true
       }
     },
@@ -44,7 +43,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        max: 100,
         notEmpty: true
       }
     },
@@ -52,8 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true,
-        max: 50
+        notEmpty: true
       }
     },
     country: {
@@ -82,7 +79,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     name: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true
@@ -97,11 +94,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     price: {
       type: DataTypes.DECIMAL,
+      validate: {
+        notEmpty: true
+      },
       allowNull: false
     },
     previewImage: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: 'img url'
     }
   }, {
     sequelize,

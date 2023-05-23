@@ -9,27 +9,39 @@ module.exports = (sequelize, DataTypes) => {
 
       Image.belongsTo(models.Review, {
         foreignKey: 'imageableId',
-        constraints: false
+        constraints: false,
+        scope: {
+          imageableType: 'Review'
+        }
       });
       Image.belongsTo(models.Listing, {
         foreignKey: 'imageableId',
-        constraints: false
+        constraints: false,
+        scope: {
+          imageableType: "Listing"
+        }
       });
 
     }
   }
   Image.init({
-    reviewImage: {
-      type: DataTypes.STRING,
-      allowNull: false
+    url: {
+      type: DataTypes.STRING(),
+      allowNull: false,
+      validate: {
+        isUrl: true
+      }
+    },
+    previewImage: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
     },
     imageableId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
     imageableType: {
-      type: DataTypes.ENUM,
-      values: ['Review', 'Listing'],
+      type: DataTypes.STRING,
       allowNull: false
     }
   }, {
