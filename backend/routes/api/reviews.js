@@ -2,31 +2,26 @@ const express = require('express');
 const { Op } = require('sequelize');
 const {check} = require('express-validator');
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const {User, Listing, Review, Image, Booking} = require('../../db/models');
-const { handleValidationErrors, handleBodyValidations, checkReviewRating, validateBooking } = require('../../utils/validation');
+const { User, Spot, Review, SpotImage, ReviewImage, Booking, sequelize} = require('../../db/models');
+const { isReviewer, handleValidationErrors,isOwner, handleListValidations, checkReviewRating, validateBooking} = require('../../utils/validation');
 // const createStatsCollector = require('mocha/lib/stats-collector');
 
 const router = express.Router();
 
 
 //Delete a review
-router.delete('/:id', requireAuth, restoreUser, async (req, res, next) => {
-    const currentUser = req.user.id;
-    const reviewId = req.params.id;
+router.delete('/:reviewId', requireAuth,isReviewer, async (req, res, next) => {
+    const reviewId = req.params.reviewId;
     const deleteReview = await Review.findByPk(reviewId);
-
-    if (!currentUser) return res.status(401).json({ "message": "You're not logged in"})
-
-    if(deleteReview) {
-        await deleteReview.destroy();
-        res.json({message: "Successfully deleted"})
-    } else {
-        res.status(404).json({ message: "Review couldnt be found"})
-    }
-
+    await deleteReview.destroy();
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+    })
 })
-//Edit a review (done)
-router.put('/:id', requireAuth, checkReviewRating, async (req, res, next) => {
+
+//Edit a review
+router.put('/:reviewId', requireAuth, checkReviewRating, async (req, res, next) => {
     try {
         const reviewId = req.params.id;
         const updateReview = await Review.findByPk(reviewId);
@@ -37,14 +32,14 @@ router.put('/:id', requireAuth, checkReviewRating, async (req, res, next) => {
           return res.status(404).json({ message: "Review not found" });
         }
 
-        const { review, rating } = req.body;
+        const { review, stars } = req.body;
 
         if (review) {
           updateReview.review = review;
         }
 
-        if (rating) {
-          updateReview.rating = rating;
+        if (stars) {
+          updateReview.stars = stars;
         }
 
         await updateReview.save();
@@ -56,27 +51,69 @@ router.put('/:id', requireAuth, checkReviewRating, async (req, res, next) => {
       }
 
 })
-//Get all Reviews of the Current User
-router.get('/currentuser', requireAuth, async (req, res, next) => {
-    const review = await Review.findAll({
-        where: { userId: req.user.id},
-        include : [
-            {
-                model: User,
-                attributes: ['id', 'firstName', 'lastName']
-            },
-            {
-                model: Listing,
-                attributes: ['id', 'hostId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price', 'previewImage']
-            },
-            {
-                model: Image,
-                scope: 'Review',
-                attributes: ['id','url', 'previewImage', 'imageableId', 'imageableType']
-            }
-        ],
+//Get all Reviews of the Current User (reviewImage is empty [])
+router.get('/current', requireAuth, async (req, res, next) => {
+    const id = req.user.id;
+    const reviews = await Review.findAll({
+        where: {
+            userId: id
+        },
+        raw: true
     });
-    return res.json({review});
-})
+    for (let review of reviews) {
+        const user = await User.findOne({
+            where: {
+                id
+            },
+            attributes: {
+                        exclude: ['username', 'hashedPassword', 'createdAt', 'updatedAt', 'email']
+                    }
+
+        });
+        review.User = user;
+        const spots = await Spot.findAll({
+            where: {
+                ownerId: id
+            },
+            raw: true
+        });
+        for (let spot of spots) {
+            const spotImages = await SpotImage.findAll({
+                where: {
+                    [Op.and]: [
+                        {
+                            spotId: spot.id,
+                        },
+                        {
+                            preview: true
+                        }
+                    ]
+                },
+                attributes: {
+                    exclude: ['id', 'preview']
+                },
+                raw: true
+            });
+            if (!spotImages.length) {
+                spot.previewImage = null
+            } else {
+                spot.previewImage = spotImages[0]['url'];
+            }
+        }
+        review.Spot = spots;
+        const images = await ReviewImage.findAll({
+            where: {
+                reviewId: review.id
+            },
+            attributes: {
+                exclude: ['reviewId', 'createdAt', 'updatedAt']
+            },
+            raw: true
+        });
+        review.ReviewImages = images
+    }
+    res.json({"Reviews": reviews });
+});
+
 
 module.exports = router;

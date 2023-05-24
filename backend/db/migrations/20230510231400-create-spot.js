@@ -6,21 +6,20 @@ if( process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    options.tableName = 'Listings';
-    await queryInterface.createTable(options, {
+    await queryInterface.createTable('Spots', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      hostId: {
+      ownerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Users'
         },
-        onDelete: 'cascade'
+        onDelete: 'CASCADE'
       },
       address: {
         type: Sequelize.STRING,
@@ -39,26 +38,22 @@ module.exports = {
         allowNull: false
       },
       lat: {
-        type: Sequelize.DECIMAL,
-        allowNull:false
+        type: Sequelize.DECIMAL
       },
       lng: {
-        type: Sequelize.DECIMAL,
-        allowNull: false
+        type: Sequelize.DECIMAL
       },
       name: {
         type: Sequelize.STRING,
         allowNull: false
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       price: {
-        type: Sequelize.DECIMAL
-      },
-      previewImage: {
-        type: Sequelize.STRING,
-
+        type: Sequelize.DECIMAL,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -73,6 +68,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Listings');
+    await queryInterface.dropTable('Spots');
   }
 };
