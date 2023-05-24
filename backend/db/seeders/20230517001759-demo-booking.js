@@ -1,3 +1,4 @@
+
 'use strict';
 let options = {};
 if(process.env.NODE_ENV === 'production'){
@@ -7,37 +8,39 @@ if(process.env.NODE_ENV === 'production'){
 module.exports = {
   async up (queryInterface, Sequelize) {
     options.tableName = 'Bookings';
-    await queryInterface.bulkInsert(options, [
+    await queryInterface.bulkInsert('Bookings', [
       {
-        listingId: 1,
+        spotId: 1,
         userId: 1,
-        checkIn: '04-12-2023',
-        checkOut: '04-18-2023',
-        numGuest: 4
+        startDate: "2023-6-16",
+        endDate: "2023-6-20"
       },
       {
-        listingId: 2,
+        spotId: 2,
         userId: 2,
-        checkIn: '03-13-2023',
-        checkOut: '03-20-23',
-        numGuest: 3
+        startDate: "2023-3-30",
+        endDate: "2023-4-1"
       },
       {
-        listingId: 3,
+        spotId: 3,
         userId: 3,
-        checkIn: '05-19-2023',
-        checkOut: '05-22-23',
-        numGuest: 2
-
-      }
-    ], {});
+        startDate: "2023-10-30",
+        endDate: "2023-11-8"
+      },
+      {
+        spotId: 1,
+        userId: 4,
+        startDate: "2023-4-1",
+        endDate: "2023-4-5"
+      },
+    ])
   },
 
   async down (queryInterface, Sequelize) {
     options.tableName = 'Bookings';
     const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
-      userId: { [Op.in]: [1, 2, 3] }
+    return queryInterface.bulkDelete(options.tableName, {
+      userId: { [Op.in]: [1, 2, 3, 4] }
     }, {})
   }
 };

@@ -6,47 +6,36 @@ if( process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    options.tableName = 'Reviews';
-    await queryInterface.createTable(options, {
+    await queryInterface.createTable('Reviews', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      spotId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Spots'
+        },
+        onDelete: 'CASCADE'
+      },
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users',
-          key: 'id'
+          model: 'Users'
         },
-        onDelete: 'cascade'
-      },
-      listingId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Listings',
-          key: 'id'
-        },
-        onDelete: 'cascade'
-      },
-      rating: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+        onDelete: 'CASCADE'
       },
       review: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      bookingId: {
+      stars: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Bookings'
-        },
-        onDelete: 'cascade'
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

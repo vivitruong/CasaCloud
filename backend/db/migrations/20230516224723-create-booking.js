@@ -6,21 +6,20 @@ if( process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    options.tableName = 'Bookings';
-    await queryInterface.createTable(options, {
+    await queryInterface.createTable('Bookings', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      listingId: {
+      spotId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Listings'
+          model: 'Spots'
         },
-        onDelete: 'cascade'
+        onDelete: 'CASCADE'
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -28,18 +27,14 @@ module.exports = {
         references: {
           model: 'Users'
         },
-        onDelete: 'cascade'
+        onDelete: 'CASCADE'
       },
-      checkIn: {
+      startDate: {
         type: Sequelize.DATE,
         allowNull: false
       },
-      checkOut: {
+      endDate: {
         type: Sequelize.DATE,
-        allowNull: false
-      },
-      numGuest: {
-        type: Sequelize.INTEGER,
         allowNull: false
       },
       createdAt: {

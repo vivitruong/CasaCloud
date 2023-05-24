@@ -1,5 +1,5 @@
 const { validationResult , check } = require('express-validator');
-const { User } = require('../db/models');
+const { User, Spot , Review, Booking} = require('../db/models');
 
 
 // middleware for formatting errors from express-validator middleware
@@ -38,56 +38,40 @@ const validateBooking = [
 ]
 const checkReviewRating = [
   check('review')
-    .not().isEmpty()
-    .withMessage("Review text is required"),
-  check('rating')
-    .not().isEmpty()
-    .isNumeric()
-    .withMessage('Stars must be an integer from 1 to 5'),
-  handleValidationErrors
+  .exists({ checkFalsy: true })
+  .withMessage('Review text is required'),
+check('stars')
+  .exists({ checkFalsy: true })
+  .isInt({ min: 1, max: 5 })
+  .withMessage('Stars must be an integer from 1 to 5'),
+handleValidationErrors
 ]
 const handleListValidations = [
   check('address')
-    .notEmpty()
-    .withMessage('Address is required')
-    .withMessage('Address must be at most 100 characters long'),
-  check('city')
-    .notEmpty()
-    .withMessage('City is required')
-    .withMessage('City must be at most 100 characters long'),
-  check('state')
-    .notEmpty()
-    .withMessage('State is required')
-    .withMessage('State must be at most 50 characters long'),
-  check('country')
-    .notEmpty()
-    .withMessage('Country is required'),
-  check('lat')
-    .notEmpty()
-    .withMessage('Latitude is required')
-    .isDecimal()
-    .withMessage('Latitude must be a decimal number')
-    .isFloat({ min: -90.999999, max: 90.999999 })
-    .withMessage('Latitude must be between -90.999999 and 90.999999'),
-  check('lng')
-    .notEmpty()
-    .withMessage('Longitude is required')
-    .isDecimal()
-    .withMessage('Longitude must be a decimal number')
-    .isFloat({ min: -180, max: 180 })
-    .withMessage('Longitude must be between -180 and 180'),
-  check('name')
-    .notEmpty()
-    .withMessage('Name is required'),
-  check('description')
-    .notEmpty()
-    .withMessage('Description is required'),
-  check('price')
-    .notEmpty()
-    .withMessage('Price is required')
-    .isDecimal()
-    .withMessage('Price must be a decimal number'),
-      handleValidationErrors
+  .exists({ checkFalsy: true })
+  .withMessage('Street address is required'),
+check('city')
+  .exists({ checkFalsy: true })
+  .withMessage('City is required'),
+check('state')
+  .exists({ checkFalsy: true })
+  .withMessage('State is required'),
+check('country')
+  .exists({ checkFalsy: true })
+  .withMessage('Country is required'),
+check('lat')
+  .isNumeric()
+  .withMessage('Latitude is not valid'),
+check('lng')
+  .isNumeric()
+  .withMessage('Longitude is not valid'),
+check('description')
+  .exists({checkFalsy: true})
+  .withMessage('Description is required'),
+check('price')
+.exists({ checkFalsy: true})
+.withMessage('Price per day is required'),
+handleValidationErrors,
 
 ]
 
@@ -164,7 +148,98 @@ const isUniqueName = async (req, res, next) => {
      next(err);
   }
 };
+//check if the user is owner of the spot
+const isOwner = async function (req, res, next) {
+  const spotId = req.params.spotId;
+  const spot = await Spot.findByPk(spotId);
+  if (!spot) {
+
+      return res.status(404).json({
+          "message": "Spot couldn't be found",
+          "statusCode": 404
+      })
+  }
+  const ownerId = spot.ownerId;
+  const userId = req.user.id;
+  if (userId === ownerId) {
+      return next();
+  } else {
+      const err = new Error('Unauthorized');
+      err.message = 'Forbidden';
+      err.status = 403;
+      return next(err);
+  }
+}
+//checkif review belongs to the current user
+const isReviewer = async function (req, res, next) {
+  const reviewId = req.params.reviewId;
+  const userId = req.user.id;
+  const review = await Review.findByPk(reviewId);
+  if (!review) {
+      return res.status(404).json({
+          "message": "Review couldn't be found",
+          "statusCode": 404
+      })
+  }
+  const userReviewId = review.userId;
+  if (userId === userReviewId) {
+      return next();
+  } else {
+      const err = new Error('Unauthorized');
+      err.message = 'Forbidden';
+      err.status = 403;
+      return next(err);
+  }
+}
+//check if the bookibg is belong to the current user (done)
+const isUpdateBooking = async (req, res, next) => {
+  const userId = req.user.id;
+  const bookingId = req.params.bookingId;
+  const booking = await Booking.findByPk(bookingId);
+  if (!booking) {
+      res.status(404).json({
+          "message": "Booking couldn't be found",
+          "statusCode": 404
+      });
+  } else {
+      const userBookingId = booking.userId;
+      if (userId === userBookingId) {
+          next();
+      } else {
+          const err = new Error('Unauthorized');
+          err.message = 'Booking must belong to the proper user';
+          err.status = 403;
+          return next(err);
+      }
+  }
+}
+//check if the booking is belong to the curr uer or the Spot must belong to the curr user
+const isProperUser = async( req, res, next) => {
+  const userId = req.user.id;
+  const bookingId = req.params.bookingId;
+  const booking = await Booking.findByPk(bookingId);
+  if (!booking) {
+      res.status(404).json({
+          "message": "Booking couldn't be found",
+          "statusCode": 404
+      });
+  } else {
+      const spotId = booking.spotId;
+      const spot = await Spot.findByPk(spotId);
+      const ownerId = spot.ownerId;
+      const userBookingId = booking.userId;
+      if (userId === userBookingId || userId === ownerId) {
+          next()
+      } else {
+          const err = new Error('Unauthorized');
+          err.message = 'Booking must belong the proper user/ This Listing must belong to the proper user';
+          err.status = 403;
+          return next(err);
+      }
+  }
+}
+
 
 module.exports = {
-  handleValidationErrors, isUniqueName, isUniqueEmail, validateLogin, validateSignup, handleListValidations, checkReviewRating, validateBooking
+  handleValidationErrors, isProperUser, isReviewer, isOwner, isUpdateBooking, isUniqueName, isUniqueEmail, validateLogin, validateSignup, handleListValidations, checkReviewRating, validateBooking
 };
