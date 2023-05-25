@@ -9,7 +9,7 @@ const { isReviewer, handleValidationErrors,isOwner, handleListValidations, check
 const router = express.Router();
 
 
-//Delete a review
+//Delete a review (done)
 router.delete('/:reviewId', requireAuth,isReviewer, async (req, res, next) => {
     const reviewId = req.params.reviewId;
     const deleteReview = await Review.findByPk(reviewId);
@@ -20,10 +20,10 @@ router.delete('/:reviewId', requireAuth,isReviewer, async (req, res, next) => {
     })
 })
 
-//Edit a review
-router.put('/:reviewId', requireAuth, checkReviewRating, async (req, res, next) => {
+//Edit a review (done)
+router.put('/:reviewId', requireAuth, isReviewer, checkReviewRating, async (req, res, next) => {
     try {
-        const reviewId = req.params.id;
+        const reviewId = req.params.reviewId;
         const updateReview = await Review.findByPk(reviewId);
         const { user } = req;
         if(!user) return res.status(401).json({message: "You have to log in"});
@@ -51,7 +51,7 @@ router.put('/:reviewId', requireAuth, checkReviewRating, async (req, res, next) 
       }
 
 })
-//Get all Reviews of the Current User (reviewImage is empty [])
+//Get all Reviews of the Current User (done)
 router.get('/current', requireAuth, async (req, res, next) => {
     const id = req.user.id;
     const reviews = await Review.findAll({
@@ -110,10 +110,9 @@ router.get('/current', requireAuth, async (req, res, next) => {
             },
             raw: true
         });
-        review.ReviewImages = images
+        review.ReviewImage = images
     }
     res.json({"Reviews": reviews });
 });
-
 
 module.exports = router;
