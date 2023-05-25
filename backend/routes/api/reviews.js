@@ -8,7 +8,7 @@ const { isReviewer, handleValidationErrors,isOwner, handleListValidations, check
 
 const router = express.Router();
 
-//Add an Image to a Review based on the Review's id
+//Add an Image to a Review based on the Review's id (done)
 router.post('/:reviewId/images', requireAuth , isReviewer, async (req, res, next) => {
     const reviewId = req.params.reviewId;
     const review = await Review.findByPk(reviewId);
