@@ -8,6 +8,30 @@ const { isReviewer, handleValidationErrors,isOwner, handleListValidations, check
 
 const router = express.Router();
 
+//Add an Image to a Review based on the Review's id
+router.post('/:reviewId/images', requireAuth , isReviewer, async (req, res, next) => {
+    const reviewId = req.params.reviewId;
+    const review = await Review.findByPk(reviewId);
+    const reviewImages = await ReviewImage.findAll({
+        where: {
+            reviewId
+        }
+    });
+    if (reviewImages.length === 10) {
+        return res.status(403).json({
+            "message": "Maximum number of images for this resource was reached"
+        })
+    }
+    const { url } = req.body;
+    const reviewImage = await ReviewImage.create({
+        reviewId,
+        url,
+    });
+    const imageData = await ReviewImage.scope('defaultScope').findByPk(reviewImage.id)
+    res.json(imageData);
+})
+
+
 
 //Delete a review (done)
 router.delete('/:reviewId', requireAuth,isReviewer, async (req, res, next) => {
