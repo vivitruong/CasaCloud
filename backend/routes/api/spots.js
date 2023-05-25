@@ -80,7 +80,7 @@ router.post('/:spotId/images', requireAuth, isOwner, async (req, res, next) => {
 
  });
 
- //Create a Spot (get error of price per)
+ //Create a Spot (done)
  router.post('/', handleListValidations, requireAuth, async (req, res, next) => {
   try {
     const ownerId = req.user.id;
@@ -106,33 +106,30 @@ router.post('/:spotId/images', requireAuth, isOwner, async (req, res, next) => {
 
 
 
-  //Edit a Spot (got error iof price per...)
-  router.put('/:id', requireAuth, handleListValidations, async (req, res, next) => {
+  //Edit a Spot (done)
+  router.put('/:spotId', requireAuth, handleListValidations, isOwner, async (req, res, next) => {
     const spotId = req.params.spotId;
     const spot = await Spot.findByPk(spotId);
-
     if (!spot) {
       return res.status(404).json({ message: "Spot couldn't be found" });
     }
-
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
+    if(spot) {
+      spot.address = address;
+      spot.city = city;
+      spot.state = state;
+      spot.country = country;
+      spot.lat = lat;
+      spot.lng = lng;
+      spot.name = name;
+      spot.description = description;
+      spot.price = price
 
-    spot.address = address;
-    spot.city = city;
-    spot.state = state;
-    spot.country = country;
-    spot.lat = lat;
-    spot.lng = lng;
-    spot.name = name;
-    spot.description = description;
-    spot.price = price;
-
-    try {
-      await spot.save();
-      return res.status(200).json(spot);
-    } catch (error) {
-      return next(error);
     }
+
+    await spot.save();
+    res.json(spot);
+
   });
 
 
@@ -148,7 +145,7 @@ router.post('/:spotId/images', requireAuth, isOwner, async (req, res, next) => {
 })
 
   //Get all review by a Spot id (done)
-  router.get('/:spotId/reviews', async (req, res, next) => {
+  router.get('/:spotId/reviews', requireAuth, async (req, res, next) => {
     const spotId = req.params.spotId;
     const spot = await Spot.findByPk(spotId);
     if (spot) {
@@ -167,7 +164,8 @@ router.post('/:spotId/images', requireAuth, isOwner, async (req, res, next) => {
                 model: ReviewImage,
                 attributes: {
                     exclude: ['reviewId', 'createdAt', 'updatedAt']
-                }
+                },
+                raw: true
             },
             ]
         });
@@ -262,7 +260,7 @@ router.get('/:spotId', async (req, res, next) => {
 
 
 //Get all Spot (done)
-router.get('/' , requireAuth,  async (req, res) => {
+router.get('/' ,  async (req, res) => {
   const spots = await Spot.findAll({
     attributes: {
       include: [

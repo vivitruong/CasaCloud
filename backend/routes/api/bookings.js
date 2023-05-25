@@ -8,16 +8,66 @@ const { handleValidationErrors,isProperUser, isUpdateBooking, handleListValidati
 
 const router = express.Router();
 
-//get all current user booking only show []
-router.get('/current', requireAuth, async (req, res, next) => {
+//Get all Bookings for a Spot based on the Spot's id (done)
+router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+    const spotId = req.params.spotId;
     const userId = req.user.id;
+    const spot = await Spot.findByPk(spotId)
+    //coulndt find a spot
+    if(!spot) {
+        res.status(404).json({ message: "Spot coulnd't be found"})
+    } else {
+        //check if you are not the owner
+        const owner = spot.ownerId;
+        if(userId !== owner) {
+            const userBooking = await Booking.findAll({
+                where: {
+                    [Op.and]: [
+                        { userId },
+                        { spotId }
+                    ]
+                },
+                attributes: {
+                    exclude: ['id', 'userId', 'createdAt', 'updatedAt']
+                }
+            });
+            res.json({
+                'Bookings': userBooking
+            })
+        }
+        //check if you are the owner
+        if(userId === owner) {
+            const ownerBooking = await Booking.findAll({
+                where: {
+                    spotId
+                },
+                raw: true
+            });
+            for (let booking of ownerBooking) {
+                const user = await User.findByPk(booking.userId, {
+                    attributes: {
+                        exclude: ['username', 'createdAt', 'updatedAt']
+                    }
+                });
+                booking.User = user;
+            }
+            res.json({
+                'Bookings': ownerBooking
+            })
+        }
+    }
+})
+
+//get all booking current user (done)
+router.get('/current', requireAuth, async (req, res, next) => {
+    const id = req.user.id;
+
     const bookings = await Booking.findAll({
         where: {
-            userId
+            userId: id
         },
         raw: true
     });
-
     for (let booking of bookings) {
         const spot = await Spot.findOne({
             where: {
@@ -25,6 +75,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             },
             raw: true
         });
+
         const spotImages = await SpotImage.findAll({
             where: {
                 [Op.and]: [
@@ -36,14 +87,16 @@ router.get('/current', requireAuth, async (req, res, next) => {
                     }
                 ]
             },
-            attributes: {
-                exclude: ['id', 'preview']
-            },
+            attributes: ['url'],
             raw: true
         });
-        spot.previewImage = spotImages.length ? spotImages[0]['url'] : null;
-
+        if (!spotImages.length) {
+            spot.previewImage = null
+        } else {
+            spot.previewImage = spotImages[0]['url'];
+        }
         booking.Spot = spot;
+
     }
     res.json({
         "Bookings": bookings
@@ -124,7 +177,7 @@ router.put('/:bookingId', requireAuth, isUpdateBooking, async (req, res, next) =
     }
   });
 
-//Delete a booking (cannot deleted anything bescuase it keeo saying booking coulnd be found)
+//Delete a booking (done)
 router.delete('/:bookingId', requireAuth, isProperUser, async (req, res, next) => {
     const bookingId = req.params.bookingId;
     const deleteBooking = await Booking.findByPk(bookingId);
