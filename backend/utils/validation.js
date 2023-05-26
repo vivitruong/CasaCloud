@@ -259,8 +259,20 @@ const isNotBelongToCurrSpot = async function (req, res, next) {
       return next();
   }
 }
+//query filters to get All Spots
+const validateQueryParameters = [
+  check('page').optional().isInt({ min: 1, max: 10 }).withMessage('Page must be between 1 and 10').toInt(),
+  check('size').optional().isInt({ min: 1, max: 20 }).withMessage('Size must be between 1 and 20').toInt(),
+  check('minLat').optional().isDecimal().withMessage('Minimum latitude is invalid'),
+  check('maxLat').optional().isDecimal().withMessage('Maximum latitude is invalid'),
+  check('minLng').optional().isDecimal().withMessage('Minimum longitude is invalid'),
+  check('maxLng').optional().isDecimal().withMessage('Maximum longitude is invalid'),
+  check('minPrice').optional().isDecimal({ min: 0 }).withMessage('Minimum price must be greater than or equal to 0').toFloat(),
+  check('maxPrice').optional().isDecimal({ min: 0 }).withMessage('Maximum price must be greater than or equal to 0').toFloat(),
+  handleValidationErrors
+];
 
 
 module.exports = {
-  handleValidationErrors,isNotBelongToCurrSpot, isProperUser, isReviewer, isOwner, isUpdateBooking, isUniqueName, isUniqueEmail, validateLogin, validateSignup, handleListValidations, checkReviewRating, validateBooking
+  handleValidationErrors,validateQueryParameters, isNotBelongToCurrSpot, isProperUser, isReviewer, isOwner, isUpdateBooking, isUniqueName, isUniqueEmail, validateLogin, validateSignup, handleListValidations, checkReviewRating, validateBooking
 };
