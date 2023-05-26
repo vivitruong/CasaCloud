@@ -92,7 +92,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
             attributes: {
                         exclude: ['username', 'hashedPassword', 'createdAt', 'updatedAt', 'email']
                     }
-
         });
         review.User = user;
         const spots = await Spot.findAll({
@@ -118,11 +117,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 },
                 raw: true
             });
-            if (!spotImages.length) {
-                spot.previewImage = null
-            } else {
-                spot.previewImage = spotImages[0]['url'];
-            }
+            spot.previewImage = spotImages.length ? spotImages[0].url : null;
         }
         review.Spot = spots;
         const images = await ReviewImage.findAll({
