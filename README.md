@@ -459,12 +459,12 @@ Creates and returns a new spot.
     }
     ```
 
-### Add an Image to a List based on the List's id (done)
+### Add an Image to a Spot based on the Spot's id (done)
 
-Create and return a new image for a list specified by id.
+Create and return a new image for a spot specified by id.
 
 * Require Authentication: true
-* Require proper authorization: List must belong to the current user
+* Require proper authorization: Spot must belong to the current user
 * Request
   * Method: POST
   * URL: /api/spots/:spotId/images
