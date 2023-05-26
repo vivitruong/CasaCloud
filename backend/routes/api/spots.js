@@ -4,9 +4,9 @@ const {check} = require('express-validator');
 const Sequelize = require("sequelize");
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
 const { User, Spot, Review, SpotImage, ReviewImage, Booking, sequelize} = require('../../db/models');
-const { handleValidationErrors,isOwner, handleListValidations, checkReviewRating, validateBooking, isProperUser, isNotBelongToCurrSpot } = require('../../utils/validation');
-const spot = require('../../db/models/spot.js');
-const spotimage = require('../../db/models/spotimage.js');
+const { handleValidationErrors,isOwner,validateQueryParameters, handleListValidations, checkReviewRating, validateBooking, isProperUser, isNotBelongToCurrSpot } = require('../../utils/validation');
+// const spot = require('../../db/models/spot.js');
+// const spotimage = require('../../db/models/spotimage.js');
 
 // const createStatsCollector = require('mocha/lib/stats-collector');
 
@@ -132,18 +132,6 @@ router.post('/:spotId/images', requireAuth, isOwner, async (req, res, next) => {
 
   });
 
-
-  //Delete a Spot(done)
-  router.delete('/:spotId', requireAuth, async (req, res, next) => {
-    const spotId = req.params.spotId;
-    const spot = await Spot.findByPk(spotId);
-    await spot.destroy();
-    res.json({
-        "message": "Successfully deleted",
-        "statusCode": 200
-    })
-})
-
   //Get all review by a Spot id (done)
   router.get('/:spotId/reviews', requireAuth, async (req, res, next) => {
     const spotId = req.params.spotId;
@@ -262,10 +250,20 @@ router.post('/:spotId/bookings', requireAuth, isNotBelongToCurrSpot, async (req,
 } )
 
 
+  //Delete a Spot(done)
+  router.delete('/:spotId', requireAuth, async (req, res, next) => {
+    const spotId = req.params.spotId;
+    const spot = await Spot.findByPk(spotId);
+    await spot.destroy();
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+    })
+})
 
 
 //Get details of Spotfrom an id (Done)
-router.get('/:spotId', async (req, res, next) => {
+router.get('/:spotId',validateQueryParameters, async (req, res, next) => {
   const spotId = req.params.spotId;
   const spot = await Spot.findByPk(spotId, {
       include: [
@@ -304,42 +302,111 @@ router.get('/:spotId', async (req, res, next) => {
 
 //Get all Spot (done)
 router.get('/' ,  async (req, res) => {
-  const spots = await Spot.findAll({
-    attributes: {
-      include: [
-        [
-          sequelize.fn('ROUND',sequelize.fn('AVG', sequelize.col('Reviews.stars')),2), 'avgRating'
-        ],
-      ]
-    },
-    include: [
-      {
-        model: Review,
-        attributes: []
-      }
-    ],
-    group: ['Spot.id'],
-    raw: true
-  })
-  for (let spot of spots) {
-    const image = await SpotImage.findAll({
-        where: {
-            [Op.and]: [
-                {
-                    spotId: spot.id,
-                },
-                {
-                    preview: true
-                }
+  let { page, size, maxLat, minLat, maxLng, minLng, minPrice, maxPrice } = req.query;
+    page = parseInt(page);
+    size = parseInt(size);
+    if (page > 10) {
+        page = 10
+    }
+    if (size > 20) {
+        size = 20
+    }
+    let pagination = {};
+    if (page, size) {
+        pagination.limit = size;
+        pagination.offset = size * (page - 1);
+    }
+    minPrice = parseFloat(minPrice);
+    maxPrice = parseFloat(maxPrice);
+
+    const spots = await Spot.findAll({
+        attributes: {
+            include: [
+                [
+                    sequelize.fn('ROUND',sequelize.fn('AVG', sequelize.col('Reviews.stars')),2), 'avgRating'
+                ],
             ]
         },
-        raw: true
+        include: [
+            {
+                model: Review,
+                attributes: []
+            },
+        ],
+        where: {
+            ...(minPrice && maxPrice ? { price: { [Op.between]: [minPrice, maxPrice] } } : {}),
+            ...(minPrice && !maxPrice ? { price: { [Op.gte]: minPrice } } : {}),
+            ...(!minPrice && maxPrice ? { price: { [Op.lte]: maxPrice } } : {}),
+          },
+        group: ['Spot.id'],
+        raw: true,
+        ...pagination,
+        subQuery: false
     });
-    spot.previewImage = image.length ? image[0]['url'] : null;
-}
-res.json({
-  "Spots": spots
-})
+
+    for (let spot of spots) {
+        const image = await SpotImage.findAll({
+            where: {
+                [Op.and]: [
+                    {
+                        spotId: spot.id,
+                    },
+                    {
+                        preview: true
+                    }
+                ]
+            },
+            raw: true
+        });
+        if (!image.length) {
+            spot.previewImage = null;
+        } else {
+            spot.previewImage = image[0]['url'];
+        }
+    }
+    if (page && size) {
+        res.json({ "Spots": spots, page, size })
+    } else {
+        res.json({
+            "Spots": spots, page, size
+        })
+      }
+//   const spots = await Spot.findAll({
+//     attributes: {
+//       include: [
+//         [
+//           sequelize.fn('ROUND',sequelize.fn('AVG', sequelize.col('Reviews.stars')),2), 'avgRating'
+//         ],
+//       ]
+//     },
+//     include: [
+//       {
+//         model: Review,
+//         attributes: []
+//       }
+//     ],
+//     group: ['Spot.id'],
+//     raw: true
+//   })
+//   for (let spot of spots) {
+//     const image = await SpotImage.findAll({
+//         where: {
+//             [Op.and]: [
+//                 {
+//                     spotId: spot.id,
+//                 },
+//                 {
+//                     preview: true
+//                 }
+//             ]
+//         },
+//         raw: true
+//     });
+//     spot.previewImage = image.length ? image[0]['url'] : null;
+// }
+// res.json({
+//   "Spots": spots
+// })
 });
 
 

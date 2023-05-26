@@ -90,11 +90,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             attributes: ['url'],
             raw: true
         });
-        if (!spotImages.length) {
-            spot.previewImage = null
-        } else {
-            spot.previewImage = spotImages[0]['url'];
-        }
+        spot.previewImage = spotImages.length ? spotImages[0].url : null;
         booking.Spot = spot;
 
     }
