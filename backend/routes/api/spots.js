@@ -271,38 +271,30 @@ router.post('/:spotId/bookings', requireAuth, isNotBelongToCurrSpot, async (req,
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
   const spotId = req.params.spotId;
   const userId = req.user.id;
-  const spot = await Spot.findByPk(spotId)
-  //coulndt find a spot
-  if(!spot) {
-      res.status(404).json({ message: "Spot coulnd't be found"})
+  const spot = await Spot.findByPk(spotId);
+
+  if (!spot) {
+      res.status(404).json({message: "Spot couldn't be found"})
   } else {
-      //check if you are not the owner
-      const owner = spot.ownerId;
-      if(userId !== owner) {
-          const userBooking = await Booking.findAll({
-              where: {
-                  [Op.and]: [
-                      { userId },
-                      { spotId }
-                  ]
-              },
-              attributes: {
-                  exclude: ['id', 'userId', 'createdAt', 'updatedAt']
-              }
-          });
-          res.json({
-              'Bookings': userBooking
-          })
-      }
-      //check if you are the owner
-      if(userId === owner) {
-          const ownerBooking = await Booking.findAll({
+      const ownerId = spot.ownerId;
+      //if you are not owner
+      if (userId !== ownerId) {
+        let userBooking = await Booking.findAll({
+          attributes: ["id", 'startDate', 'endDate'],
+          where: { spotId: spotId },
+          raw: true
+        })
+        res.json({ Bookings: userBooking })
+    }
+      // if you are owner
+      if (userId === ownerId) {
+          const ownerBookings = await Booking.findAll({
               where: {
                   spotId
               },
               raw: true
           });
-          for (let booking of ownerBooking) {
+          for (let booking of ownerBookings) {
               const user = await User.findByPk(booking.userId, {
                   attributes: {
                       exclude: ['username', 'createdAt', 'updatedAt']
@@ -311,11 +303,14 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
               booking.User = user;
           }
           res.json({
-              'Bookings': ownerBooking
+              'Bookings': ownerBookings
           })
       }
   }
-})
+});
+
+
+
 
 
 //Get details of Spotfrom an id (Done)
