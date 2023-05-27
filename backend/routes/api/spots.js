@@ -267,7 +267,7 @@ router.post('/:spotId/bookings', requireAuth, isNotBelongToCurrSpot, async (req,
         "statusCode": 200
     })
 })
-//Get all booking fro a aspot base on spot id
+//Get all booking fro a aspot base on spot id (doneneen)
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
   const spotId = req.params.spotId;
   const userId = req.user.id;
@@ -280,7 +280,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
       //if you are not owner
       if (userId !== ownerId) {
         let userBooking = await Booking.findAll({
-          attributes: ["id", 'startDate', 'endDate'],
+          attributes: ["spotId", 'startDate', 'endDate'],
           where: { spotId: spotId },
           raw: true
         })
@@ -308,9 +308,6 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
       }
   }
 });
-
-
-
 
 
 //Get details of Spotfrom an id (Done)
