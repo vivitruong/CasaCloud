@@ -13,129 +13,6 @@ const { handleValidationErrors,isOwner,validateQueryParameters, handleListValida
 
 const router = express.Router();
 
-// Add an Image to a spot base on the spot's id (done)
-router.post('/:spotId/images', requireAuth, isOwner, async (req, res, next) => {
-  const spotId = req.params.spotId;
-  const { url, preview } = req.body;
-  const spot = await Spot.findByPk(spotId);
-
-  if (spot) {
-      const image = await SpotImage.create({
-          url,
-          preview,
-          spotId
-      });
-      const newId = image.id;
-      const imageData = await SpotImage.scope('defaultScope').findByPk(newId);
-      res.json(imageData)
-  } else {
-      res.status(404).json({
-          "message": "Spot couldn't be found",
-          "statusCode": 404
-      })
-  }
-});
-
-//Get all Spot owned by the Current User (done)
- router.get('/current', requireAuth, async(req, res, next) => {
-  const id = req.user.dataValues.id;
-
-  const spots = await Spot.findAll({
-    where: {
-      ownerId: id
-    },
-    attributes: {
-      include: [
-        [
-          sequelize.fn('ROUND',sequelize.fn('AVG', sequelize.col('Reviews.stars'))), 'avgRating'
-        ]
-      ]
-    },
-    include: [
-      {
-        model: Review,
-        attributes: []
-      }
-    ],
-    group: ['Spot.id'],
-    raw: true
-  });
-    for( let spot of spots) {
-      const image = await SpotImage.findAll({
-        where: {
-            [Op.and]: [
-                {
-                    spotId: spot.id,
-                },
-                {
-                    preview: true
-                }
-            ]
-        },
-        raw: true
-    });
-   spot.previewImage = image.length ? image[0]['url'] : null;
-   //convert
-   spot.lat = parseFloat(spot.lat);
-   spot.lng = parseFloat(spot.lng);
-   spot.price = parseFloat(spot.price);
-   spot.avgRating = parseFloat(spot.avgRating)
-
-  }
-  res.json({ "Spots": spots });
-
- });
-
- //Create a Spot (done)
- router.post('/', requireAuth, handleListValidations, async (req, res, next) => {
-
-    const ownerId = req.user.id;
-    const { address, city, state, country, lat, lng, name, description, price } = req.body;
-    const spot = await Spot.create({
-      ownerId: ownerId,
-      address: address,
-      city: city,
-      state: state,
-      country: country,
-      lat: lat,
-      lng: lng,
-      name: name,
-      description: description,
-      price: price,
-    });
-
-    res.status(201).json(spot);
-
-});
-
-
-
-  //Edit a Spot (done)
-  router.put('/:spotId', requireAuth, handleListValidations, isOwner, async (req, res, next) => {
-    const spotId = req.params.spotId;
-    const spot = await Spot.findByPk(spotId);
-    if (!spot) {
-      return res.status(404).json({ message: "Spot couldn't be found" });
-    }
-    const { address, city, state, country, lat, lng, name, description, price } = req.body;
-    if(spot) {
-      spot.address = address;
-      spot.city = city;
-      spot.state = state;
-      spot.country = country;
-      spot.lat = lat;
-      spot.lng = lng;
-      spot.name = name;
-      spot.description = description;
-      spot.price = price
-
-    }
-
-    await spot.save();
-    res.json(spot);
-
-  });
-
   //Get all review by a Spot id (done)
   router.get('/:spotId/reviews', requireAuth, async (req, res, next) => {
     const spotId = req.params.spotId;
@@ -254,19 +131,7 @@ router.post('/:spotId/bookings', requireAuth, isNotBelongToCurrSpot, async (req,
 } );
 
 
-  //Delete a Spot(done)
-  router.delete('/:spotId', requireAuth, async (req, res, next) => {
-    const spotId = req.params.spotId;
-    const spot = await Spot.findByPk(spotId);
-    if(!spot) {
-      return res.status(404).json({ message: "Spot couldnt be found"})
-    }
-    await spot.destroy();
-    res.json({
-        "message": "Successfully deleted",
-        "statusCode": 200
-    })
-})
+
 //Get all booking fro a aspot base on spot id (doneneen)
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
   const spotId = req.params.spotId;
@@ -309,6 +174,121 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
   }
 });
 
+// Add an Image to a spot base on the spot's id (done)
+router.post('/:spotId/images', requireAuth, isOwner, async (req, res, next) => {
+  const spotId = req.params.spotId;
+  const { url, preview } = req.body;
+  const spot = await Spot.findByPk(spotId);
+
+  if (spot) {
+      const image = await SpotImage.create({
+          url,
+          preview,
+          spotId
+      });
+      const newId = image.id;
+      const imageData = await SpotImage.scope('defaultScope').findByPk(newId);
+      res.json(imageData)
+  } else {
+      res.status(404).json({
+          "message": "Spot couldn't be found",
+          "statusCode": 404
+      })
+  }
+});
+
+//Get all Spot owned by the Current User (done)
+ router.get('/current', requireAuth, async(req, res, next) => {
+  const id = req.user.dataValues.id;
+
+  const spots = await Spot.findAll({
+    where: {
+      ownerId: id
+    },
+    attributes: {
+      include: [
+        [
+          sequelize.fn('ROUND',sequelize.fn('AVG', sequelize.col('Reviews.stars'))), 'avgRating'
+        ]
+      ]
+    },
+    include: [
+      {
+        model: Review,
+        attributes: []
+      }
+    ],
+    group: ['Spot.id'],
+    raw: true
+  });
+    for( let spot of spots) {
+      const image = await SpotImage.findAll({
+        where: {
+            [Op.and]: [
+                {
+                    spotId: spot.id,
+                },
+                {
+                    preview: true
+                }
+            ]
+        },
+        raw: true
+    });
+   spot.previewImage = image.length ? image[0]['url'] : null;
+   //convert
+   spot.lat = parseFloat(spot.lat);
+   spot.lng = parseFloat(spot.lng);
+   spot.price = parseFloat(spot.price);
+   spot.avgRating = parseFloat(spot.avgRating)
+
+  }
+  res.json({ "Spots": spots });
+
+ });
+
+
+  //Edit a Spot (done)
+  router.put('/:spotId', requireAuth, handleListValidations, isOwner, async (req, res, next) => {
+    const spotId = req.params.spotId;
+    const spot = await Spot.findByPk(spotId);
+    if (!spot) {
+      return res.status(404).json({ message: "Spot couldn't be found" });
+    }
+    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+    if(spot) {
+      spot.address = address;
+      spot.city = city;
+      spot.state = state;
+      spot.country = country;
+      spot.lat = lat;
+      spot.lng = lng;
+      spot.name = name;
+      spot.description = description;
+      spot.price = price
+
+    }
+
+    await spot.save();
+    res.json(spot);
+
+  });
+
+
+  //Delete a Spot(done)
+  router.delete('/:spotId', requireAuth, async (req, res, next) => {
+    const spotId = req.params.spotId;
+    const spot = await Spot.findByPk(spotId);
+    if(!spot) {
+      return res.status(404).json({ message: "Spot couldnt be found"})
+    }
+    await spot.destroy();
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+    })
+})
+
 
 //Get details of Spotfrom an id (Done)
 router.get('/:spotId',async (req, res, next) => {
@@ -348,6 +328,27 @@ router.get('/:spotId',async (req, res, next) => {
           "statusCode": 404
       })
   }
+});
+ //Create a Spot (done)
+ router.post('/', requireAuth, handleListValidations, async (req, res, next) => {
+
+  const ownerId = req.user.id;
+  const { address, city, state, country, lat, lng, name, description, price } = req.body;
+  const spot = await Spot.create({
+    ownerId: ownerId,
+    address: address,
+    city: city,
+    state: state,
+    country: country,
+    lat: lat,
+    lng: lng,
+    name: name,
+    description: description,
+    price: price,
+  });
+
+  res.status(201).json(spot);
+
 });
 
 
@@ -424,14 +425,15 @@ router.get('/' , validateQueryParameters, async (req, res) => {
         } else {
             spot.previewImage = image[0]['url'];
         }
-        spots.lat = parseFloat(spots.lat);
-        spots.lng = parseFloat(spots.lng);
-        spots.price = parseFloat(spots.price)
-        spots.avgRating = parseFloat(spots.avgRating)
+
     }
     if (page && size) {
         res.json({ "Spots": spots, page, size })
     } else {
+      spots.lat = parseFloat(spots.lat);
+      spots.lng = parseFloat(spots.lng);
+      spots.price = parseFloat(spots.price)
+      spots.avgRating = parseFloat(spots.avgRating)
         res.json({
             "Spots": spots
         })
