@@ -8,95 +8,57 @@ const { handleValidationErrors,isProperUser, isUpdateBooking, handleListValidati
 
 const router = express.Router();
 
-//Get all Bookings for a Spot based on the Spot's id (done)
-router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
-    const spotId = req.params.spotId;
-    const userId = req.user.id;
-    const spot = await Spot.findByPk(spotId)
-    //coulndt find a spot
-    if(!spot) {
-        res.status(404).json({ message: "Spot coulnd't be found"})
-    } else {
-        //check if you are not the owner
-        const owner = spot.ownerId;
-        if(userId !== owner) {
-            const userBooking = await Booking.findAll({
-                where: {
-                    [Op.and]: [
-                        { userId },
-                        { spotId }
-                    ]
-                },
-                attributes: {
-                    exclude: ['id', 'userId', 'createdAt', 'updatedAt']
-                }
-            });
-            res.json({
-                'Bookings': userBooking
-            })
-        }
-        //check if you are the owner
-        if(userId === owner) {
-            const ownerBooking = await Booking.findAll({
-                where: {
-                    spotId
-                },
-                raw: true
-            });
-            for (let booking of ownerBooking) {
-                const user = await User.findByPk(booking.userId, {
-                    attributes: {
-                        exclude: ['username', 'createdAt', 'updatedAt']
-                    }
-                });
-                booking.User = user;
-            }
-            res.json({
-                'Bookings': ownerBooking
-            })
-        }
-    }
-})
 
 //get all booking current user (done)
 router.get('/current', requireAuth, async (req, res, next) => {
-    const id = req.user.id;
+  const id = req.user.id;
+  const bookings = await Booking.findAll({
+    where: {
+      userId: id,
+    },
+    raw: true,
+  });
 
-    const bookings = await Booking.findAll({
-        where: {
-            userId: id
-        },
-        raw: true
+  const resArray = [];
+  for (let booking of bookings) {
+    const spot = await Spot.findOne({
+      where: {
+        id: booking.spotId,
+      },
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+      raw: true,
     });
-    for (let booking of bookings) {
-        const spot = await Spot.findOne({
-            where: {
-                id: booking.spotId
-            },
-            raw: true
-        });
 
-        const spotImages = await SpotImage.findAll({
-            where: {
-                [Op.and]: [
-                    {
-                        spotId: booking.spotId,
-                    },
-                    {
-                        preview: true
-                    }
-                ]
-            },
-            attributes: ['url'],
-            raw: true
-        });
-        spot.previewImage = spotImages.length ? spotImages[0].url : null;
-        booking.Spot = spot;
-
-    }
-    res.json({
-        "Bookings": bookings
+    const spotImages = await SpotImage.findAll({
+      where: {
+        [Op.and]: [
+          {
+            spotId: booking.spotId,
+          },
+          {
+            preview: true,
+          },
+        ],
+      },
+      attributes: ["url"],
+      raw: true,
     });
+
+    spot.previewImage = spotImages.length ? spotImages[0].url : null;
+    spot.lat = parseFloat(spot.lat);
+    spot.lng = parseFloat(spot.lng);
+    spot.price = parseFloat(spot.price);
+
+    booking.Spot = spot;
+    resArray.push(booking);
+  }
+
+  if (resArray.length > 0) {
+    res.json({ Bookings: resArray });
+  } else {
+    res.json({ Bookings: [] });
+  }
+
 });
 
 // Edit a booking (done)
