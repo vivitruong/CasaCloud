@@ -8,12 +8,12 @@ const handleValidationErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
 
   if (!validationErrors.isEmpty()) {
-    const errors = {};
+    const errors = [];
     validationErrors
       .array()
-      .forEach(error => errors[error.param] = error.msg);
+      .forEach(error => errors.push(error.msg));
 
-    const err = Error("Bad request.");
+    const err = Error("Validation error");
     err.errors = errors;
     err.status = 400;
     err.title = "Bad request.";
@@ -60,10 +60,12 @@ check('country')
   .exists({ checkFalsy: true })
   .withMessage('Country is required'),
 check('lat')
-  .isNumeric()
+  .isFloat()
+  .not().isAlpha()
   .withMessage('Latitude is not valid'),
 check('lng')
-  .isNumeric()
+  .isFloat()
+  .not().isAlpha()
   .withMessage('Longitude is not valid'),
 check('description')
   .exists({checkFalsy: true})
@@ -72,7 +74,6 @@ check('price')
 .exists({ checkFalsy: true})
 .withMessage('Price per day is required'),
 handleValidationErrors,
-
 ]
 
 const validateSignup = [
@@ -261,15 +262,48 @@ const isNotBelongToCurrSpot = async function (req, res, next) {
 }
 //query filters to get All Spots
 const validateQueryParameters = [
-  check('page').optional().isInt({ min: 1, max: 10 }).withMessage('Page must be between 1 and 10').toInt(),
-  check('size').optional().isInt({ min: 1, max: 20 }).withMessage('Size must be between 1 and 20').toInt(),
-  check('minLat').optional().isDecimal().withMessage('Minimum latitude is invalid'),
-  check('maxLat').optional().isDecimal().withMessage('Maximum latitude is invalid'),
-  check('minLng').optional().isDecimal().withMessage('Minimum longitude is invalid'),
-  check('maxLng').optional().isDecimal().withMessage('Maximum longitude is invalid'),
-  check('minPrice').optional().isDecimal({ min: 0 }).withMessage('Minimum price must be greater than or equal to 0').toFloat(),
-  check('maxPrice').optional().isDecimal({ min: 0 }).withMessage('Maximum price must be greater than or equal to 0').toFloat(),
-  handleValidationErrors
+  check('page')
+  .optional()
+  .exists({ checkFalsy: true })
+  .isInt({ min: 1 })
+  .withMessage('Page must be greater than or equal to 1'),
+check('size')
+  .optional()
+  .exists({ checkFalsy: true })
+  .isInt({ min: 1 })
+  .withMessage('Size must be greater than or equal to 1'),
+check('minLat')
+  .optional()
+  .exists({ checkFalsy: true })
+  .isDecimal()
+  .withMessage('Minimum latitude is invalid'),
+check('maxLat')
+  .optional()
+  .exists({ checkFalsy: true })
+  .isDecimal()
+  .withMessage('Maximum latitude is invalid"'),
+check('minLng')
+  .optional()
+  .exists({ checkFalsy: true })
+  .isDecimal()
+  .withMessage('Minimum longitude is invalid'),
+check('maxLng')
+  .optional()
+  .exists({ checkFalsy: true })
+  .isDecimal()
+  .withMessage('Max longitude is invalid'),
+check('minPrice')
+  .optional()
+  .exists({ checkFalsy: true })
+  .isFloat({min:0})
+  .withMessage('Minimum price must be greater than or equal to 0'),
+check('maxPrice')
+  .optional()
+  .exists({ checkFalsy: true })
+  .isFloat({min:0})
+  .withMessage('Maximum price must be greater than or equal to 0'),
+
+handleValidationErrors
 ];
 
 

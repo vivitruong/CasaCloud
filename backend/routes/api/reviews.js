@@ -78,60 +78,48 @@ router.put('/:reviewId', requireAuth, isReviewer, checkReviewRating, async (req,
 //Get all Reviews of the Current User (done)
 router.get('/current', requireAuth, async (req, res, next) => {
     const id = req.user.id;
-    const reviews = await Review.findAll({
-        where: {
-            userId: id
+    const Reviews = await Review.findAll({
+      where: {
+        userId: id,
+      },
+      include: [
+        {
+          model: User,
+          attributes: ["id", "firstName", "lastName"],
         },
-        raw: true
+        {
+          model: ReviewImage,
+          as: "ReviewImages",
+          attributes: ["id", "url"],
+        },
+      ],
     });
-    for (let review of reviews) {
-        const user = await User.findOne({
-            where: {
-                id
-            },
-            attributes: {
-                        exclude: ['username', 'hashedPassword', 'createdAt', 'updatedAt', 'email']
-                    }
-        });
-        review.User = user;
-        const spots = await Spot.findAll({
-            where: {
-                ownerId: id
-            },
-            raw: true
-        });
-        for (let spot of spots) {
-            const spotImages = await SpotImage.findAll({
-                where: {
-                    [Op.and]: [
-                        {
-                            spotId: spot.id,
-                        },
-                        {
-                            preview: true
-                        }
-                    ]
-                },
-                attributes: {
-                    exclude: ['id', 'preview']
-                },
-                raw: true
-            });
-            spot.previewImage = spotImages.length ? spotImages[0].url : null;
-        }
-        review.Spot = spots;
-        const images = await ReviewImage.findAll({
-            where: {
-                reviewId: review.id
-            },
-            attributes: {
-                exclude: ['reviewId', 'createdAt', 'updatedAt']
-            },
-            raw: true
-        });
-        review.ReviewImage = images
+
+    const resArr = [];
+    for (let i = 0; i < Reviews.length; i++) {
+      const review = Reviews[i].toJSON();
+      const spotId = review.spotId;
+      const spot = await Spot.findOne({
+        where: { id: spotId },
+        raw: true,
+        attributes: { exclude: ["createdAt", "updatedAt"] },
+      });
+      const previewImage = await SpotImage.findAll({
+        where: {
+          spotId: spotId,
+          preview: true,
+        },
+        attributes: ["url"],
+      });
+
+      spot.previewImage = previewImage.length > 0 ? previewImage[previewImage.length - 1].url : null;
+      review.Spot = [spot];
+      resArr.push(review);
     }
-    res.json({"Reviews": reviews });
+
+    res.json({ Reviews: resArr });
+
+
 });
 
 module.exports = router;

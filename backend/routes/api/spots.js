@@ -75,33 +75,37 @@ router.post('/:spotId/images', requireAuth, isOwner, async (req, res, next) => {
         raw: true
     });
    spot.previewImage = image.length ? image[0]['url'] : null;
+   //convert
+   spot.lat = parseFloat(spot.lat);
+   spot.lng = parseFloat(spot.lng);
+   spot.price = parseFloat(spot.price);
+   spot.avgRating = parseFloat(spot.avgRating)
+
   }
   res.json({ "Spots": spots });
 
  });
 
  //Create a Spot (done)
- router.post('/', handleListValidations, requireAuth, async (req, res, next) => {
-  try {
+ router.post('/', requireAuth, handleListValidations, async (req, res, next) => {
+
     const ownerId = req.user.id;
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
     const spot = await Spot.create({
-      ownerId,
-      address,
-      city,
-      state,
-      country,
-      lat,
-      lng,
-      name,
-      description,
-      price
+      ownerId: ownerId,
+      address: address,
+      city: city,
+      state: state,
+      country: country,
+      lat: lat,
+      lng: lng,
+      name: name,
+      description: description,
+      price: price,
     });
 
     res.status(201).json(spot);
-  } catch (error) {
-    next(error);
-  }
+
 });
 
 
@@ -247,23 +251,75 @@ router.post('/:spotId/bookings', requireAuth, isNotBelongToCurrSpot, async (req,
   })
   res.status(200).json(resArray)
 
-} )
+} );
 
 
   //Delete a Spot(done)
   router.delete('/:spotId', requireAuth, async (req, res, next) => {
     const spotId = req.params.spotId;
     const spot = await Spot.findByPk(spotId);
+    if(!spot) {
+      return res.status(404).json({ message: "Spot couldnt be found"})
+    }
     await spot.destroy();
     res.json({
         "message": "Successfully deleted",
         "statusCode": 200
     })
 })
+//Get all booking fro a aspot base on spot id
+router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+  const spotId = req.params.spotId;
+  const userId = req.user.id;
+  const spot = await Spot.findByPk(spotId)
+  //coulndt find a spot
+  if(!spot) {
+      res.status(404).json({ message: "Spot coulnd't be found"})
+  } else {
+      //check if you are not the owner
+      const owner = spot.ownerId;
+      if(userId !== owner) {
+          const userBooking = await Booking.findAll({
+              where: {
+                  [Op.and]: [
+                      { userId },
+                      { spotId }
+                  ]
+              },
+              attributes: {
+                  exclude: ['id', 'userId', 'createdAt', 'updatedAt']
+              }
+          });
+          res.json({
+              'Bookings': userBooking
+          })
+      }
+      //check if you are the owner
+      if(userId === owner) {
+          const ownerBooking = await Booking.findAll({
+              where: {
+                  spotId
+              },
+              raw: true
+          });
+          for (let booking of ownerBooking) {
+              const user = await User.findByPk(booking.userId, {
+                  attributes: {
+                      exclude: ['username', 'createdAt', 'updatedAt']
+                  }
+              });
+              booking.User = user;
+          }
+          res.json({
+              'Bookings': ownerBooking
+          })
+      }
+  }
+})
 
 
 //Get details of Spotfrom an id (Done)
-router.get('/:spotId',validateQueryParameters, async (req, res, next) => {
+router.get('/:spotId',async (req, res, next) => {
   const spotId = req.params.spotId;
   const spot = await Spot.findByPk(spotId, {
       include: [
@@ -282,8 +338,11 @@ router.get('/:spotId',validateQueryParameters, async (req, res, next) => {
       attributes: {
           include: [
               [
-                  sequelize.fn('ROUND',sequelize.fn('AVG', sequelize.col('Reviews.stars')),2), 'avgStarRating'
+                sequelize.fn("COUNT", sequelize.col("Reviews.stars")), "numReviews"
               ],
+              [
+                sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"
+              ]
           ]
       },
       group: ['Spot.id', 'SpotImages.id', 'Reviews.id', 'Owner.id'],
