@@ -379,7 +379,7 @@ router.get('/' , validateQueryParameters, async (req, res) => {
         attributes: {
             include: [
                 [
-                    sequelize.cast(sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating', "FLOAT")
+                    sequelize.cast(sequelize.fn('AVG', sequelize.col('Reviews.stars')), "FLOAT") , 'AvgRating'
                 ],
             ]
         },
