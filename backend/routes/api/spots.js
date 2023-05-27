@@ -360,7 +360,7 @@ router.get('/:spotId',async (req, res, next) => {
 
 
 //Get all Spot (done)
-router.get('/' ,  async (req, res) => {
+router.get('/' , validateQueryParameters, async (req, res) => {
   let { page, size, maxLat, minLat, maxLng, minLng, minPrice, maxPrice } = req.query;
     page = parseInt(page);
     size = parseInt(size);
@@ -377,6 +377,10 @@ router.get('/' ,  async (req, res) => {
     }
     minPrice = parseFloat(minPrice);
     maxPrice = parseFloat(maxPrice);
+    minLat = parseFloat(minLat);
+    maxLat = parseFloat(maxLat);
+    minLng = parseFloat(minLng);
+    maxLng = parseFloat(maxLng);
 
     const spots = await Spot.findAll({
         attributes: {
@@ -393,9 +397,15 @@ router.get('/' ,  async (req, res) => {
             },
         ],
         where: {
-            ...(minPrice && maxPrice ? { price: { [Op.between]: [minPrice, maxPrice] } } : {}),
-            ...(minPrice && !maxPrice ? { price: { [Op.gte]: minPrice } } : {}),
-            ...(!minPrice && maxPrice ? { price: { [Op.lte]: maxPrice } } : {}),
+          ...(minPrice && maxPrice ? { price: { [Op.between]: [minPrice, maxPrice] } } : {}),
+          ...(minPrice && !maxPrice ? { price: { [Op.gte]: minPrice } } : {}),
+          ...(!minPrice && maxPrice ? { price: { [Op.lte]: maxPrice } } : {}),
+          ...(minLat && maxLat ? { lat: { [Op.between]: [minLat, maxLat] } } : {}),
+          ...(minLat && !maxLat ? { lat: { [Op.gte]: minLat } } : {}),
+          ...(!minLat && maxLat ? { lat: { [Op.lte]: maxLat } } : {}),
+          ...(minLng && maxLng ? { lng: { [Op.between]: [minLng, maxLng] } } : {}),
+          ...(minLng && !maxLng ? { lng: { [Op.gte]: minLng } } : {}),
+          ...(!minLng && maxLng ? { lng: { [Op.lte]: maxLng } } : {}),
           },
         group: ['Spot.id'],
         raw: true,
@@ -422,12 +432,15 @@ router.get('/' ,  async (req, res) => {
         } else {
             spot.previewImage = image[0]['url'];
         }
+        spots.lat = parseFloat(spots.lat);
+        spots.lng = parseFloat(spots.lng);
+        spots.price = parseFloat(spots.price)
     }
     if (page && size) {
         res.json({ "Spots": spots, page, size })
     } else {
         res.json({
-            "Spots": spots, page, size
+            "Spots": spots
         })
       }
 //   const spots = await Spot.findAll({
