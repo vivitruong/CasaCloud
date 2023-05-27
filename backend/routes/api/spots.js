@@ -435,6 +435,7 @@ router.get('/' , validateQueryParameters, async (req, res) => {
         spots.lat = parseFloat(spots.lat);
         spots.lng = parseFloat(spots.lng);
         spots.price = parseFloat(spots.price)
+        spots.avgRating = parseFloat(spots.avgRating)
     }
     if (page && size) {
         res.json({ "Spots": spots, page, size })
