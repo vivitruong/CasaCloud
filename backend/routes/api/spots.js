@@ -236,11 +236,7 @@ router.post('/:spotId/images', requireAuth, isOwner, async (req, res, next) => {
         raw: true
     });
    spot.previewImage = image.length ? image[0]['url'] : null;
-   //convert
-   spot.lat = parseFloat(spot.lat);
-   spot.lng = parseFloat(spot.lng);
-   spot.price = parseFloat(spot.price);
-   spot.avgRating = parseFloat(spot.avgRating)
+
 
   }
   res.json({ "Spots": spots });
@@ -430,10 +426,7 @@ router.get('/' , validateQueryParameters, async (req, res) => {
     if (page && size) {
         res.json({ "Spots": spots, page, size })
     } else {
-      spots.lat = parseFloat(spots.lat);
-      spots.lng = parseFloat(spots.lng);
-      spots.price = parseFloat(spots.price)
-      spots.avgRating = parseFloat(spots.avgRating)
+
         res.json({
             "Spots": spots
         })
