@@ -45,9 +45,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     });
 
     spot.previewImage = spotImages.length ? spotImages[0].url : null;
-    spot.lat = parseFloat(spot.lat);
-    spot.lng = parseFloat(spot.lng);
-    spot.price = parseFloat(spot.price);
+
 
     booking.Spot = spot;
     resArray.push(booking);
