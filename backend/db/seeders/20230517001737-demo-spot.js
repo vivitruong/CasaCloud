@@ -3,13 +3,11 @@ let options = {};
 if(process.env.NODE_ENV === 'production'){
   options.schema = process.env.SCHEMA;
 }
-
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-
-    await queryInterface.bulkInsert('Spots', [
+    options.tableName = 'Spots';
+    await queryInterface.bulkInsert(options, [
       {
         ownerId: 1,
         address: "5050 N Broadway Street",
@@ -155,16 +153,16 @@ module.exports = {
         price: 100
       },
 
-    ])
+    ], {});
   },
 
 
   async down (queryInterface, Sequelize) {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
-    return await queryInterface.bulkDelete(options.tableName,
+    return await queryInterface.bulkDelete(options,
       {
         ownerId: { [Op.in]: [1, 2, 3] }
-      });
+      }, {});
   }
 };

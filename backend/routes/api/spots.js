@@ -208,7 +208,7 @@ router.post('/:spotId/images', requireAuth, isOwner, async (req, res, next) => {
     attributes: {
       include: [
         [
-          sequelize.fn('ROUND',sequelize.fn('AVG', sequelize.col('Reviews.stars'))), 'avgRating'
+          Sequelize.cast(sequelize.fn('AVG', sequelize.col('Reviews.stars')), "FLOAT") , 'AvgRating'
         ]
       ]
     },
@@ -306,10 +306,10 @@ router.get('/:spotId',async (req, res, next) => {
       attributes: {
           include: [
               [
-                sequelize.fn("COUNT", sequelize.col("Reviews.stars")), "numReviews"
+                Sequelize.cast(sequelize.fn("COUNT", sequelize.col("Reviews.stars")), "FLOAT"), 'numReviews'
               ],
               [
-                sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"
+                Sequelize.cast(sequelize.fn('AVG', sequelize.col('Reviews.stars')), "FLOAT") , 'AvgStarRating'
               ]
           ]
       },
@@ -371,7 +371,7 @@ router.get('/' , validateQueryParameters, async (req, res) => {
         attributes: {
             include: [
                 [
-                  sequelize.cast(sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating', "FLOAT")
+                    Sequelize.cast(sequelize.fn('AVG', sequelize.col('Reviews.stars')), "FLOAT") , 'AvgRating'
                 ],
             ]
         },
