@@ -238,7 +238,6 @@ router.post('/:spotId/images', requireAuth, isOwner, async (req, res, next) => {
    spot.previewImage = image.length ? image[0]['url'] : null;
 
 
-
   }
   res.json({ "Spots": spots });
 
@@ -367,10 +366,6 @@ router.get('/' , validateQueryParameters, async (req, res) => {
     }
     minPrice = parseFloat(minPrice);
     maxPrice = parseFloat(maxPrice);
-    minLat = parseFloat(minLat);
-    maxLat = parseFloat(maxLat);
-    minLng = parseFloat(minLng);
-    maxLng = parseFloat(maxLng);
 
     const spots = await Spot.findAll({
         attributes: {
@@ -387,15 +382,9 @@ router.get('/' , validateQueryParameters, async (req, res) => {
             },
         ],
         where: {
-          ...(minPrice && maxPrice ? { price: { [Op.between]: [minPrice, maxPrice] } } : {}),
-          ...(minPrice && !maxPrice ? { price: { [Op.gte]: minPrice } } : {}),
-          ...(!minPrice && maxPrice ? { price: { [Op.lte]: maxPrice } } : {}),
-          ...(minLat && maxLat ? { lat: { [Op.between]: [minLat, maxLat] } } : {}),
-          ...(minLat && !maxLat ? { lat: { [Op.gte]: minLat } } : {}),
-          ...(!minLat && maxLat ? { lat: { [Op.lte]: maxLat } } : {}),
-          ...(minLng && maxLng ? { lng: { [Op.between]: [minLng, maxLng] } } : {}),
-          ...(minLng && !maxLng ? { lng: { [Op.gte]: minLng } } : {}),
-          ...(!minLng && maxLng ? { lng: { [Op.lte]: maxLng } } : {}),
+            ...(minPrice && maxPrice ? { price: { [Op.between]: [minPrice, maxPrice] } } : {}),
+            ...(minPrice && !maxPrice ? { price: { [Op.gte]: minPrice } } : {}),
+            ...(!minPrice && maxPrice ? { price: { [Op.lte]: maxPrice } } : {}),
           },
         group: ['Spot.id'],
         raw: true,
@@ -422,16 +411,14 @@ router.get('/' , validateQueryParameters, async (req, res) => {
         } else {
             spot.previewImage = image[0]['url'];
         }
-
     }
     if (page && size) {
         res.json({ "Spots": spots, page, size })
     } else {
-
         res.json({
             "Spots": spots
         })
-      }
+    }
 //   const spots = await Spot.findAll({
 //     attributes: {
 //       include: [
