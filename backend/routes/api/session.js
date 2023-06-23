@@ -20,7 +20,7 @@ const router = express.Router();
 // ];
 
 // Log in
-router.post("/login", validateLogin, async (req, res, next) => {
+router.post("/", validateLogin, async (req, res, next) => {
   const { credential, password } = req.body;
 
   const user = await User.unscoped().findOne({
@@ -46,6 +46,8 @@ router.post("/login", validateLogin, async (req, res, next) => {
     lastName: user.lastName,
     email: user.email,
     username: user.username,
+    createAt: user.createAt,
+    updateAt: user.updateAt,
     token: "",
   };
 
@@ -78,6 +80,8 @@ router.get(
           lastName: user.lastName,
           email: user.email,
           username: user.username,
+          createAt: user.createAt,
+          updateAt: user.updateAt
         };
         return res.json({
           user: safeUser

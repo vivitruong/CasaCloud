@@ -13,9 +13,9 @@ function LoginFormPage() {
     const [validationError, setValidationErrors] = useState([]);
 
 
-    if (sessionUser) return (
-        <Redirect to="/" />
-    );
+    // if (sessionUser) return (
+    //     <Redirect to="/" />
+    // );
     const handleSubmit = (e) => {
         e.preventDefault();
         setValidationErrors({});

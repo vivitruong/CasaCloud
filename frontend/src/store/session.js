@@ -17,14 +17,13 @@ export function logout() {
 };
 //Thunk action creators
 export const userLogin = (user) => async (dispatch) => {
-    const response = await csrfFetch(`/api/session/login`, {
+    const response = await csrfFetch(`/api/session`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(user)
     });
-    console.log('response', response)
     const data = await response.json();
     dispatch(login(data.user));
     return response;
@@ -40,6 +39,20 @@ export const userLogout = () => async dispatch => {
 
 export const restoreUser = () => async dispatch => {
     const response = await csrfFetch('/api/session');
+    const data = await response.json();
+    dispatch(login(data.user));
+    return response
+}
+
+export const signup = (user) => async dispatch => {
+    const { firstName, lastName, password, username, email } = user;
+    const response = await csrfFetch('/api/users', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({firstName, lastName, password, username, email})
+    });
     const data = await response.json();
     dispatch(login(data.user));
     return response
