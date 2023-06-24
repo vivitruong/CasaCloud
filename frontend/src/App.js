@@ -18,7 +18,6 @@ function App() {
     <div className="page-container">
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
-
       <Switch>
         <Route path="/login">
           <LoginFormPage />
@@ -27,7 +26,7 @@ function App() {
           <SignupFormPage />
         </Route>
       </Switch>
-    )};
+    )}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import * as sessionActions from '../../store/session';
 import { Link } from "react-router-dom";
-import './ProfileButton.css'
+import './ProfileButton.css';
 
 export default function ProfileButton({ user, setLogin, setShowModal }) {
     const dispatch = useDispatch();
