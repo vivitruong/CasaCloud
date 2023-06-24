@@ -7,6 +7,7 @@ import LoginFormPage from "../LoginFormPage";
 import SignupFormPage from "../SignupFormPage";
 import Button from "../Buttons";
 import './Navigation.css';
+import logo from './casa-cloud-logo.png';
 
 export default function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
@@ -16,7 +17,7 @@ export default function Navigation({ isLoaded }) {
     return (
         <div className="navigation">
             <div className="navigation-logo">
-                {/* <NavLink exact to='/'><img src={logo} alt='logo' style={{width:120, height:80} } /></NavLink> */}
+                <NavLink exact to='/'><img className="logo-img" src={logo} alt='logo' style={{width: 100, height: 90} } /></NavLink>
             </div>
             <div className="navigation-mid">
                 <div className="search-container">
