@@ -65,7 +65,9 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+
 }
+
 
 .link-createspot {
     margin-right: 30px;
@@ -87,6 +89,10 @@
 }
 .btn-search:hover {
     text-decoration: none;
+}
+.btn-container {
+    margin-left: 10px;
+    margin-top: 6px;
 }
 
 .link-content, .link-content:visited {
