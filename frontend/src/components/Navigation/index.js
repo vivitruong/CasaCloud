@@ -5,6 +5,7 @@ import ProfileButton from './ProfileButton';
 import { Modal } from "../../context/Modal";
 import LoginFormPage from "../LoginFormPage";
 import SignupFormPage from "../SignupFormPage";
+import Button from "../Buttons";
 import './Navigation.css';
 
 export default function Navigation({ isLoaded }) {
@@ -17,29 +18,29 @@ export default function Navigation({ isLoaded }) {
             <div className="navigation-logo">
                 {/* <NavLink exact to='/'><img src={logo} alt='logo' style={{width:120, height:80} } /></NavLink> */}
             </div>
-            {/* <div className="navigation-mid">
+            <div className="navigation-mid">
                 <div className="search-container">
-                    <LabelledButton child={
+                    <Button child={
                         <div className="search-where">
                             <span>Anywhere</span>
                         </div>
                     } />
-                    <LabelledButton child={
+                    <Button child={
                         <div className="search-time">
                             <span>Any week</span>
                         </div>
                     } />
-                    <LabelledButton child={
+                    <Button child={
                         <div className="search-guest">
-                                <span>Any Price</span>
+                                <span>Add guests</span>
                             <div className="btn-container">
-                                <button className="btn-search"><i className="fa-solid fa-magnifying-glass" style={{ fontSize: 14 }}></i></button>
+                                <button className="btn-search"><i className="fa-solid fa-magnifying-glass" style={{ fontSize: 12 }}></i></button>
                             </div>
                         </div>
                     }/>
                 </div>
 
-            </div> */}
+            </div>
             <div className="navigation-bar">
                 {isLoaded && (
                     <>
