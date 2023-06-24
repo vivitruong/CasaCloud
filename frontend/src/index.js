@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import './index.css';
@@ -31,6 +32,9 @@ function Root() {
     </ReduxProvider>
   );
 }
+
+const rootElement = document.getElementById('root');
+const root = createRoot(rootElement);
 
 ReactDOM.render(
   <React.StrictMode>
