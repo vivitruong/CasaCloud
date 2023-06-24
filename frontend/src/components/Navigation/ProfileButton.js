@@ -84,6 +84,7 @@ export default function ProfileButton({ user, setLogin, setShowModal }) {
                                     setLogin(true)
                                     setShowModal(true)
                                 }} className='dropdown-btn'>Login</button>
+
                             </li>
                             <li>
                                 <button onClick={() => {
