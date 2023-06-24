@@ -28,6 +28,7 @@ router.post("/", validateLogin, async (req, res, next) => {
       [Op.or]: {
         username: credential,
         email: credential,
+
       },
     },
   });
@@ -46,8 +47,6 @@ router.post("/", validateLogin, async (req, res, next) => {
     lastName: user.lastName,
     email: user.email,
     username: user.username,
-    createAt: user.createAt,
-    updateAt: user.updateAt,
     token: "",
   };
 
@@ -80,8 +79,7 @@ router.get(
           lastName: user.lastName,
           email: user.email,
           username: user.username,
-          createAt: user.createAt,
-          updateAt: user.updateAt
+
         };
         return res.json({
           user: safeUser
