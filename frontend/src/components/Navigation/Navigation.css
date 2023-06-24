@@ -4,6 +4,7 @@
     flex-direction: row;
     box-sizing: border-box;
     border-bottom: 1px solid #cccccc;
+
 }
 .navigation-logo {
     padding-left: 30px;
@@ -42,7 +43,6 @@
     border-right:1px solid #cccccc;
     height: 30px;
     margin-top: 5px;
-
 }
 
 .search-guest {
@@ -52,6 +52,8 @@
     height: 20px;
     align-items: center;
 }
+
+
 
 .search-input {
     position: absolute;
@@ -71,8 +73,8 @@
     margin-right: 30px;
 
 }
-.btn-container {
-
+.navigation-mid {
+    margin-bottom: 15px;
 }
 .btn-search {
     height: 25px;
@@ -99,7 +101,7 @@
     cursor: pointer;
 }
 .link-content:hover {
-    color: #FF5A5F;
+    color: #FF385C;
 }
 
 
