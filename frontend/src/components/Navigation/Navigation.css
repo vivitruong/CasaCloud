@@ -1,0 +1,124 @@
+.navigation {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    flex-direction: row;
+    box-sizing: border-box;
+    border-bottom: 1px solid #cccccc;
+}
+.navigation-logo {
+    padding-left: 30px;
+}
+.navigation-bar {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+.navigation-mid {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+.search-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 15px;
+    box-sizing: border-box;
+    border: 1px solid #cccccc;
+    border-radius: 20px;
+    height: 45px;
+    width: 400px;
+}
+.search-where, .search-time, .search-guest {
+    padding: 10px;
+    font-size: 14px;
+}
+
+.search-where, .search-time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    box-sizing: border-box;
+    border-right:1px solid #cccccc;
+    height: 30px;
+    margin-top: 5px;
+
+}
+
+.search-guest {
+    display: flex;
+    justify-content: space-around;
+    color: #cccccc;
+    height: 20px;
+    align-items: center;
+}
+
+.search-input {
+    position: absolute;
+    right: 2rem;
+    bottom: -200px;
+    border: 1px solid #cccccc;
+    width: 20rem;
+    height: 220px;
+    z-index: 9999;
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.link-createspot {
+    margin-right: 30px;
+
+}
+.btn-container {
+
+}
+.btn-search {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    margin-bottom: 5pxs;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background: #FF385C;
+}
+.btn-search:hover {
+    text-decoration: none;
+}
+
+.link-content, .link-content:visited {
+    text-decoration: none;
+}
+
+.link-content {
+    color: black;
+    font-weight: 700;
+    cursor: pointer;
+}
+.link-content:hover {
+    color: #FF5A5F;
+}
+
+
+@media only screen and (max-width: 600px){
+    .navigation {
+        max-width: 600px;
+        min-width: 375px;
+        display: flex;
+        justify-content: center;
+        height: 80px;
+    }
+    .navigation-bar,.navigation-logo {
+        visibility: hidden;
+    }
+    .navigation-mid {
+        max-width: 600px;
+        min-width: 300px;
+        margin-left: 10px;
+        font-size: 10px;
+    }
+
+}
