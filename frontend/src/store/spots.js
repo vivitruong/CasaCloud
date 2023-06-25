@@ -10,29 +10,37 @@ export const allSpots = (spots) => {
     }
 }
 
+//Thunk action creator
 
 
-export const landingPageSpots = () => async dispatch => {
-    const response = await csrfFetch(`api/spots`);
-    const spotsData = await response.json();
-    dispatch(allSpots(spotsData.Spots));
-    return response;
+export const getAllSpots = () => async dispatch => {
+    const response = await csrfFetch("/api/spots", {
+        method: "GET",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(allSpots(data.Spots));
+      }
+      return response;
 }
 
 
 //Reducer
+let initialState = {}
 
-export default function spotsReducer(state = {}, action) {
-    let newState;
+const spotsReducer = (state = initialState, action) => {
+    let newState = {}
     switch (action.type) {
         case GET_SPOTS:
-            newState = {};
-            for (let spot of action.spots) {
-                newState.allSpots[spot.id] = spot
-            }
-            return newState;
+
+            action.spots.forEach((spot) => {
+                newState[spot.id] = spot
+              })
+              return newState;
 
         default:
-        return state
+            return state
     }
 }
+
+export default spotsReducer;

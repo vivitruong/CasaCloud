@@ -1,12 +1,7 @@
-import { Link } from "react-router-dom";
-import '../ALLCSS/Spotcard.css'
-// import '../ALLCSS/SpotDetails.css'
-// import '../ALLCSS/SpotIndex.css'
+import {Link} from 'react-router-dom';
+import React from 'react';
 
-
- const SpotCard = ({spots}) => {
-    // console.log({spots})
-    //
+const SpotCard = ({spots}) => {
     return (
         <>
 
@@ -34,4 +29,4 @@ import '../ALLCSS/Spotcard.css'
     )
 }
 
-export default SpotCard
+export default SpotCard;
