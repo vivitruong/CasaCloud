@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import React, {useEffect, useState} from 'react';
 import * as spotActions from "../../store/spots.js";
 import SpotCard from "./SpotCard";
+import './spots.css'
 
 function AllSpots () {
     let dispatch = useDispatch()
@@ -10,7 +11,6 @@ function AllSpots () {
     console.log(spotList)
     useEffect(() => {
         dispatch(spotActions.getAllSpots())
-        // dispatch(spotsActions.getOwnedSpots())
     }, [dispatch])
 
     return (

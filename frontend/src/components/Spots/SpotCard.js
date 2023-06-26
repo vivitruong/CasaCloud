@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom';
 import React from 'react';
+import './spots.css';
 
 const SpotCard = ({spots}) => {
     return (
@@ -17,7 +18,7 @@ const SpotCard = ({spots}) => {
         <div className='bottom-description'>
                 <div className='star-rating'>
                 <i className="fa-solid fa-star"></i>
-                <div className="spotRating">{spots.avgRating}</div>
+                <div className="spotRating">{spots.AvgRating ? spots.AvgRating : 0}</div>
                 </div>
                 </div>
                 </div>
