@@ -4,8 +4,8 @@
     border-bottom: 1px solid #cccccc;
     flex-direction: row;
     box-sizing: border-box;
-
 }
+
 .navigation-logo {
     padding-left: 30px;
 }
@@ -85,7 +85,7 @@
     border: none;
     cursor: pointer;
     outline: none;
-    background: #FF385C;
+    background: #e05358;
 }
 .btn-search:hover {
     text-decoration: none;
@@ -105,7 +105,7 @@
     cursor: pointer;
 }
 .link-content:hover {
-    color: #FF385C;
+    color: #e05358;
 }
 
 
