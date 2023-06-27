@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import Headliner from "../HeadLiner/index.js";
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import * as spotActions from "../../store/spots.js";
 import SpotCard from "./SpotCard";
 import './spots.css'
