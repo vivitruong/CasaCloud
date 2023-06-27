@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import * as sessionActions from './store/session';
 import Navigation from './components/Navigation';
 import  AllSpots  from "./components/Spots";
+import { FilterSpotsPage } from "./components/Spots/FilterSpots";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,9 @@ function App() {
         <Route path="/signup">
           <SignupFormPage />
         </Route>
+        <Route path='/filtered-spots'>
+          <FilterSpotsPage/>
+          </Route>
 
       </Switch>
     )}

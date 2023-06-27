@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-
+import Headliner from "../HeadLiner/index.js";
 import React, {useEffect, useState} from 'react';
 import * as spotActions from "../../store/spots.js";
 import SpotCard from "./SpotCard";
@@ -14,6 +14,11 @@ function AllSpots () {
     }, [dispatch])
 
     return (
+        <>
+        <div className='spothead-container'>
+        <Headliner dispatch={dispatch} />
+         </div>
+
         <div className="allSpots">
         <div className="spotsContainer">
             <div className="spots-grid">
@@ -23,6 +28,7 @@ function AllSpots () {
         </div>
             </div>
         </div>
+        </>
     )
             }
 
