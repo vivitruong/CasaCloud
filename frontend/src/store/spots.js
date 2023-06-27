@@ -22,6 +22,7 @@ export const getAllSpots = () => async dispatch => {
       }
       return response;
 };
+
 export function displayFilterSpots(spots) {
     return {
         type: FILTER_SPOTS,
