@@ -1,0 +1,184 @@
+.spots-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    flex-direction: row;
+    place-items: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+.spot-spinner {
+    display: flex;
+    justify-content: center;
+}
+.spots-container > a, .spots-container > a:link,.spots-container > a:visited   {
+    text-decoration: none;
+    background-color: transparent;
+    color: black;
+    margin-top: 30px
+}
+
+
+
+
+
+.spot-card {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 20vw;
+    height: 300px;
+}
+
+.spot-image {
+    width: 21vw;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.spot-image > img {
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+.spot-name-row {
+    display: flex;
+    flex-direction: row;
+    width: 21vw;
+    margin-top: 5px;
+}
+
+.spot-name {
+    flex-grow: 1;
+    max-width: 18vw;
+    font-size: 14px;
+    font-weight: 700;
+}
+.spot-name-info {
+    font-size: 15px;
+}
+
+.fa-solid {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.no-spots {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: 30px;
+}
+
+.no-spots-para1 {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .spots-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+    }
+    .spot-card {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        width: 300px;
+        height: 400px;
+        margin: 5px;
+    }
+
+    .spot-image {
+        width: 300px;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .spot-name-row {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .spot-name {
+        flex-grow: 1;
+        max-width: 250px;
+        font-size: 14px;
+        font-weight: 700;
+    }
+    .spot-name-info {
+        font-size: 10px;
+    }
+
+    .fa-solid {
+        font-weight: 700;
+        font-size: 10px;
+    }
+    img {
+        object-fit: cover;
+    }
+
+
+}
+
+@media only screen and (max-width: 1024px) and (min-width: 601px) {
+    .spots-container {
+        display: grid;
+        grid-template-columns: 300px 300px 300px;
+        place-items: center;
+        max-width: 1024px;
+        margin: 10px;
+    }
+    .spot-card {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        width: 300px;
+        height: 350px;
+    }
+
+    .spot-image {
+        width: 300px;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .spot-name-row {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .spot-name {
+        flex-grow: 1;
+        max-width: 270px;
+        font-size: 14px;
+        font-weight: 700;
+    }
+    .spot-name-info {
+        font-size: 14px;
+    }
+
+    .fa-solid {
+        font-weight: 700;
+        font-size: 10px;
+    }
+    img {
+        object-fit: cover;
+    }
+
+}
