@@ -60,19 +60,21 @@ check('country')
   .exists({ checkFalsy: true })
   .withMessage('Country is required'),
 check('lat')
-  .isFloat()
-  .not().isAlpha()
+  // .exists({ checkFalsy: true })
+  .isNumeric()
   .withMessage('Latitude is not valid'),
 check('lng')
-  .isFloat()
-  .not().isAlpha()
+  // .exists({ checkFalsy: true })
+  .isNumeric()
   .withMessage('Longitude is not valid'),
 check('description')
   .exists({checkFalsy: true})
   .withMessage('Description is required'),
 check('price')
-.exists({ checkFalsy: true})
-.withMessage('Price per day is required'),
+  .exists({ checkFalsy: true })
+  .isInt({ min: 1 })
+  // .isNumeric()
+  .withMessage('Price per day is required'),
 handleValidationErrors,
 ]
 
