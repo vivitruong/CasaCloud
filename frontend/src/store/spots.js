@@ -52,23 +52,23 @@ export const filterSpots = (query) => async (dispatch) => {
 };
 
 export const createSpot = (spot) => async (dispatch) => {
-    // const { address, city, state, country, lat, lng, name, description, price, url, preview } = spot;
+    const { address, city, state, country, lat, lng, name, description, price, url, preview } = spot;
 
     const response = await csrfFetch(`/api/spots`, {
         method: 'POST',
         headers: {
-            'Content-type': 'application/json'
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify(spot)
+        body: JSON.stringify(name, description, address, city, country, state, lat, lng, price)
     });
     if(response.ok) {
         const data = await response.json();
         const imgRes = await csrfFetch(`/api/spots/${data.id}/images`, {
             method: 'POST',
             headers: {
-                'Content-type': 'application/json'
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({url: spot.url, preview: spot.previewImage})
+            body: JSON.stringify({url, preview})
         });
         if(imgRes.ok) {
             const imgData = await imgRes.json();

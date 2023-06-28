@@ -17,8 +17,9 @@ export function CreateSpots() {
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [url, setUrl] = useState('');
-    const [lat, setLat] = useState(null);
-    const [lng, setLng] = useState(null);
+    const [lat, setLat] = useState(100);
+    const [lng, setLng] = useState(100);
+
     const [validationErrors, setValidationErrors] = useState([]);
     const preview = true;
 
@@ -34,7 +35,7 @@ export function CreateSpots() {
         e.preventDefault();
         setValidationErrors([]);
         if(url.length > 300) setValidationErrors(['The URL image is invalid! Must less than 300 characters'])
-        let createdSpot = await dispatch(spotsAction.createSpot({ name, description, price, address, country, city, state, lat, lng, url, preview }))
+        let createdSpot = await dispatch(spotsAction.createSpot({ name, description, price, address, country, city, state,lat, lng, url, preview }))
         .catch(async res => {
             const data = await res.json();
             if (data && data.message) {
@@ -153,13 +154,37 @@ export function CreateSpots() {
                             <input
                             type='text'
                             value={price}
-                            placeholder='Price'
+                            placeholder='Price per night'
                             onChange={(e) => setPrice(e.target.value)}
                             required
                             className='input-field'
                              />
                         </label>
                     </div>
+                    {/* <div className='createspot-detail'>
+                        <label>
+                            <input
+                            type='text'
+                            value={lat}
+                            placeholder='Latitude'
+                            onChange={(e) => setLat(e.target.value)}
+                            required
+                            className='input-field'
+                             />
+                        </label>
+                    </div>
+                    <div className='createspot-detail'>
+                        <label>
+                            <input
+                            type='text'
+                            value={lng}
+                            placeholder='Longitude'
+                            onChange={(e) => setLng(e.target.value)}
+                            required
+                            className='input-field'
+                             />
+                        </label>
+                    </div> */}
                     <div className='createspot-detail'>
                         <label>
                             <input
