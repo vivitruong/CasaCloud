@@ -1,0 +1,74 @@
+.createspot-whole {
+    grid-template-columns: 1fr 1fr;
+    display: grid;
+}
+h2 {
+    color: #e05c5c
+}
+
+.createspot-video {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    margin: 100px;
+}
+
+.createspot-youtube > iframe {
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin: 10px
+}
+
+.createspot-headline > h3 {
+    margin: 5vw;
+    color: darkgrey
+
+}
+
+.createspot-contain {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.italic-red {
+    color: rgb(216, 56, 56)
+}
+.createspot-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.createspot-detail {
+    margin: 10px
+}
+
+.input-field {
+    width: 29vw;
+    height: 30px;
+    border: 1px solid #cccccc;
+    color: black;
+    border-radius: 10px;
+    font-size: 14px;
+    padding: 10px
+}
+
+textarea {
+    resize: none;
+}
+
+.createspot-form > button {
+    width: 30.5vw;
+    height: 30px;
+    border-radius: 8px;
+    color: #ffffff;
+    background: #e05c5c;
+    cursor: pointer;
+    border: none;
+}
+
+.createspot-form > button:hover {
+    background: #FF5A5F
+}

@@ -16,7 +16,7 @@ function AllSpots () {
     return (
         <>
         <div className='spothead-container'>
-        <Headliner dispatch={dispatch} />
+            <Headliner dispatch={dispatch} />
          </div>
 
         <div className="allSpots">

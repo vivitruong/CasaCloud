@@ -6,6 +6,7 @@ import { Modal } from "../../context/Modal";
 import LoginFormPage from "../LoginFormPage";
 import SignupFormPage from "../SignupFormPage";
 import Button from "../Buttons";
+import Host from "../CreateSpots";
 import './Navigation.css';
 import logo from './casa-cloud-logo.png';
 
@@ -51,7 +52,7 @@ export default function Navigation({ isLoaded }) {
                         setShowModal={setShowModal}
                     />
                         <div className="link-createspot">
-                            {/* <NewSpot /> */}
+                            <Host />
                         </div>
                     </>
                     )}

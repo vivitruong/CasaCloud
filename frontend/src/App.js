@@ -7,7 +7,7 @@ import * as sessionActions from './store/session';
 import Navigation from './components/Navigation';
 import  AllSpots  from "./components/Spots";
 import { FilterSpotsPage } from "./components/Spots/FilterSpots";
-
+import { CreateSpots } from './components/CreateSpots/CreateSpot'
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -33,6 +33,9 @@ function App() {
         <Route path='/filtered-spots'>
           <FilterSpotsPage/>
           </Route>
+          <Route exact path='/spots/new'>
+              <CreateSpots />
+            </Route>
 
       </Switch>
     )}
