@@ -2,6 +2,9 @@ import { useDispatch, useSelector, useSelectore} from 'react-redux';
 import {fetchDetailSpot} from '../../store/spots';
 import { useEffect } from 'react';
 import {useParams} from 'react-router-dom';
+import * as reviewsAction from '../../store/reviews';
+import ReviewSpotModal from '../Reviews/ReviewForm/ReviewFormModal';
+import DeleteReviewModal from '../Reviews/DeleteModal';
 
 import './SpotDetail.css';
 
@@ -10,10 +13,24 @@ export function SpotDetail() {
     const dispatch = useDispatch();
     const spot = useSelector(state => state.spots );
     const sessionUser = useSelector(state => state.session.user)
+    const reviewObj = useSelector((state) => state.reviews);
+    const spotReviews = Object.values(reviewObj.spot);
+
+    let sum = 0;
+    let avgRating = 0;
+
+    for (let review of spotReviews) {
+        sum += review.stars;
+    }
+    if (sum > 0) {
+        avgRating = (sum / spotReviews.length).toFixed(2);
+    }
 
     useEffect(() => {
-        dispatch(fetchDetailSpot(spotId))
+        dispatch(fetchDetailSpot(spotId));
+        dispatch(reviewsAction.fetchSpotReviews(spotId))
     }, [dispatch, spotId]);
+
 
 
     if(spot && spot.statusCode) return (
@@ -22,12 +39,21 @@ export function SpotDetail() {
         </div>
     )
     return (
-        <>
-        <div>
-            {spot.SpotImages?.length > 0 &&
-            <div className='spot-photo-container photo-one'>
-                <img src={spot.SpotImages[0].url} alt='spot' />
+
+    <div className="spot-container">
+            <div className="spot-info">
+                <h2 className="spot-info-firstline">{spot.name}</h2>
+                <div className="spot-info-secondline">
+                    <i className="fa-solid fa-star"></i>
+                    {avgRating}, {spotReviews.length} reviews, {spot.city}, {spot.state}, {spot.country}
+                </div>
             </div>
+            <div className="spot-photo">
+                 {spot.SpotImages?.length > 0 &&
+                    <div className="spot-photo-container photo-one">
+                        <img src={spot.SpotImages[0].url} alt='spot'/>
+                    </div>
+
             }
 
             <div className='spot-photo-container photo-four'>
@@ -96,7 +122,36 @@ export function SpotDetail() {
                     </div>
                 </div>
 
+                <div className='spot-review'>
+                    <div className='review-container'>
+                    <p style={{fontWeight:700, fontSize:20}}> <i className="fa-solid fa-star" style={{fontSize:17}}></i>{avgRating} - {spotReviews.length} reviews</p>
+                    <div className="reviews-cards">
+                            {spotReviews?.length > 0 && spotReviews.map(review => (
+                                <div key={review.id} className='review-user-container'>
+                                    <div className="reviewer-info">
+
+                                        <div className="review-user-photo">
+                                            <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/choji.jpg' alt='cony' className="user-profile"/>
+                                        </div>
+                                        <div className="review-name">{review.User.firstName}</div>
+                                    </div>
+                                    <div className="review-description">{review.review}</div>
+                                    <div className="review-delete">
+                                        {sessionUser && +review.userId === sessionUser.id &&
+                                            <DeleteReviewModal reviewId={review.id} spotId={spot.id} />
+                                        }
+
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="btn-newreview">
+                            <ReviewSpotModal spotId={spot.id} />
+                        </div>
+
+                        </div>
+                </div>
+            </div>
         </div>
-        </>
     )
 }
