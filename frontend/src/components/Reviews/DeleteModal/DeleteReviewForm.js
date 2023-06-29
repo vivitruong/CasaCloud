@@ -5,7 +5,6 @@ import * as reviewsActions from '../../../store/reviews';
 export function DeleteReviewForm(props) {
     const reviewId = props.review;
     const modal = props.onClose;
-    const spotId = props.spotId;
     const [validationErrors, setValidationErrors] = useState([]);
     const dispatch = useDispatch();
 

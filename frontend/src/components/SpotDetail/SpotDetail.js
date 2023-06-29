@@ -53,9 +53,7 @@ export function SpotDetail() {
                     <div className="spot-photo-container photo-one">
                         <img src={spot.SpotImages[0].url} alt='spot'/>
                     </div>
-
             }
-
             <div className='spot-photo-container photo-four'>
                 <div className='photo-four1'>
                     <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/J1.jpg' alt='spot'/>
