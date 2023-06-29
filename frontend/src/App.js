@@ -22,24 +22,26 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
       <Switch>
-        <Route path='/' exact>
+        <Route exact path='/'>
           <AllSpots />
         </Route>
-        <Route path="/login">
-          <LoginFormPage />
-        </Route>
-        <Route path="/signup">
-          <SignupFormPage />
-        </Route>
-        <Route path='/filtered-spots'>
-          <FilterSpotsPage/>
-          </Route>
-          <Route exact path='/spots/new'>
+        <Route path='/spots/new'>
               <CreateSpots />
             </Route>
-          <Route path='/spots/:spotId'>
+        <Route path='/spots/:spotId'>
               <SpotDetail />
           </Route>
+        <Route exact path="/login">
+          <LoginFormPage />
+        </Route>
+        <Route exact path="/signup">
+          <SignupFormPage />
+        </Route>
+        <Route exact path='/filtered-spots'>
+          <FilterSpotsPage/>
+          </Route>
+
+
 
       </Switch>
     )}

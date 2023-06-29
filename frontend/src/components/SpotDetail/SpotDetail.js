@@ -23,6 +23,7 @@ export function SpotDetail() {
     )
     return (
         <>
+        <h1>hello</h1>
         <div>
             {spot.SpotImages?.length > 0 &&
             <div className='spot-photo-container photo-one'>
