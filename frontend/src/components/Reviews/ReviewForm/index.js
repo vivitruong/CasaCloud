@@ -84,8 +84,6 @@ export function ReviewForm(props) {
                         <button onClick={handleCancelButton} className='btn-cancel'>Cancel</button>
                     </div>
                 </div>
-
-
             </form>
         </div>
     )

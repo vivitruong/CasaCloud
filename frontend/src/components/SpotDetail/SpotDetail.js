@@ -1,4 +1,4 @@
-import { useDispatch, useSelector, useSelectore} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import {fetchDetailSpot} from '../../store/spots';
 import { useEffect } from 'react';
 import {useParams} from 'react-router-dom';
@@ -53,21 +53,19 @@ export function SpotDetail() {
                     <div className="spot-photo-container photo-one">
                         <img src={spot.SpotImages[0].url} alt='spot'/>
                     </div>
-
             }
-
             <div className='spot-photo-container photo-four'>
                 <div className='photo-four1'>
-                    <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/J1.jpg'/>
+                    <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/J1.jpg' alt='spot'/>
                 </div>
                 <div className='photo-four1'>
-                    <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/H1.jpg'/>
+                    <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/H1.jpg' alt='spot' className="photo-border1"/>
                 </div>
                 <div className='photo-four1'>
-                    <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/L2.jpg'/>
+                    <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/L2.jpg' alt='spot'/>
                 </div>
                 <div className='photo-four1'>
-                    <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/K3.jpg'/>
+                    <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/K3.jpg' alt='spot'className="photo-border2"/>
                 </div>
             </div>
             <div className="spot-detail-container">
