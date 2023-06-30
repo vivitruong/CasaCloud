@@ -4,6 +4,8 @@ const GET_SPOTS = 'spots/getSpots';
 const FILTER_SPOTS = 'spots/loadFilterSpots';
 const CREATE_SPOTS = 'spots/createSpots';
 const DETAIL_SPOTS = 'spots/detailSpots';
+const EDIT_SPOTS = 'spots/editSpots';
+const HOST_SPOTS = 'spots/hostSpots';
 
 
 
@@ -32,6 +34,20 @@ export function displayDetailSpots(spot) {
     return {
         type: DETAIL_SPOTS,
         spot
+    }
+}
+
+export function editSpot(spot) {
+    return {
+        type: EDIT_SPOTS,
+        spot
+    }
+}
+
+export function getHostSpot(spots) {
+    return {
+        type: HOST_SPOTS,
+        spots
     }
 }
 
@@ -67,7 +83,7 @@ export const createSpot = (spot) => async (dispatch) => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(name, description, address, city, country, state, lat, lng, price)
+        body: JSON.stringify({ name, description, address, city, country, state, lat, lng, price })
     });
     if(response.ok) {
         const data = await response.json();
@@ -92,6 +108,29 @@ export const fetchDetailSpot = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`)
     const data = await response.json();
     dispatch(displayDetailSpots(data))
+};
+
+export const getEditSpot = (spot) => async (dispatch) => {
+    const { name, description, address, city, country, state, lat, lng, price } = spot;
+    const response = await csrfFetch(`/api/spots/${spot.id}`, {
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, description, address, city, country, state, lat, lng, price })
+    })
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(editSpot(data))
+        return data;
+    }
+
+};
+
+export const getUserSpots = () => async dispatch => {
+    const response = await csrfFetch(`/api/spots/current`);
+    const data = await response.json();
+    dispatch(getHostSpot(data.Spots))
 }
 // let initializedState = {
 //     allSpots: {},
@@ -127,6 +166,11 @@ const spotsReducer = (state = initialState, action) => {
             newState = { ...state};
             const spot = action.spot
             newState = spot;
+            return newState;
+
+        case EDIT_SPOTS:
+            newState = { ...state };
+            newState[action.spots.id] = action.spots;
             return newState;
 
 

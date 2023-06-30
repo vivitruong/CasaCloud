@@ -54,7 +54,6 @@ export function CreateSpots() {
         history.push(`/spots/${id}`)
     }
     }
-
     return (
         <>
         <div className='createspot-whole'>
@@ -73,8 +72,8 @@ export function CreateSpots() {
                 <form onSubmit={handleSubmit} className='createspot-form'>
                     {validationErrors.length > 0 &&
                     <ul>
-                        {validationErrors.map((error, i) =>
-                            <li key={i} >{error}</li>)}
+                        {validationErrors.map((error) =>
+                            <li key={error} >{error}</li>)}
                     </ul>
                     }
                     <div className='createspot-detail'>
