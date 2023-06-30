@@ -34,7 +34,7 @@
 .manage-name > a, .manage-name> a:link,.manage-name > a:visited   {
     text-decoration: none;
     background-color: transparent;
- color: #FF5A5F;
+    color: #FF5A5F;
 }
 .manage-name:hover {
     font-weight: 700;
