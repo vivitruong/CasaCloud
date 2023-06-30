@@ -9,6 +9,7 @@ import  AllSpots  from "./components/Spots";
 import { FilterSpotsPage } from "./components/Spots/FilterSpots";
 import { CreateSpots } from './components/CreateSpots/CreateSpot'
 import { SpotDetail } from "./components/SpotDetail/SpotDetail";
+import { HostingSpots } from "./components/HostSpots";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -31,6 +32,9 @@ function App() {
         <Route path='/spots/:spotId'>
               <SpotDetail />
           </Route>
+        <Route path='/hosting'>
+          <HostingSpots />
+        </Route>
         <Route exact path="/login">
           <LoginFormPage />
         </Route>
