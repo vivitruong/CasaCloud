@@ -119,7 +119,8 @@ export const fetchDetailSpot = (spotId) => async (dispatch) => {
 };
 
 export const getEditSpot = (spot) => async (dispatch) => {
-    const { name, description, address, city, country, state, lat, lng, price } = spot;
+
+    const {name, description, address, city, country, state, lat, lng, price } = spot;
     const response = await csrfFetch(`/api/spots/${spot.id}`, {
         method: 'PUT',
         headers: {
@@ -129,20 +130,24 @@ export const getEditSpot = (spot) => async (dispatch) => {
     })
     if (response.ok) {
         const data = await response.json();
+        data.id = spot.id
         dispatch(editSpot(data))
         return data;
     }
 
 };
 
-export const removeSpot = (spotId) => async (dispatch) => {
+export const removeSpot = (spot) => async (dispatch) => {
+    const spotId = spot.id;
     const response = await csrfFetch(`/api/spots/${spotId}`, {
       method: "DELETE",
     });
     if (response.ok) {
+    const data = await response.json();
       dispatch(deleteSpot(spotId));
-
-      return response;
+      return data
+    } else {
+        return response
     }
   };
 
@@ -186,13 +191,19 @@ const spotsReducer = (state = initialState, action) => {
 
         case EDIT_SPOTS:
             newState = { ...state };
-            newState[action.spots.id] = action.spots;
+            newState[action.spot.id] = { ...state[action.spot.id], ...action.spot};
                 return newState;
 
         case DELETE_SPOTS:
             newState = {...state };
             delete newState[action.spotId];
             return newState;
+
+        case HOST_SPOTS:
+            newState = { ...state};
+            for(let spot of action.spots) {
+                newState[spot.id] = spot
+            } return newState
 
         default:
             return state

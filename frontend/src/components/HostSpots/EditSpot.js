@@ -21,17 +21,18 @@ export function EditSpotForm(props) {
     const [validationErrors, setValidationErrors] = useState([]);
     const dispatch = useDispatch();
     const id = spot.id
-    console.log('this is ', id)
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setValidationErrors([]);
 
-        dispatch(spotsAction.editSpot({id, name, description, price, address, country, city, state, lat, lng }))
+        dispatch(spotsAction.getEditSpot({id, name, description, price, address, country, city, state, lat, lng }))
             .then(() => modal())
-        .catch(async (res) => {
+        .catch(async res => {
+            console.log(res)
             const data = await res.json();
+
             if (data && data.errors) {
                 let error = Object.values(data.errors)
                 setValidationErrors(error);

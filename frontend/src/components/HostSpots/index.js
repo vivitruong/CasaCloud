@@ -31,7 +31,7 @@ export function HostingSpots() {
                 {spots.length > 0 && spots.map(spot =>
                     <div key={spot.id} className='manage-container'>
                         <div>
-                            <img src={spot.previewImage} alt='' style={{height:"200px"}}></img>
+                            <img src={spot.previewImage} alt='spot' style={{height:"200px"}}></img>
                         </div>
                         <div className='manage-name'>
                             <Link to={`/spots/${spot.id}`}>{spot.name}</Link>
