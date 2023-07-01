@@ -81,7 +81,7 @@ export function CreateSpots() {
                             <input
                             type='text'
                             value={name}
-                            placeholder='Name'
+                            placeholder='Give us a name for you place'
                             onChange={(e) => setName(e.target.value)}
                             required
                             className='input-field'

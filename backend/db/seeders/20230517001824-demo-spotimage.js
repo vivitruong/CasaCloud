@@ -11,47 +11,47 @@ module.exports = {
     await queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/A1.jpg",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa10.webp",
         preview: true
       },
       {
         spotId: 2,
-        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/B1.jpg",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa9.webp",
         preview: true
       },
       {
         spotId: 3,
-        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/C1.jpg",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa8.webp",
         preview: true
       },
       {
         spotId: 4,
-        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/D1.jpg",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa7.webp",
         preview: true
       },
       {
         spotId: 5,
-        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/E1.jpg",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa6.webp",
         preview: true
       },
       {
         spotId: 6,
-        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/F1.jpg",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa5.webp",
         preview: true
       },
       {
         spotId: 7,
-        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/G1.jpg",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa4.webp",
         preview: true
       },
       {
         spotId: 8,
-        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/H1.jpg",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa3.webp",
         preview: true
       },
       {
         spotId: 9,
-        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/I1.jpg",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa2.webp",
         preview: true
       },
       {

@@ -4,14 +4,14 @@
     align-items: center;
     color: #222;
     background: #ffffff;
-    padding: 20px;
-    width: 520px;
+    padding: 19px;
+    width: 600px;
 }
 
 .reviewform-info {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 100%;
 }
 .review-content {
     display: grid;
@@ -34,4 +34,8 @@
     background: #FF5A5F;
     margin-right: 10px;
     cursor: pointer;
+}
+
+.btn-post:hover{
+    background-color: lightgray;
 }

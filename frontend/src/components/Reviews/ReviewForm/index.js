@@ -43,7 +43,7 @@ export function ReviewForm(props) {
     return (
         <div className="reviewform-container">
             <div className="reviewform-welcome">
-                <h2>Rate this spot!</h2>
+                <h2>Leave a review!</h2>
             </div>
             <form onSubmit={handleSubmit} className='reviewform-info'>
                 <div>
@@ -56,7 +56,7 @@ export function ReviewForm(props) {
                 </div>
                 <div className="review-content">
                     <div className="reviewform-rating">
-                        <label> Rating point:
+                        <label> Rating:
                             <input
                                 type='number'
                                 value={rating}
@@ -70,7 +70,7 @@ export function ReviewForm(props) {
                         <div className="reviewform-description">
                             <label>
                                 <textarea
-                                    placeholder='Share details of your own experience at this spot'
+                                    placeholder='Describe your personal experience at this spot...'
                                     value={review}
                                     onChange={(e) => setReview(e.target.value)}
                                     className='input-field'
