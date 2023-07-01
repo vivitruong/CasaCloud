@@ -40,34 +40,35 @@ export function SpotDetail() {
     )
     return (
 
-    <div className="spot-container">
-            <div className="spot-info">
-                <h2 className="spot-info-firstline">{spot.name}</h2>
-                <div className="spot-info-secondline">
-                    <i className="fa-solid fa-star"></i>
-                    {avgRating}, {spotReviews.length} reviews, {spot.city}, {spot.state}, {spot.country}
-                </div>
+     <div className="spot-container">
+        <div className="spot-info">
+            <h2 className="spot-info-firstline">{spot.name}</h2>
+            <div className="spot-info-secondline">
+                <i className="fa-solid fa-star"></i>
+                {avgRating}, {spotReviews.length} reviews, {spot.city}, {spot.state}, {spot.country}
             </div>
-            <div className="spot-photo">
-                 {spot.SpotImages?.length > 0 &&
-                    <div className="spot-photo-container photo-one">
-                        <img src={spot.SpotImages[0].url} alt='spot'/>
-                    </div>
+        </div>
+        <div className="spot-photo">
+             {spot.SpotImages?.length > 0 &&
+                <div className='spot-photo-container photo-one'>
+                    <img src={spot.SpotImages[0].url} alt='spot'/>
+                </div>
             }
-            <div className='spot-photo-container photo-four'>
-                <div className='photo-four1'>
-                    <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/J1.jpg' alt='spot'/>
-                </div>
-                <div className='photo-four1'>
-                    <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/H1.jpg' alt='spot' className="photo-border1"/>
-                </div>
-                <div className='photo-four1'>
-                    <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/L2.jpg' alt='spot'/>
-                </div>
-                <div className='photo-four1'>
-                    <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/K3.jpg' alt='spot'className="photo-border2"/>
-                </div>
+               <div className='spot-photo-container photo-four'>
+                    <div className='photo-four1'>
+                        <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/J1.jpg' alt='spot'/>
+                    </div>
+                    <div className='photo-four1'>
+                         <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/H1.jpg' alt='spot' className="photo-border1"/>
+                    </div>
+                    <div className='photo-four1'>
+                        <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/L2.jpg' alt='spot'/>
+                    </div>
+                    <div className='photo-four1'>
+                        <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/K3.jpg' alt='spot'className="photo-border2"/>
+                    </div>
             </div>
+        </div>
             <div className="spot-detail-container">
                 <div className="spot-host-container">
                     <div className="spot-host">
@@ -81,27 +82,23 @@ export function SpotDetail() {
                         </div>
                     </div>
                 </div>
-            </div>
-            {/* <div className="spot-price">
-                    {/* ${spot.price} <span style={{fontWeight:300}}>/night</span> */}
-                    {/* <BookingCalendar avgRating={avgRating} reviews={spotReviews.length} price={spot.price} id={spot.id} spotBooking={spotBooking} user={sessionUser} /> */}
+                 {/* <div className="spot-price">
+                 <BookingCalendar avgRating={avgRating} reviews={spotReviews.length} price={spot.price} id={spot.id} spotBooking={spotBooking} user={sessionUser} />
+            </div> */}
 
-                    <div className="spot-mockup1">
+            <div className="spot-mockup1">
                     <div className="mockup-item">
                         <i className="fa-solid fa-check"></i> Self Checkin
                     </div>
                     <div className="mockup-item">
-                        <i className="fa-solid fa-location-pin"></i> Excellent Location
+                        <i className="fa-solid fa-location-pin"></i> Great Location
                     </div>
                     <div className="mockup-item">
-                    <i className="fa-solid fa-calendar"></i> Free cancellation
-                    </div>
-                    <div className='mockup-item'>
-                    <i className="fa-solid fa-square-parking"></i> Covered Parking
+                    <i className="fa-solid fa-calendar"></i> Free cancellation for 48hours.
                     </div>
                 </div>
                 <div className="spot-mockup">
-                <div>
+                    <div>
                         <h2>WHAT WE COVER</h2>
                     </div>
                     <div className="mockup-para">
@@ -119,11 +116,10 @@ export function SpotDetail() {
                         </p>
                     </div>
                 </div>
-
-                <div className='spot-review'>
-                    <div className='review-container'>
-                    <p style={{fontWeight:700, fontSize:20}}> <i className="fa-solid fa-star" style={{fontSize:17}}></i>{avgRating} - {spotReviews.length} reviews</p>
-                    <div className="reviews-cards">
+                <div className="spot-review">
+                    <div className="reviews-container">
+                        <p style={{fontWeight:700, fontSize:20}}> <i className="fa-solid fa-star" style={{fontSize:17}}></i>{avgRating} - {spotReviews.length} reviews</p>
+                        <div className="reviews-cards">
                             {spotReviews?.length > 0 && spotReviews.map(review => (
                                 <div key={review.id} className='review-user-container'>
                                     <div className="reviewer-info">
@@ -151,5 +147,6 @@ export function SpotDetail() {
                 </div>
             </div>
         </div>
+
     )
 }

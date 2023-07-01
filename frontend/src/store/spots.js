@@ -180,7 +180,7 @@ const spotsReducer = (state = initialState, action) => {
 
         case CREATE_SPOTS:
             newState = { ...state };
-            newState[action.spots.id] = action.spots;
+            newState[action.spots.id] = { ...state[action.spots.id], ...action.spots};
                 return newState;
 
         case DETAIL_SPOTS:
