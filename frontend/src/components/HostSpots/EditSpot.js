@@ -4,6 +4,7 @@ import * as spotsAction from '../../store/spots';
 import './EditSpot.css';
 
 export function EditSpotForm(props) {
+
     const spot = props.spot;
     const modal = props.onClose;
     const [address, setAddress] = useState(spot.address);
@@ -20,12 +21,14 @@ export function EditSpotForm(props) {
     const [validationErrors, setValidationErrors] = useState([]);
     const dispatch = useDispatch();
     const id = spot.id
-    //handle submit here
+    console.log('this is ', id)
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setValidationErrors([]);
 
-        dispatch(spotsAction.editSpot({ id, name, description, price, address, country, city, state, lat, lng }))
+        dispatch(spotsAction.editSpot({id, name, description, price, address, country, city, state, lat, lng }))
             .then(() => modal())
         .catch(async (res) => {
             const data = await res.json();
