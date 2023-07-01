@@ -2,6 +2,7 @@ import { useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserSpots } from '../../store/spots';
 import EditSpotModal from './EditSpotModal';
+import DeleteSpotModal from './DeleteSpotModal';
 import { Link } from 'react-router-dom';
 import './index.css'
 
@@ -30,7 +31,7 @@ export function HostingSpots() {
                 {spots.length > 0 && spots.map(spot =>
                     <div key={spot.id} className='manage-container'>
                         <div>
-                            <img src={spot.previewImage} style={{height:"200px"}}></img>
+                            <img src={spot.previewImage} alt='' style={{height:"200px"}}></img>
                         </div>
                         <div className='manage-name'>
                             <Link to={`/spots/${spot.id}`}>{spot.name}</Link>
@@ -39,9 +40,9 @@ export function HostingSpots() {
                             <div className='update'>
                                 <EditSpotModal spot={spot} />
                             </div>
-                            {/* <div className='delete'>
+                            <div className='delete'>
                                 <DeleteSpotModal spot={spot}/>
-                            </div> */}
+                            </div>
                         </div>
                     </div>
                 )}

@@ -28,7 +28,7 @@ function AllSpots () {
                         </div>
                         <div className='spot-name-row'>
                             <div className='spot-name'>{spot.city}, {spot.state}</div>
-                            <div style={{fontSize:14, fontWeight: 'bold'}}>
+                            <div style={{fontSize:14}}>
 
                             <i className="fa-solid fa-star"></i>{spot.AvgRating ? spot.AvgRating : 0}
                             </div>
