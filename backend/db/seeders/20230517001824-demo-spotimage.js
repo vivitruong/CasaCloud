@@ -46,7 +46,7 @@ module.exports = {
       },
       {
         spotId: 8,
-        url: "hhttps://casacloudpics.s3.us-east-2.amazonaws.com/casa3.webp",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa3.webp",
         preview: true
       },
       {
