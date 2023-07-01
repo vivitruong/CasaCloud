@@ -53,10 +53,22 @@
     border-bottom-right-radius: 15px;
 }
 
-
+.share-save {
+    margin-left: 90%;
+}
+.share-save:hover {
+    background-color: #cccccc;
+}
 .spot-detail-container {
     margin-top: 20px;
-    /* width: 80vw; */
+    cursor: pointer;
+
+}
+
+.spot-info-secondline {
+    font-weight: bold;
+    font-size: 14px;
+
 }
 .spot-host-container {
     display: flex;
@@ -100,6 +112,7 @@
 .mockup-item {
     margin: 30px;
     font-size: 16px;
+
 }
 .mockup-para {
     font-size: 16px;

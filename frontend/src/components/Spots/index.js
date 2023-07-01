@@ -34,7 +34,8 @@ function AllSpots () {
                             </div>
                         </div>
                         <div className='spot-name-info'>
-                            <div style={{fontSize:13}}>Recently added</div>
+                            <div style={{fontSize:13}}>June 15 - 20</div>
+                            <div style={{fontSize: 13}}>666 miles away</div>
                         </div>
                         <div className='spot-name-info' style={{fontWeight:700}}>
                             ${spot.price} <span style={{fontWeight:300}}>night</span>

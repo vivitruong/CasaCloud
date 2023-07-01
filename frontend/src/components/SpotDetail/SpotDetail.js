@@ -44,8 +44,15 @@ export function SpotDetail() {
         <div className="spot-info">
             <h2 className="spot-info-firstline">{spot.name}</h2>
             <div className="spot-info-secondline">
-                <i className="fa-solid fa-star"></i>
-                {avgRating}, {spotReviews.length} reviews, {spot.city}, {spot.state}, {spot.country}
+                <i className="fa-solid fa-star"> </i>
+                {avgRating}.  {spotReviews.length} reviews. {spot.city}, {spot.state}, {spot.country}
+
+            </div>
+            <div className='share-save'>
+            <i class="fas fa-share"></i>
+                share .
+            <i class="fa-regular fa-heart"></i>
+                save
             </div>
         </div>
         <div className="spot-photo">
@@ -75,6 +82,7 @@ export function SpotDetail() {
                         {spot.Owner &&
                             <div className="host-name">
                                 <h2>This place hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h2>
+                                <p>4 guests . 2 bedrooms . 3 beds . 1bath</p>
                             </div>
                         }
                         <div>
@@ -89,12 +97,14 @@ export function SpotDetail() {
             <div className="spot-mockup1">
                     <div className="mockup-item">
                         <i className="fa-solid fa-check"></i> Self Checkin
+                        <p style={{fontSize:13, marginLeft:10}}>Check yourself in with the smartlock.</p>
                     </div>
                     <div className="mockup-item">
-                        <i className="fa-solid fa-location-pin"></i> Great Location
+                        <i className="fa-solid fa-location-pin"></i>Designed by
+                        <p style={{fontSize:13, marginLeft:10}}>Vivi Truong from 999 Architect.co</p>
                     </div>
                     <div className="mockup-item">
-                    <i className="fa-solid fa-calendar"></i> Free cancellation for 48hours.
+                    <i className="fa-solid fa-calendar"></i> Free cancellation for 48 hours.
                     </div>
                 </div>
                 <div className="spot-mockup">
