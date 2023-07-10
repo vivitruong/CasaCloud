@@ -49,9 +49,9 @@ export function SpotDetail() {
 
             </div>
             <div className='share-save'>
-            <i class="fas fa-share"></i>
+            <i className="fas fa-share"></i>
                 share .
-            <i class="fa-regular fa-heart"></i>
+            <i className="fa-regular fa-heart"></i>
                 save
             </div>
         </div>
