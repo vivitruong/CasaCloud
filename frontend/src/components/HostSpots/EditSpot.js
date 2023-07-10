@@ -123,6 +123,7 @@ export function EditSpotForm(props) {
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             required
+                            placeholder='Describe your place...'
                             className="field"
                         />
                     </label>

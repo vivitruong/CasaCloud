@@ -15,15 +15,14 @@ export default function SignupFormPage({setShowModal}) {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [validationErrors, setValidationErrors] = useState([]);
 
-    // if (sessionUser) {
-    //     return (
-    //         <Redirect to='/' />
-    //     )
-    // }
+    if (sessionUser) {
+        return (
+            <Redirect to='/' />
+        )
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        //check error here
         if (username.length < 4) return setValidationErrors(['Username must be 4 characters or more'])
         if (password.length < 6) return setValidationErrors(['Password must be 6 characters or more.'])
         if (password === confirmPassword) {
