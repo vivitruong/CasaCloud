@@ -52,12 +52,15 @@
 .photo-border2 {
     border-bottom-right-radius: 15px;
 }
-
-.share-save {
+.ss:hover{
+    cursor: pointer;
+}
+.fa-share {
     margin-left: 90%;
 }
-.share-save:hover {
+.fa-share:hover,.fa-heart:hover {
     background-color: #cccccc;
+    cursor: pointer;
 }
 .spot-detail-container {
     margin-top: 20px;
@@ -147,12 +150,20 @@
     display: flex;
     flex-direction: row;
 }
-.review-name {
+.review-name{
     display: flex;
     align-items: center;
     padding: 5px;
     font-weight: 600;
     font-size: 16px;
+}
+.review-date {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    font-weight: 400;
+    font-size: 14px;
+    color: rgb(100, 95, 95);
 }
 
 .review-description {

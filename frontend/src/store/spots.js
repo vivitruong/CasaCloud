@@ -200,7 +200,7 @@ const spotsReducer = (state = initialState, action) => {
             return newState;
 
         case HOST_SPOTS:
-            newState = { ...state};
+            newState = {}
             for(let spot of action.spots) {
                 newState[spot.id] = spot
             } return newState

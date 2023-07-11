@@ -5,6 +5,7 @@ import './CreateSpot.css';
 import { useHistory } from 'react-router-dom';
 import  vidads from '../CreateSpots/vid-ads.mp4';
 
+
 export function CreateSpots() {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -19,6 +20,7 @@ export function CreateSpots() {
     const [url, setUrl] = useState('');
     const [lat, setLat] = useState(100);
     const [lng, setLng] = useState(100);
+
 
     const [validationErrors, setValidationErrors] = useState([]);
     const preview = true;
@@ -68,6 +70,9 @@ export function CreateSpots() {
             <div className='createspot-contain'>
                 <div className='createspot-headline'>
                     <h3>Transform Your Place into a <i className='italic-red'>Destination!</i></h3>
+                    <h4> Where's your place located?</h4>
+                    <p className='small-detail'>Guests will only get your exact address once they booked a reservation.</p>
+
                 </div>
                 <form onSubmit={handleSubmit} className='createspot-form'>
                     {validationErrors.length > 0 &&
@@ -93,7 +98,7 @@ export function CreateSpots() {
                             <input
                             type='text'
                             value={address}
-                            placeholder='Address'
+                            placeholder='Street Address'
                             onChange={(e) => setAddress(e.target.value)}
                             required
                             className='input-field'
@@ -136,12 +141,16 @@ export function CreateSpots() {
                              />
                         </label>
                     </div>
+                    <div className='des-text'>
+                        <h4>Describe your place to guests</h4>
+                        <p className='small-detail'>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood</p>
+                    </div>
                     <div className='createspot-detail'>
                         <label>
                             <input
                             type='text'
                             value={description}
-                            placeholder='Describe the unique features of your place! '
+                            placeholder='Please write at least 30 characters'
                             onChange={(e) => setDescription(e.target.value)}
                             required
                             className='input-field describe'
