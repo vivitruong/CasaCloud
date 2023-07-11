@@ -21,7 +21,7 @@ function AllSpots () {
         </div>
         <div className='spots-container'>
             { spotList?.length > 0 && spotList.map(spot => (
-                <Link to={`/spots/${spot.id}`}>
+                <Link to={`/spots/${spot.id}`} key={spot.id}>
                     <div key={spot.id} className='spot-card'>
                         <div className='spot-image'>
                             <img src={spot.previewImage} alt='spot'/>
@@ -30,11 +30,12 @@ function AllSpots () {
                             <div className='spot-name'>{spot.city}, {spot.state}</div>
                             <div style={{fontSize:14}}>
 
-                            <i className="fa-solid fa-star"></i>{spot.AvgRating ? spot.AvgRating : 0}
+                            <i className="fa-solid fa-star"></i>{spot.AvgRating ? spot.AvgRating : "New"}
                             </div>
                         </div>
                         <div className='spot-name-info'>
-                            <div style={{fontSize:13}}>Recently added</div>
+                            <div style={{fontSize:13}}>June 15 - 20</div>
+                            <div style={{fontSize: 13}}>666 miles away</div>
                         </div>
                         <div className='spot-name-info' style={{fontWeight:700}}>
                             ${spot.price} <span style={{fontWeight:300}}>night</span>

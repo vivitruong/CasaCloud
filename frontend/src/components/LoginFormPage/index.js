@@ -13,16 +13,16 @@ function LoginFormPage() {
     const [validationError, setValidationErrors] = useState([]);
 
 
-    // if (sessionUser) return (
-    //     <Redirect to="/" />
-    // );
+    if (sessionUser) return (
+        <Redirect to="/" />
+    );
     const handleSubmit = (e) => {
         e.preventDefault();
         setValidationErrors({});
         return dispatch(sessionActions.userLogin({ credential, password })).catch(
           async (res) => {
             const data = await res.json();
-            if (data && data.errors) setValidationErrors([`username/email or password are invalid!`]);
+            if (data && data.errors) setValidationErrors([`The provided credentials were invalid`]);
           }
         );
       };

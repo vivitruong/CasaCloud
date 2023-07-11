@@ -16,6 +16,8 @@ export function HostingSpots() {
     useEffect(() => {
         dispatch(getUserSpots())
     },[dispatch])
+
+
     return(
         <div className='manage-main'>
         {!sessionUser &&

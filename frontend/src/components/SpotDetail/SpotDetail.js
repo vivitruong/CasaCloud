@@ -44,9 +44,26 @@ export function SpotDetail() {
         <div className="spot-info">
             <h2 className="spot-info-firstline">{spot.name}</h2>
             <div className="spot-info-secondline">
-                <i className="fa-solid fa-star"></i>
-                {avgRating}, {spotReviews.length} reviews, {spot.city}, {spot.state}, {spot.country}
+            {spotReviews.length > 0 ? (
+        <>
+            <i className="fa-solid fa-star"> </i>
+            {avgRating}. {spotReviews.length} reviews.
+        </>
+    ) : (
+        <>
+            <i className="fa-solid fa-star"> </i>
+            New .
+
+        </>
+    )}
+    {spot.city}, {spot.state}, {spot.country}
+
+            <i className="fas fa-share"></i>
+                <span className='ss'style={{textDecoration:'underline'}}>Share</span>
+            <i className="fa-regular fa-heart"></i>
+            <span className='ss' style={{textDecoration:'underline'}} >Save</span>
             </div>
+
         </div>
         <div className="spot-photo">
              {spot.SpotImages?.length > 0 &&
@@ -75,6 +92,7 @@ export function SpotDetail() {
                         {spot.Owner &&
                             <div className="host-name">
                                 <h2>This place hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h2>
+                                <p>4 guests . 2 bedrooms . 3 beds . 1bath</p>
                             </div>
                         }
                         <div>
@@ -89,17 +107,19 @@ export function SpotDetail() {
             <div className="spot-mockup1">
                     <div className="mockup-item">
                         <i className="fa-solid fa-check"></i> Self Checkin
+                        <p style={{fontSize:13, marginLeft:10}}>Check yourself in with the smartlock.</p>
                     </div>
                     <div className="mockup-item">
-                        <i className="fa-solid fa-location-pin"></i> Great Location
+                        <i className="fa-solid fa-location-pin"></i>Designed by
+                        <p style={{fontSize:13, marginLeft:10}}>Vivi Truong from 999 Architect.co</p>
                     </div>
                     <div className="mockup-item">
-                    <i className="fa-solid fa-calendar"></i> Free cancellation for 48hours.
+                    <i className="fa-solid fa-calendar"></i> Free cancellation for 48 hours.
                     </div>
                 </div>
                 <div className="spot-mockup">
                     <div>
-                        <h2>WHAT WE COVER</h2>
+                        <h2>CASA COVER</h2>
                     </div>
                     <div className="mockup-para">
                         <p>At CasaCloud, we prioritize your peace of mind throughout the booking process and your stay. That's why every booking with us includes free protection from host cancellations, listing inaccuracies, and other potential issues you may encounter during your trip. We're here to ensure a smooth and worry-free experience from check-in to check-out.
@@ -118,27 +138,44 @@ export function SpotDetail() {
                 </div>
                 <div className="spot-review">
                     <div className="reviews-container">
-                        <p style={{fontWeight:700, fontSize:20}}> <i className="fa-solid fa-star" style={{fontSize:17}}></i>{avgRating} - {spotReviews.length} reviews</p>
-                        <div className="reviews-cards">
-                            {spotReviews?.length > 0 && spotReviews.map(review => (
+                    <p style={{ fontWeight: 700, fontSize: 20 }}>
+                    <i className="fa-solid fa-star" style={{ fontSize: 17 }}></i>
+                            {avgRating}
+                            {spotReviews.length > 0 && (
+                                <>
+                                    {' . '}
+                                    {spotReviews.length} {spotReviews.length === 1 ? 'Review' : 'Reviews'}
+                                </>
+                            )}
+                    </p>
+                    <div className="reviews-cards">
+                        {spotReviews?.length > 0 ? (
+                            spotReviews.map(review => (
                                 <div key={review.id} className='review-user-container'>
                                     <div className="reviewer-info">
-
                                         <div className="review-user-photo">
                                             <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/choji.jpg' alt='cony' className="user-profile"/>
                                         </div>
                                         <div className="review-name">{review.User.firstName}</div>
+                                        <div className='review-date'>
+                                            {new Date(review.createdAt).toLocaleString('en-US', { month: 'long', year: 'numeric' })}
+                                        </div>
                                     </div>
                                     <div className="review-description">{review.review}</div>
                                     <div className="review-delete">
-                                        {sessionUser && +review.userId === sessionUser.id &&
+                                        {sessionUser && +review.userId === sessionUser.id && (
                                             <DeleteReviewModal reviewId={review.id} spotId={spot.id} />
-                                        }
-
+                                        )}
                                     </div>
                                 </div>
-                            ))}
-                        </div>
+                            ))
+                        ) : (
+                            sessionUser && sessionUser.userId  !== spot.ownerId ? (
+                                <p>Be the first to post a review!</p>
+                            ) : null
+                        )}
+                    </div>
+
                         <div className="btn-newreview">
                             <ReviewSpotModal spotId={spot.id} />
                         </div>
