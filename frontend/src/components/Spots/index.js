@@ -9,7 +9,9 @@ import { Link } from 'react-router-dom';
 
 function AllSpots () {
     let dispatch = useDispatch()
-    const spotList = useSelector((state) => Object.values(state.spots))
+    const spotObj = useSelector((state) => state.spots);
+    const spotList = Object.values(spotObj)
+    console.log(spotList)
     useEffect(() => {
         dispatch(spotActions.getAllSpots())
     }, [dispatch])
@@ -20,7 +22,7 @@ function AllSpots () {
             <Headliner dispatch={dispatch} />
         </div>
         <div className='spots-container'>
-            { spotList?.length > 0 && spotList.map(spot => (
+            { spotList?.length > 0 && typeof spotList[0] === 'object' && spotList.map(spot => (
                 <Link to={`/spots/${spot.id}`} key={spot.id}>
                     <div key={spot.id} className='spot-card'>
                         <div className='spot-image'>

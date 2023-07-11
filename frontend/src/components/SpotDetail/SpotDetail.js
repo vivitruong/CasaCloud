@@ -139,15 +139,20 @@ export function SpotDetail() {
                 <div className="spot-review">
                     <div className="reviews-container">
                     <p style={{ fontWeight: 700, fontSize: 20 }}>
-                    <i className="fa-solid fa-star" style={{ fontSize: 17 }}></i>
+                        {spotReviews.length > 0 ? (
+                            <>
+                            <i className="fa-solid fa-star" style={{ fontSize: 17 }}></i>
                             {avgRating}
-                            {spotReviews.length > 0 && (
-                                <>
-                                    {' . '}
-                                    {spotReviews.length} {spotReviews.length === 1 ? 'Review' : 'Reviews'}
-                                </>
-                            )}
-                    </p>
+                            {' . '}
+                            {spotReviews.length} {spotReviews.length === 1 ? 'Review' : 'Reviews'}
+                            </>
+                        ) : (
+                            <>
+                            <i className="fa-solid fa-star" style={{ fontSize: 17 }}></i>
+                            New
+                            </>
+                        )}
+                        </p>
                     <div className="reviews-cards">
                         {spotReviews?.length > 0 ? (
                             spotReviews.map(review => (

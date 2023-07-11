@@ -4,6 +4,7 @@ import * as spotsAction from '../../store/spots';
 import './CreateSpot.css';
 import { useHistory } from 'react-router-dom';
 import  vidads from '../CreateSpots/vid-ads.mp4';
+import { useEffect } from 'react';
 
 
 export function CreateSpots() {
@@ -17,13 +18,14 @@ export function CreateSpots() {
     const [country, setCountry] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
-    const [url, setUrl] = useState('');
+    const [url, setUrl] = useState(['', '', '', '', '']);
+    const [previewUrl, setPreviewUrl] = useState('');
     const [lat, setLat] = useState(100);
     const [lng, setLng] = useState(100);
 
 
-    const [validationErrors, setValidationErrors] = useState([]);
-    const preview = true;
+    const [validationErrors, setValidationErrors] = useState({});
+    // const preview = true;
 
     if(!sessionUser) {
         return (
@@ -36,20 +38,55 @@ export function CreateSpots() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setValidationErrors([]);
-        if(url.length > 300) setValidationErrors(['The URL image is invalid! Must less than 300 characters'])
-        let createdSpot = await dispatch(spotsAction.createSpot({ name, description, price, address, country, city, state,lat, lng, url, preview }))
-        .catch(async res => {
-            const data = await res.json();
-            if (data && data.message) {
-                if (data.errors) {
-                  const errors = Object.values(data.errors);
-                  setValidationErrors(errors);
-                } else {
-                  setValidationErrors(data.message);
-                }
-              }
 
-    })
+        if (!name || name.length < 4 || name.length > 100) {
+            setValidationErrors.push('Name must be between 4 and 100 characters')
+         }
+        if (!address) {
+            setValidationErrors.push('Address is required')
+          }
+        if (!city) {
+            setValidationErrors.push('City is required');
+          }
+        if (!state) {
+            setValidationErrors.push('State is required');
+          }
+        if (!country) {
+            setValidationErrors.push('Country is required');
+          }
+        if (description.length < 30) {
+            setValidationErrors.push('Description needs 30 or more characters');
+          }
+        if (!price) {
+            setValidationErrors.push('Price per night is required');
+          }
+        if(url[0] === '') {
+            setValidationErrors(['At least one image URL is required'])
+            return
+        }
+        const spotData = {
+            name,
+            address,
+            city,
+            state,
+            country,
+            description,
+            price,
+            previewUrl: url[0],
+            url: url.slice(1),
+          };
+
+    let createdSpot = await dispatch(spotsAction.createSpot(spotData)).catch(async (res) => {
+        const data = await res.json();
+        if (data && data.message) {
+          if (data.errors) {
+            const errors = Object.values(data.errors);
+            setValidationErrors(errors);
+          } else {
+            setValidationErrors({general: data.message});
+          }
+        }
+      });
 
     if (createdSpot) {
         const id = createdSpot.id
@@ -68,31 +105,32 @@ export function CreateSpots() {
                 </div>
             </div>
             <div className='createspot-contain'>
-                <div className='createspot-headline'>
-                    <h3>Transform Your Place into a <i className='italic-red'>Destination!</i></h3>
-                    <h4> Where's your place located?</h4>
-                    <p className='small-detail'>Guests will only get your exact address once they booked a reservation.</p>
-
-                </div>
-                <form onSubmit={handleSubmit} className='createspot-form'>
-                    {validationErrors.length > 0 &&
-                    <ul>
-                        {validationErrors.map((error) =>
-                            <li key={error} >{error}</li>)}
-                    </ul>
-                    }
-                    <div className='createspot-detail'>
-                        <label>
-                            <input
-                            type='text'
-                            value={name}
-                            placeholder='Give us a name for you place'
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                            className='input-field'
-                             />
-                        </label>
-                    </div>
+          <div className='createspot-headline'>
+            <h4>Where's your place located?</h4>
+            <p className='small-detail'>Guests will only get your exact address once they book a reservation.</p>
+          </div>
+          <form onSubmit={handleSubmit} className='createspot-form'>
+            {validationErrors.general && (
+              <div className='error-message'>{validationErrors.general}</div>
+            )}
+             {validationErrors.country && (
+                <div className='error-message'>{validationErrors.country}</div>
+              )}
+            <div className='createspot-detail'>
+              <label>
+                <input
+                  type='text'
+                  value={country}
+                  placeholder='Country'
+                  onChange={(e) => setCountry(e.target.value)}
+                  required
+                  className='input-field'
+                />
+              </label>
+              {validationErrors.country && (
+                <div className='error-message'>{validationErrors.country}</div>
+              )}
+            </div>
                     <div className='createspot-detail'>
                         <label>
                             <input
@@ -129,84 +167,94 @@ export function CreateSpots() {
                              />
                         </label>
                     </div>
-                    <div className='createspot-detail'>
-                        <label>
-                            <input
-                            type='text'
-                            value={country}
-                            placeholder='Country'
-                            onChange={(e) => setCountry(e.target.value)}
-                            required
-                            className='input-field'
-                             />
-                        </label>
-                    </div>
+
                     <div className='des-text'>
                         <h4>Describe your place to guests</h4>
-                        <p className='small-detail'>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood</p>
-                    </div>
+                        <p className='small-detail'>
+                            Mention the best features of your space, any special amenities like fast WiFi or parking, and what you
+                            love about the neighborhood.
+                        </p>
+                        </div>
                     <div className='createspot-detail'>
                         <label>
                             <input
                             type='text'
                             value={description}
-                            placeholder='Please write at least 30 characters'
+                            placeholder='Please write at least 30 characters...'
                             onChange={(e) => setDescription(e.target.value)}
                             required
                             className='input-field describe'
                              />
                         </label>
                     </div>
+                            <div className='createspot-detail'>
+                            <h4>Create a title for your spot</h4>
+                            <p className='small-detail'>Catch guests' attention with a spot title that highlights what makes your place special.</p>
+                            </div>
+                    <div className='createspot-detail'>
+                            <label>
+                                <input
+                                type='text'
+                                value={name}
+                                placeholder='Name of your spot'
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                                className='input-field'
+                                />
+                            </label>
+                            </div>
+                            <div className='createspot-detail'>
+                                <h4>Set a base price for your spot</h4>
+                                <p className='small-detail'>Competitive pricing can help your listing stand out and rank higher in search results.</p>
+                                </div>
                     <div className='createspot-detail'>
                         <label>
                             <input
                             type='text'
                             value={price}
-                            placeholder='Price per night'
+                            placeholder='Price per night (USD)'
                             onChange={(e) => setPrice(e.target.value)}
                             required
                             className='input-field'
                              />
                         </label>
                     </div>
-                    {/* <div className='createspot-detail'>
-                        <label>
-                            <input
-                            type='text'
-                            value={lat}
-                            placeholder='Latitude'
-                            onChange={(e) => setLat(e.target.value)}
-                            required
-                            className='input-field'
-                             />
-                        </label>
-                    </div>
                     <div className='createspot-detail'>
-                        <label>
-                            <input
-                            type='text'
-                            value={lng}
-                            placeholder='Longitude'
-                            onChange={(e) => setLng(e.target.value)}
-                            required
-                            className='input-field'
-                             />
-                        </label>
-                    </div> */}
+                        <h4>Liven up your spot with photos</h4>
+                        <p className='small-detail'>Submit a link to at least one photo to publish your spot.</p>
+                        </div>
                     <div className='createspot-detail'>
                         <label>
                             <input
                             type='url'
                             value={url}
-                            placeholder='Your Image Link'
+                            placeholder='Preview Image URL'
                             onChange={(e) => setUrl(e.target.value)}
                             required
                             className='input-field'
                              />
                         </label>
                     </div>
+                    {[0, 1, 2, 3].map((index) => (
+                        <div className='createspot-detail' key={index}>
+                        <label>
+                            <input
+                                type='text'
+                                // value={url[index]}
+                                placeholder='Image URL'
+                                onChange={(e) => {
+                                const updatedImageUrls = [...url];
+                                updatedImageUrls[index] = e.target.value;
+                                setUrl(updatedImageUrls);
+                                }}
+                                className='input-field'
+                            />
+                            </label>
+                        </div>
+                        ))}
+
                     <button type='submit'>
-                        Agree & Submit
+                        Create Spot
                     </button>
 
                 </form>
