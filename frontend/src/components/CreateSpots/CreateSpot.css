@@ -1,6 +1,10 @@
 .createspot-whole {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    /* display: grid;
+    grid-template-columns: 1fr 1fr; */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
 }
 h2 {
     color: #e05c5c
@@ -31,22 +35,28 @@ h4 {
 
 .createspot-headline > h3 {
     margin: 5vw;
-    color: darkgrey
+    color: darkgrey;
 
 }
 
+.h-title {
+    margin-right: 100%
+}
 .createspot-contain {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    flex: 0.8;
 }
 .italic-red {
     color: rgb(216, 56, 56)
 }
 .createspot-form {
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
     align-items: start;
+    max-width: 500px;
+
 }
 
 .createspot-detail {
@@ -62,6 +72,10 @@ h4 {
     font-size: 14px;
     padding: 10px
 }
+.createspot-welcome h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
 
 textarea {
     resize: none;
@@ -85,3 +99,9 @@ textarea {
     color: #e05c5c;
 
 }
+
+.small-detail {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 20px;
+  }

@@ -14,7 +14,7 @@ const { handleValidationErrors,isOwner,validateQueryParameters, handleListValida
 const router = express.Router();
 
   //Get all review by a Spot id (done)
-  router.get('/:spotId/reviews', requireAuth, async (req, res, next) => {
+  router.get('/:spotId/reviews', async (req, res, next) => {
     const spotId = req.params.spotId;
     const spot = await Spot.findByPk(spotId);
     if (spot) {

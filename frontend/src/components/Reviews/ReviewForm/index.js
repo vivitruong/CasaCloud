@@ -1,7 +1,10 @@
-import {useState } from "react";
-import * as reviewsAction from '../../../store/reviews';
+import { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import './index.css';
+import * as reviewActions from "../../../store/reviews";
+import * as spotsActions from '../../../store/spots'
+import './index.css'
+
 
 export function ReviewForm(props) {
     const [rating, setRating] = useState();
@@ -11,7 +14,14 @@ export function ReviewForm(props) {
     const modal = props.onClose;
     const spotId = props.spotId;
     const sessionUser = useSelector(state => state.session.user);
+    const [isCommentValid, setIsCommentValid] = useState(false);
+    const [isRatingValid, setIsRatingValid] = useState(false);
+    const [hoveredRating, setHoveredRating] = useState(null);
 
+    const reviewObj = useSelector(state => state.reviews)
+    const reviews = Object.values(reviewObj)
+    // const hasPostedReview = reviews.find((review) => sessionUser.id === review.userId)
+    const spot = useSelector(state => Object.values(state.spots))
     const handleSubmit = async (e) => {
         e.preventDefault();
         setValidationErrors([]);
@@ -20,7 +30,7 @@ export function ReviewForm(props) {
             stars: rating, review
         }
         if (!review) return setValidationErrors([`Please input your review!`])
-        dispatch(reviewsAction.createReview(spotId, info))
+        dispatch(reviewActions.createReview(spotId, info))
             .then(() => modal())
             .catch(async (res) => {
                         const data = await res.json();
@@ -40,10 +50,21 @@ export function ReviewForm(props) {
         modal();
     }
 
+    const Star = ({ filled, onClick, onMouseEnter, onMouseLeave }) => {
+        return (
+          <span
+            className={`star ${filled ? 'filled' : ''}`}
+            onClick={onClick}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+          ></span>
+        );
+      };
+
     return (
         <div className="reviewform-container">
             <div className="reviewform-welcome">
-                <h2>Leave a review!</h2>
+                <h2>How was your stay?</h2>
             </div>
             <form onSubmit={handleSubmit} className='reviewform-info'>
                 <div>
@@ -54,37 +75,51 @@ export function ReviewForm(props) {
                     </ul>
                 }
                 </div>
-                <div className="review-content">
-                    <div className="reviewform-rating">
-                        <label> Rating:
-                            <input
-                                type='number'
-                                value={rating}
-                                onChange={(e) => setRating(e.target.value)}
-                                min="1"
-                                max="5"
-                                required
-                            />
-                        </label>
-                        </div>
-                        <div className="reviewform-description">
+                <div className="reviewform-description">
                             <label>
                                 <textarea
-                                    placeholder='Describe your personal experience at this spot...'
+                                    placeholder='Leave your review here...'
                                     value={review}
-                                    onChange={(e) => setReview(e.target.value)}
+                                    onChange={(e) => {
+                                        setReview(e.target.value);
+                                        setIsCommentValid(e.target.value.length >= 10);
+                                    }}
                                     className='input-field'
                                     required
                                 >
                                 </textarea>
                             </label>
                         </div>
+                        <div className="review-content">
+                            <div className="reviewform-rating">
+                                <label>Stars:</label>
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                <Star
+                                    key={star}
+                                    filled={star <= (hoveredRating || rating)}
+                                    onClick={() => {
+                                    setRating(star);
+                                    setIsRatingValid(star >= 1);
+                                    }}
+                                    onMouseEnter={() => setHoveredRating(star)}
+                                    onMouseLeave={() => setHoveredRating(null)}
+                                />
+                                ))}
+                            </div>
                     <div className="review-button">
-                        <button type="submit" className="btn-post">Post</button>
-                        <button onClick={handleCancelButton} className='btn-cancel'>Cancel</button>
+
+                <button type="submit" className="btn-post" disabled={!isCommentValid || !isRatingValid}>
+                    Submit your Review
+                </button>
+
+
+                    </div>
+                    <div>
+                    <button onClick={handleCancelButton} className='btn-cancel'>Cancel</button>
                     </div>
                 </div>
             </form>
         </div>
     )
 }
+// setIsRatingValid((e.target.value >= 1))
