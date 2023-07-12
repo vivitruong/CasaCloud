@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as reviewsAction from '../../store/reviews';
+import * as reviewsAction from '../../store/reviews'
 import './ListingSpotReviews.css';
 
 export function ListingSpotReviews({spotId}) {
     const dispatch = useDispatch();
-    const reviewObj = useSelector(state => state.reviews);
-    const reviews = Object.values(reviewObj.spot);
+    const reviews= useSelector(state => Object.values(state.reviews));
+
     const spotReviews = [];
     for (let review of reviews) {
         if (review.spotId === +spotId) {
@@ -17,7 +17,7 @@ export function ListingSpotReviews({spotId}) {
 
 
     useEffect(() => {
-        dispatch(reviewsAction.fetchSpotReviews(spotId))
+        dispatch(reviewsAction.getReviews(spotId))
     }, [dispatch])
 
     return (

@@ -5,7 +5,9 @@ import {useParams} from 'react-router-dom';
 import * as reviewsAction from '../../store/reviews';
 import ReviewSpotModal from '../Reviews/ReviewForm/ReviewFormModal';
 import DeleteReviewModal from '../Reviews/DeleteModal';
-
+import { useState } from 'react';
+import BookingCalendar from './Booking';
+import * as bookingAction from '../../store/bookings';
 import './SpotDetail.css';
 
 export function SpotDetail() {
@@ -15,6 +17,8 @@ export function SpotDetail() {
     const sessionUser = useSelector(state => state.session.user)
     const reviewObj = useSelector((state) => state.reviews);
     const spotReviews = Object.values(reviewObj.spot);
+    const spotBooking = useSelector(state => state.bookings.spot);
+
 
     let sum = 0;
     let avgRating = 0;
@@ -29,6 +33,9 @@ export function SpotDetail() {
     useEffect(() => {
         dispatch(fetchDetailSpot(spotId));
         dispatch(reviewsAction.fetchSpotReviews(spotId))
+    }, [dispatch, spotId]);
+    useEffect(() => {
+        dispatch(bookingAction.fetchSpotBookings(spotId));
     }, [dispatch, spotId]);
 
 
@@ -100,9 +107,9 @@ export function SpotDetail() {
                         </div>
                     </div>
                 </div>
-                 {/* <div className="spot-price">
+                 <div className="spot-price">
                  <BookingCalendar avgRating={avgRating} reviews={spotReviews.length} price={spot.price} id={spot.id} spotBooking={spotBooking} user={sessionUser} />
-            </div> */}
+            </div>
 
             <div className="spot-mockup1">
                     <div className="mockup-item">

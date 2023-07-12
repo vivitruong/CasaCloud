@@ -39,7 +39,9 @@ h4 {
 
 }
 
-
+.h-title {
+    margin-right: 100%
+}
 .createspot-contain {
     display: flex;
     flex-direction: column;
