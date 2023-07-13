@@ -1,7 +1,8 @@
 .booking-container {
     border: 1px solid rgb(221, 221, 221);;
     padding: 10px;
-    width: 256px;
+    width: 260px;
+    height: 400px;
     position: absolute;
     right: 10%;
     border-radius: 12px;
@@ -43,9 +44,8 @@
     display: flex;
     flex-direction: row;
     font-size: 1rem;
-    /* border: 1px solid #cccccc; */
     align-items: center;
-    /* border-bottom: 0.5px solid #cccccc; */
+
 }
 
 .booking-info-checkin, .booking-info-checkout {
@@ -68,6 +68,29 @@
 
 .booking-info-timeinput:focus {
     border: none;
+}
+.CreateBookingGuest {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid #cccccc;
+  border-left: 1px solid #cccccc;
+  border-right: 1px solid #cccccc;
+  border-radius: 0 0 8px 8px;
+  height: 55px;
+  padding-left: 12px;
+  margin-bottom: 16px;
+
+}
+
+.CreateBookingGuestOne {
+  font-weight: 600;
+  font-size: 10px;
+}
+
+.CreateBookingGuestTwo {
+  color: darkgray;
+  font-size: 13px;
 }
 
 .booking-info-guest {
@@ -96,8 +119,15 @@ input:focus{
 
 .booking-info-cfbtn {
     width: 100%;
-    margin-top: 10px;
-    background-color: #FF385C;
+    margin-top: 20px;
+    background-color: rgba(0, 0, 0, 0)
+    linear-gradient(
+      to right,
+      rgb(230, 30, 77) 0%,
+      rgb(227, 28, 95) 50%,
+      rgb(215, 4, 102) 100%
+      )
+      repeat scroll 0% 0%;
     color: #fff;
     font-size: 0.8rem;
     height: 40px;
@@ -110,9 +140,8 @@ input:focus{
 }
 .booking-info-disabledbtn {
     width: 100%;
-    margin-top: 10px;
-    background-color: #cccccc;
-    color: #fff;
+    background-color: #FF385C;
+    color: #dfd9da;
     font-size: 0.8rem;
     height: 40px;
     border-radius: 10px;
@@ -120,6 +149,11 @@ input:focus{
     justify-content: center;
     align-items: center;
     display: flex;
+    margin: 10px;
+    cursor: pointer;
+}
+.booking-info-disabledbtn:hover {
+  background-color: #0e0101;
 }
 
 .booking-info-cfstm {
@@ -209,10 +243,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-bottom: 1px solid #cccccc;
     height: 60px;
     font-weight: 500;
+    padding : 15px
 }
 
 .booking-price-total {
-    margin-top: 10px;
+    margin-top: 20px;
     font-size: 0.85rem;
 }
 

@@ -126,7 +126,7 @@ export function SpotDetail() {
                 </div>
                 <div className="spot-mockup">
                     <div>
-                        <h2>CASA COVER</h2>
+                        <h2 className='spot-h2'>CASA COVER</h2>
                     </div>
                     <div className="mockup-para">
                         <p>At CasaCloud, we prioritize your peace of mind throughout the booking process and your stay. That's why every booking with us includes free protection from host cancellations, listing inaccuracies, and other potential issues you may encounter during your trip. We're here to ensure a smooth and worry-free experience from check-in to check-out.

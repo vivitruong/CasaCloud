@@ -1,6 +1,6 @@
 .delete-component {
-    width: 400px;
-    height: 100px;
+    width: 540px;
+    height: 180px;
     display: grid;
     grid-template-rows: 1fr 1fr;
 }
@@ -9,18 +9,19 @@
     display: flex;
     align-items: center;
     padding-left: 80px;
+    font-weight: 500;
 }
 
 .delete-btn {
     display: flex;
     flex-direction: row;
-    margin-left: 110px;
+    margin-left: 190px;
 }
 
 
 
 .btn-delete {
-    background-color: #cccccc;
+    background-color: #e08383;
     color: #fff;
     border:none;
     font-weight: 700;
@@ -32,7 +33,7 @@
     cursor: pointer;
 }
 .btn-delete:hover {
-    background:#db2137 ;
+    background: #201616;
 }
 
 .btn-cancel {

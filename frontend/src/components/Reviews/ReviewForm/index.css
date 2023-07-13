@@ -38,7 +38,14 @@
     font-weight: 700;
     width: 140px;
     height: 50px;
-    background: #FF5A5F;
+    background: rgba(0, 0, 0, 0)
+    linear-gradient(
+      to right,
+      rgb(230, 30, 77) 0%,
+      rgb(227, 28, 95) 50%,
+      rgb(215, 4, 102) 100%
+      )
+      repeat scroll 0% 0%;
     margin-right: 10px;
     cursor: pointer;
 }
