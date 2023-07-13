@@ -22,18 +22,21 @@ const BookingCalendar = ({ avgRating, reviews, price, id, spotBooking, user }) =
     const history = useHistory();
     const dispatch = useDispatch();
     const onReserve = () => {
-        const startDate = start._d.toISOString().slice(0, 10);
-        const endDate = end._d.toISOString().slice(0, 10);
+        if (start && end) {
+            const startDate = start._d.toISOString().slice(0, 10);
+            const endDate = end._d.toISOString().slice(0, 10);
 
-        const bookingInfo = { startDate, endDate, spotId: id };
-        dispatch(bookingAction.makeBooking(bookingInfo))
-            .then(() => {
-                history.push('/bookings');
-            })
-            .catch(async (error) => {
-                const data = await error.json();
-                setErr(data.message)
-            })
+            const bookingInfo = { startDate, endDate, spotId: id };
+            dispatch(bookingAction.makeBooking(bookingInfo))
+                .then(() => {
+                    history.push('/bookings');
+                })
+                .catch(async (error) => {
+                    const data = await error.json();
+                    setErr(data.message)
+                });
+        }
+
     }
 
     const blockDays = (date) => {
@@ -52,11 +55,13 @@ const BookingCalendar = ({ avgRating, reviews, price, id, spotBooking, user }) =
             return blocked;
     }
     const duration = (startDate, endDate) => {
-        const moment1 = moment(startDate._d);
-        const moment2 = moment(endDate._d);
-        const diff = moment2.diff(moment1);
-        const diffInDays = moment.duration(diff).asDays();
-        setDurr(diffInDays.toFixed(0));
+        if (startDate && endDate) {
+            const moment1 = moment(startDate._d);
+            const moment2 = moment(endDate._d);
+            const diff = moment2.diff(moment1);
+            const diffInDays = moment.duration(diff).asDays();
+            setDurr(diffInDays.toFixed(0));
+        }
     }
     return (
         <div className="booking-container">
@@ -67,12 +72,21 @@ const BookingCalendar = ({ avgRating, reviews, price, id, spotBooking, user }) =
                     <span>night</span>
                 </div>
                 <div className="booking-title-right">
-                    <div>
-                        <i className="fa-solid fa-star"></i>
-                        <span>{avgRating} -</span>
-                    </div>
-                    <span style={{paddingLeft:"0.3rem"}}>{reviews} reviews</span>
-                </div>
+                        {reviews === 0 ? (
+                            <div>
+                            <i className="fa-solid fa-star"></i>
+                            <span>New</span>
+                            </div>
+                        ) : (
+                            <div>
+                            <i className="fa-solid fa-star"></i>
+                            <span>{avgRating} -</span>
+                            <span style={{ paddingLeft: "0.3rem" }}>
+                                {reviews} {reviews === 1 ? 'review' : 'reviews'}
+                            </span>
+                            </div>
+                        )}
+                        </div>
             </div>
             {
                 !user &&
@@ -92,32 +106,36 @@ const BookingCalendar = ({ avgRating, reviews, price, id, spotBooking, user }) =
                     <div className="booking-info-box">
 
                         <DateRangePicker
-                            startDate={start} // momentPropTypes.momentObj or null,
-                            startDateId="startDate" // PropTypes.string.isRequired,
-                            endDate={end} // momentPropTypes.momentObj or null,
-                            endDateId="endDate" // PropTypes.string.isRequired,
+                            startDate={start}
+                            startDateId="startDate"
+                            endDate={end}
+                            endDateId="endDate"
                             onDatesChange={({ startDate, endDate }) => {
                                 setStart(startDate);
                                 setEnd(endDate);
                                 duration(startDate, endDate);
-                            }}// PropTypes.func.isRequired,
-                            focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                            onFocusChange={focusedInput => setFocusedInput(focusedInput)} // PropTypes.func.isRequired,
+                            }}
+                            focusedInput={focusedInput}
+                            onFocusChange={focusedInput => setFocusedInput(focusedInput)}
                             isDayBlocked={blockDays}
                             minimumNights={1}
                         />
 
                     </div>
+                    <div className="CreateBookingGuest">
+                    <div className="CreateBookingGuestOne">GUESTS</div>
+                    <div className="CreateBookingGuestTwo">2 guests</div>
+                </div>
                     {
                         (!user || start === null || end === null) &&
-                        <div className="booking-info-disabledbtn " >
-                        <span>Reserve</span>
+                        <div className="booking-info-cfbtn" >
+                        <button className="booking-info-disabledbtn">Reserve</button>
                     </div>
                     }
                     {
                        user && start && end &&
                         <div className="booking-info-cfbtn" onClick={onReserve}>
-                        <span>Reserve</span>
+                        <button className="booking-info-disabledbtn"> Reserve</button>
                     </div>
                     }
 
@@ -133,11 +151,13 @@ const BookingCalendar = ({ avgRating, reviews, price, id, spotBooking, user }) =
                                         <span>${price} x {durr} nights</span>
                                         <span>Cleaning Fee</span>
                                         <span>Service Fee</span>
+                                        <span>Tax</span>
                                     </div>
                                     <div className="booking-price-detail-title">
                                         <span>$ {price * durr}</span>
-                                        <span>$ 0</span>
-                                        <span>$ 2</span>
+                                        <span>$ 50</span>
+                                        <span>$ 33</span>
+                                        <span>$ 66</span>
                                     </div>
                                 </div>
                             <div className="booking-price-total">
@@ -145,7 +165,7 @@ const BookingCalendar = ({ avgRating, reviews, price, id, spotBooking, user }) =
                                     Total
                                 </span>
                                 <span>
-                                    $ {price * durr + 2}
+                                    $ {price * durr + 33 + 66}
                                 </span>
                             </div>
                         </>
@@ -158,11 +178,13 @@ const BookingCalendar = ({ avgRating, reviews, price, id, spotBooking, user }) =
                                         <span>${price} x 1 nights</span>
                                         <span>Cleaning Fee</span>
                                         <span>Service Fee</span>
+                                        <span>Tax</span>
                                     </div>
                                     <div className="booking-price-detail-title">
                                         <span>${price * 1}</span>
-                                        <span>$0</span>
-                                        <span>$2</span>
+                                        <span>$50</span>
+                                        <span>$33</span>
+                                        <span>$66</span>
                                     </div>
                                 </div>
                             <div className="booking-price-total">
@@ -170,7 +192,7 @@ const BookingCalendar = ({ avgRating, reviews, price, id, spotBooking, user }) =
                                     Total before taxes
                                 </span>
                                 <span>
-                                    ${+price + 2}
+                                    ${+price + 50 + 66 + 33}
                                 </span>
                             </div>
                         </>

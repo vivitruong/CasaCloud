@@ -1,14 +1,39 @@
 .field {
-    width: 310px;
-    height: 50px;
-    margin: 5px;
+    width: 380px;
+    height: 24px;
+    margin: 25px;
     border-radius: 10px;;
     border: 1px solid #cccccc;
     color: black;
-    padding: 10px;
+    padding: 8px;
 }
 
 .field:focus {
     outline: none;
     border: 1px solid #6e6e6e;
 }
+.createspot-whole-1 {
+    width: 550px
+}
+.creatspot-fields{
+    height: 50px;
+    align-items: center;
+    display: flex;
+}
+.createspot-form-but > button{
+    width: 100%;
+    height: 26px;
+    border-radius: 8px;
+    color: #ffffff;
+    background: #e05c5c;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+.createspot-form-but > button:hover {
+    background-color: #b82d2d;
+}
+/* .creatspot-fields-state{
+    border-bottom: 1px solid #cccccc ;
+    height: 74px
+} */

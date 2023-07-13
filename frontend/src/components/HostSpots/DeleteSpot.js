@@ -31,11 +31,11 @@ export function DeleteSpot(props) {
     return (
         <div className="delete-component">
             <div className="delete-question">
-                Please confirm the deletion of this spot:
+                Are you sure you want to remove this spot from the listings?
             </div>
             <div className="delete-btn">
-                <button onClick={handleYesButton} className='btn-delete'>Confirm</button>
-                <button onClick={handleCancelButton}className='btn-cancel'>Cancel</button>
+                <button onClick={handleYesButton} className='btn-delete'>Yes</button>
+                <button onClick={handleCancelButton}className='btn-cancel'>No</button>
             </div>
 
         </div>

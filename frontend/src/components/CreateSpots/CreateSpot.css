@@ -9,9 +9,10 @@
 h2 {
     color: #e05c5c
 }
-h4 {
+h4{
     color: rgb(85, 78, 78);
-    margin-left: 60px
+    margin-left: 30px;
+
 }
 .small-detail {
     font-size: 14px;
@@ -39,9 +40,6 @@ h4 {
 
 }
 
-.h-title {
-    margin-right: 100%
-}
 .createspot-contain {
     display: flex;
     flex-direction: column;
@@ -52,25 +50,24 @@ h4 {
     color: rgb(216, 56, 56)
 }
 .createspot-form {
-    /* display: flex;
-    flex-direction: column; */
+
     align-items: start;
-    max-width: 500px;
+    max-width: 450px;
 
 }
 
 .createspot-detail {
-    margin: 10px
+    margin: 8px
 }
 
 .input-field {
-    width: 29vw;
-    height: 30px;
+    width: 28vw;
+    height: 20px;
     border: 1px solid #cccccc;
     color: black;
     border-radius: 10px;
     font-size: 14px;
-    padding: 10px
+    padding: 8px
 }
 .createspot-welcome h2 {
     font-size: 24px;
@@ -91,15 +88,27 @@ textarea {
     border: none;
     outline: none;
 }
-
+.map-container {
+    width: 400px;
+    height: 300px;
+  }
 .createspot-form > button:hover {
     background: #FF5A5F
 }
 .host-link {
-    color: #e05c5c;
+    display: flex;
+    align-items:center;
+      color: #FFFFFF;
+      height: 40px;
+      width: 170px;
+      border-radius:17px;
 
+      cursor: pointer;
+      text-decoration: none;
 }
-
+.host-link:hover {
+    background-color: #f3ebeb;
+  }
 .small-detail {
     font-size: 14px;
     color: #777;

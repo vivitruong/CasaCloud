@@ -4,9 +4,9 @@ import * as spotsAction from '../../store/spots';
 import './CreateSpot.css';
 import { useHistory } from 'react-router-dom';
 import  vidads from '../CreateSpots/vid-ads.mp4';
+import { Map, GoogleApiWrapper } from 'google-maps-react';
+import React, { Component } from 'react';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
 
 
 export function CreateSpots() {
@@ -28,12 +28,24 @@ export function CreateSpots() {
     const history = useHistory();
     const sessionUser = useSelector((state) => state.session.user);
 
+    useEffect(() => {
+        const loadGoogleMapsScript = () => {
+          const googleMapsScript = document.createElement('script');
+          googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
+          window.document.body.appendChild(googleMapsScript);
+        };
+
+        loadGoogleMapsScript();
+      }, []);
+
     if (!sessionUser) return (
         <div className='managespot-welcome'>
             <h2>Please login to see this page!</h2>
         </div>
 
     )
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setValidationErrors([]);
@@ -85,7 +97,7 @@ export function CreateSpots() {
             </div>
             <div className='createspot-contain'>
           <div className='createspot-headline'>
-            <h4 className='h-title'>Where's your place located?</h4>
+            <h4>Where's your place located?</h4>
             <p className='small-detail'>Guests will only get your exact address once they book a reservation.</p>
           </div>
           <form onSubmit={handleSubmit} className='createspot-form'>
@@ -143,7 +155,7 @@ export function CreateSpots() {
                     </div>
 
                     <div className='des-text'>
-                        <h4 className='h-title'>Describe your place to guests</h4>
+                        <h4 >Describe your place to guests</h4>
                         <p className='small-detail'>
                             Mention the best features of your space, any special amenities like fast WiFi or parking, and what you
                             love about the neighborhood.
@@ -162,7 +174,7 @@ export function CreateSpots() {
                         </label>
                     </div>
                             <div className='createspot-detail'>
-                            <h4 className='h-title'>Create a title for your spot</h4>
+                            <h4 >Create a title for your spot</h4>
                             <p className='small-detail'>Catch guests' attention with a spot title that highlights what makes your place special.</p>
                             </div>
                     <div className='createspot-detail'>
@@ -178,7 +190,7 @@ export function CreateSpots() {
                             </label>
                             </div>
                             <div className='createspot-detail'>
-                                <h4 className='h-title'>Set a base price for your spot</h4>
+                                <h4>Set a base price for your spot</h4>
                                 <p className='small-detail'>Competitive pricing can help your listing stand out and rank higher in search results.</p>
                                 </div>
                     <div className='createspot-detail'>
@@ -194,7 +206,7 @@ export function CreateSpots() {
                         </label>
                     </div>
                     <div className='createspot-detail'>
-                        <h4 className='h-title'>Liven up your spot with photos</h4>
+                        <h4 >Liven up your spot with photos</h4>
                         <p className='small-detail'>Submit a link to at least one photo to publish your spot.</p>
                         </div>
                     <div className='createspot-detail'>
@@ -236,7 +248,19 @@ export function CreateSpots() {
             </div>
 
         </div>
-
-        </>
-    )
+        {/* <div className='map-container'>
+        <Map
+          google={window.google}
+          zoom={10}
+          // Set the initial map center using lat and lng values
+          initialCenter={{ lat: 47.823, lng: 123 }}
+        />
+      </div> */}
+    </>
+  );
 }
+
+
+export default GoogleApiWrapper({
+    apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+  })(CreateSpots);

@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/vivitruong/CasaCloud#readme",
   "dependencies": {
+    "google-maps-react": "^2.0.6",
     "moment": "^2.29.4",
     "moment-range": "^4.0.2",
     "react-date-picker": "^10.2.0",
