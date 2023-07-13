@@ -4,7 +4,7 @@ import * as spotsAction from '../../store/spots';
 import './CreateSpot.css';
 import { useHistory } from 'react-router-dom';
 import  vidads from '../CreateSpots/vid-ads.mp4';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+// import { Map, GoogleApiWrapper } from 'google-maps-react';
 import React, { Component } from 'react';
 import { useEffect } from 'react';
 
@@ -28,15 +28,15 @@ export function CreateSpots() {
     const history = useHistory();
     const sessionUser = useSelector((state) => state.session.user);
 
-    useEffect(() => {
-        const loadGoogleMapsScript = () => {
-          const googleMapsScript = document.createElement('script');
-          googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
-          window.document.body.appendChild(googleMapsScript);
-        };
+    // useEffect(() => {
+    //     const loadGoogleMapsScript = () => {
+    //       const googleMapsScript = document.createElement('script');
+    //       googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
+    //       window.document.body.appendChild(googleMapsScript);
+    //     };
 
-        loadGoogleMapsScript();
-      }, []);
+    //     loadGoogleMapsScript();
+    //   }, []);
 
     if (!sessionUser) return (
         <div className='managespot-welcome'>
@@ -261,6 +261,6 @@ export function CreateSpots() {
 }
 
 
-export default GoogleApiWrapper({
-    apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
-  })(CreateSpots);
+// export default GoogleApiWrapper({
+//     apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+//   })(CreateSpots);

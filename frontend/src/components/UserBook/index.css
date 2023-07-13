@@ -54,7 +54,13 @@
     justify-content: center;
     align-items: center;
 }
+.login-book{
+    font-size: 25px;
+    font-weight: 600;
 
+    padding: 30px;
+    color: #db2137
+}
 h2 {
     text-align: center;
 }
