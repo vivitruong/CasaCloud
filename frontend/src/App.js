@@ -11,6 +11,7 @@ import { CreateSpots } from './components/CreateSpots/CreateSpot'
 import { SpotDetail } from "./components/SpotDetail/SpotDetail";
 import { HostingSpots } from "./components/HostSpots";
 import { UserProfile } from "./components/UserBook";
+import { Footer } from "./components/Footer";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -26,6 +27,7 @@ function App() {
       <Switch>
         <Route exact path='/'>
           <AllSpots />
+          <Footer />
         </Route>
         <Route path='/spots/new'>
               <CreateSpots />
