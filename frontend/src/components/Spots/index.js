@@ -7,11 +7,13 @@ import Spinner from "../GridLoad/index.js";
 import { Link } from 'react-router-dom';
 
 
+
+
 function AllSpots () {
     let dispatch = useDispatch()
     const spotObj = useSelector((state) => state.spots);
     const spotList = Object.values(spotObj)
-    console.log(spotList)
+    // console.log(spotList)
     useEffect(() => {
         dispatch(spotActions.getAllSpots())
     }, [dispatch])

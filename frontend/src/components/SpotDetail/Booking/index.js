@@ -69,7 +69,7 @@ const BookingCalendar = ({ avgRating, reviews, price, id, spotBooking, user }) =
                 <div className="booking-title-left">
                     <span>$ </span>
                     <span style={{fontSize:"1.2rem", fontWeight:"700"}}> {price} </span>
-                    <span>night</span>
+                    <span> night</span>
                 </div>
                 <div className="booking-title-right">
                         {reviews === 0 ? (

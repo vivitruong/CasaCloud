@@ -4,7 +4,7 @@ import * as spotsAction from '../../store/spots';
 import './CreateSpot.css';
 import { useHistory } from 'react-router-dom';
 import  vidads from '../CreateSpots/vid-ads.mp4';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+// import { Map, GoogleApiWrapper } from 'google-maps-react';
 import React, { Component } from 'react';
 import { useEffect } from 'react';
 
@@ -28,15 +28,15 @@ export function CreateSpots() {
     const history = useHistory();
     const sessionUser = useSelector((state) => state.session.user);
 
-    useEffect(() => {
-        const loadGoogleMapsScript = () => {
-          const googleMapsScript = document.createElement('script');
-          googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
-          window.document.body.appendChild(googleMapsScript);
-        };
+    // useEffect(() => {
+    //     const loadGoogleMapsScript = () => {
+    //       const googleMapsScript = document.createElement('script');
+    //       googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
+    //       window.document.body.appendChild(googleMapsScript);
+    //     };
 
-        loadGoogleMapsScript();
-      }, []);
+    //     loadGoogleMapsScript();
+    //   }, []);
 
     if (!sessionUser) return (
         <div className='managespot-welcome'>
@@ -97,10 +97,17 @@ export function CreateSpots() {
             </div>
             <div className='createspot-contain'>
           <div className='createspot-headline'>
+            <h4 style={{color:'lightcoral', fontSize:20}}>Create a New Spot</h4>
             <h4>Where's your place located?</h4>
             <p className='small-detail'>Guests will only get your exact address once they book a reservation.</p>
           </div>
           <form onSubmit={handleSubmit} className='createspot-form'>
+          {validationErrors.length > 0 &&
+                        <ul>
+                            {validationErrors.map(error =>
+                                <li key={error}>{error}</li>)}
+                        </ul>
+                    }
 
             <div className='createspot-detail'>
               <label>
@@ -113,9 +120,7 @@ export function CreateSpots() {
                   className='input-field'
                 />
               </label>
-              {validationErrors.country && (
-                <div className='error-message'>{validationErrors.country}</div>
-              )}
+
             </div>
                     <div className='createspot-detail'>
                         <label>
@@ -261,6 +266,6 @@ export function CreateSpots() {
 }
 
 
-export default GoogleApiWrapper({
-    apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
-  })(CreateSpots);
+// export default GoogleApiWrapper({
+//     apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+//   })(CreateSpots);

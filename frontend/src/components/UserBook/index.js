@@ -29,7 +29,7 @@ export function UserProfile() {
                                         <div>
                                             <Link className='booking-trip-detail' to={`/spots/${booking.spotId}`}>
                                                 <div className='booking-trip-img'>
-                                                    <img src={booking.Spot.previewImage}></img>
+                                                    <img src={booking.Spot.previewImage} alt='spots'></img>
                                                 </div>
                                                 <div className='booking-trip-content'>
                                                     <span className='booking-city'>
@@ -63,8 +63,8 @@ export function UserProfile() {
             }
             {
                 !sessionUser &&
-                <div>
-                         Please login to see this page!
+                <div className='login-book'>
+                         Please login to see this page
                 </div>
             }
 
