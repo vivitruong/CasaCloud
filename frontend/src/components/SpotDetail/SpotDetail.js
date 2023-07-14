@@ -18,7 +18,11 @@ export function SpotDetail() {
     const reviewObj = useSelector((state) => state.reviews);
     const spotReviews = Object.values(reviewObj.spot);
     const spotBooking = useSelector(state => state.bookings.spot);
-
+    // const usersObj = useSelector(state => state.user)
+    // const { ownerId} = useParams();
+    // const spotOwner = spot.ownerId;
+    // const [reviews, setReviews] = useState([])
+    const [newReview, setNewReview] = useState(null)
 
     let sum = 0;
     let avgRating = 0;
@@ -45,6 +49,7 @@ export function SpotDetail() {
             <h2>Sorry, the listing couldnt be found</h2>
         </div>
     )
+
     return (
 
      <div className="spot-container">
@@ -126,7 +131,7 @@ export function SpotDetail() {
                 </div>
                 <div className="spot-mockup">
                     <div>
-                        <h2 className='spot-h2'>CASA COVER</h2>
+                        <h2 className='spot-h2'>CASA <span style={{color: 'black'}}>COVER</span></h2>
                     </div>
                     <div className="mockup-para">
                         <p>At CasaCloud, we prioritize your peace of mind throughout the booking process and your stay. That's why every booking with us includes free protection from host cancellations, listing inaccuracies, and other potential issues you may encounter during your trip. We're here to ensure a smooth and worry-free experience from check-in to check-out.
@@ -150,8 +155,8 @@ export function SpotDetail() {
                             <>
                             <i className="fa-solid fa-star" style={{ fontSize: 17 }}></i>
                             {avgRating}
-                            {' . '}
-                            {spotReviews.length} {spotReviews.length === 1 ? 'Review' : 'Reviews'}
+                            {' • '}
+                            {spotReviews.length} {spotReviews.length === 1 ? 'review' : 'reviews'}
                             </>
                         ) : (
                             <>

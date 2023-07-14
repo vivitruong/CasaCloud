@@ -97,10 +97,17 @@ export function CreateSpots() {
             </div>
             <div className='createspot-contain'>
           <div className='createspot-headline'>
+            <h4 style={{color:'lightcoral', fontSize:20}}>Create a New Spot</h4>
             <h4>Where's your place located?</h4>
             <p className='small-detail'>Guests will only get your exact address once they book a reservation.</p>
           </div>
           <form onSubmit={handleSubmit} className='createspot-form'>
+          {validationErrors.length > 0 &&
+                        <ul>
+                            {validationErrors.map(error =>
+                                <li key={error}>{error}</li>)}
+                        </ul>
+                    }
 
             <div className='createspot-detail'>
               <label>
@@ -113,9 +120,7 @@ export function CreateSpots() {
                   className='input-field'
                 />
               </label>
-              {validationErrors.country && (
-                <div className='error-message'>{validationErrors.country}</div>
-              )}
+
             </div>
                     <div className='createspot-detail'>
                         <label>

@@ -26,18 +26,33 @@ export function HostingSpots() {
             </div>
         }
         {sessionUser &&
-            <div className='manage-page'>
-                <div className='manage-welcome'>
-                    <h2>Welcome, {sessionUser.firstName}! </h2>
+            <div className='manage-welcome'>
+                <h2 style={{color: 'grey'}}>Welcome, {sessionUser.firstName} ! Manage Your Spots </h2>
+                <div className='btn-link-createee'>
+                <button className='link-createee'>
+                <Link to='/spots/new' className="create-spot-linkk">Create a New Spot</Link>
+                </button>
                 </div>
+            <div className='manage-page'>
                 {spots.length > 0 && spots.map(spot =>
                     <div key={spot.id} className='manage-container'>
-                        <div>
+                        <div className='spot-image'>
                             <img src={spot.previewImage} alt='spot' style={{height:"200px"}}></img>
                         </div>
                         <div className='manage-name'>
                             <Link to={`/spots/${spot.id}`}>{spot.name}</Link>
                         </div>
+                        <div className='spot-name-row'>
+                            <div className='spot-name'>{spot.city}, {spot.state}</div>
+                            <div style={{fontSize:14}}>
+
+                            <i className="fa-solid fa-star"></i>{spot.AvgRating ? spot.AvgRating : "New"}
+                            </div>
+                        </div>
+                        <div className='spot-name-info' style={{fontWeight:700}}>
+                            ${spot.price} <span style={{fontWeight:300}}>night</span>
+                        </div>
+
                         <div className='manage-change'>
                             <div className='update'>
                                 <EditSpotModal spot={spot} />
@@ -49,8 +64,11 @@ export function HostingSpots() {
                     </div>
                 )}
             </div>
+            </div>
         }
+
     </div>
+
 )
 
 }

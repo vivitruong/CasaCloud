@@ -17,6 +17,7 @@ export function ReviewForm(props) {
     const [isCommentValid, setIsCommentValid] = useState(false);
     const [isRatingValid, setIsRatingValid] = useState(false);
     const [hoveredRating, setHoveredRating] = useState(null);
+    const history = useHistory();
 
     const reviewObj = useSelector(state => state.reviews)
     const reviews = Object.values(reviewObj)
@@ -42,7 +43,7 @@ export function ReviewForm(props) {
                         setValidationErrors(['You already rated this spot!']);
                         }
             });
-        // history.push(`/spots/${spotId}`);
+        history.push(`/spots/${spotId}`);
     }
 
     const handleCancelButton = (e) => {
@@ -78,7 +79,7 @@ export function ReviewForm(props) {
                 <div className="reviewform-description">
                             <label>
                                 <textarea
-                                    placeholder='Leave your review here...'
+                                    placeholder='Leave your review here...(minimum 10 characters)'
                                     value={review}
                                     onChange={(e) => {
                                         setReview(e.target.value);
