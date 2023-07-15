@@ -1,1 +1,37 @@
-/* TODO Add site wide styles */
+#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+.not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+a {
+    /* font-size: 16px; */
+}
+.page-container {
+    width: 100vw;
+    height: 100vh;
+}
+
+
+@media only screen and (max-width: 600px){
+    body {
+        max-width: 600px;
+    }
+}
+
+@media only screen and (max-width: 1024px) and (min-width: 601px) {
+    body {
+        max-width: 1024px;
+    }
+}

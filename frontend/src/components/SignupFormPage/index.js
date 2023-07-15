@@ -14,18 +14,19 @@ export default function SignupFormPage({setShowModal}) {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [validationErrors, setValidationErrors] = useState([]);
+    const [isFormValid, setIsFormValid] = useState(false)
 
-    // if (sessionUser) {
-    //     return (
-    //         <Redirect to='/' />
-    //     )
-    // }
+    if (sessionUser) {
+        return (
+            <Redirect to='/' />
+        )
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        //check error here
-        if (username.length < 4) return setValidationErrors(['Username must be 4 characters or more'])
+        if (username.length < 4) return setValidationErrors(['Username must be 4 characters or more.'])
         if (password.length < 6) return setValidationErrors(['Password must be 6 characters or more.'])
+        if(email.length === '') return setValidationErrors(['Email field is required.'])
         if (password === confirmPassword) {
             setValidationErrors([]);
             return dispatch(sessionActions.signup({ email, username, password, firstName, lastName }))
@@ -35,6 +36,7 @@ export default function SignupFormPage({setShowModal}) {
                         if (data && data.errors) {
                             let error = Object.values(data.errors)
                             setValidationErrors(error);
+
                         }
                     });
         }

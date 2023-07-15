@@ -11,62 +11,62 @@ module.exports = {
     await queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        url: "https://imgur.com/gallery/m6K1DCQ",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa10.webp",
         preview: true
       },
       {
         spotId: 2,
-        url: "https://imgur.com/gallery/Eu988fE",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa9.webp",
         preview: true
       },
       {
         spotId: 3,
-        url: "https://imgur.com/gallery/jMrJI4x",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa8.webp",
         preview: true
       },
       {
         spotId: 4,
-        url: "https://imgur.com/gallery/dB03i",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa7.webp",
         preview: true
       },
       {
         spotId: 5,
-        url: "https://imgur.com/gallery/Y9fob",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa6.webp",
         preview: true
       },
       {
         spotId: 6,
-        url: "https://imgur.com/gallery/DQpaxYO",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa5.webp",
         preview: true
       },
       {
         spotId: 7,
-        url: "https://imgur.com/gallery/YqiiL",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa4.webp",
         preview: true
       },
       {
         spotId: 8,
-        url: "https://imgur.com/gallery/Ft1XsIn",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa3.webp",
         preview: true
       },
       {
         spotId: 9,
-        url: "https://imgur.com/gallery/cQeQJ",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa2.webp",
         preview: true
       },
       {
         spotId: 10,
-        url: "https://imgur.com/gallery/J9rSgQq",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/J1.jpg",
         preview: true
       },
       {
         spotId: 11,
-        url: "https://imgur.com/gallery/aiPAZEg",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/L1.jpg",
         preview: true
       },
       {
         spotId: 12,
-        url: "https://imgur.com/gallery/EpRq2",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/K1.jpg",
         preview: true
       },
 

@@ -1,0 +1,113 @@
+.booking-trips-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    flex-direction: row;
+    place-items: center;
+    gap: 20px;
+    margin: 30px;
+}
+
+.booking-trip-detail {
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+
+}
+.booking-trip-detail:hover, .booking-trip-detail:active {
+    text-decoration: none;
+
+}
+.booking-trip-img {
+    width: 15vw;
+    height: 100px;
+    object-fit: cover;
+}
+
+.booking-trip-content {
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    margin: 10px;
+
+}
+
+.booking-city {
+    font-weight: 700;
+    font-size: 1rem;
+}
+.booking-date {
+    font-size: 0.6rem;
+    margin: 2px;
+}
+
+.cancel-err {
+    text-align: center;
+    color: red;
+    font-size: 0.8rem;
+}
+
+.cancel-component {
+    width: 400px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.login-book{
+    font-size: 25px;
+    font-weight: 600;
+
+    padding: 30px;
+    color: #db2137
+}
+h2 {
+    text-align: center;
+}
+.cancel-err {
+    height: 20px
+}
+.cancel-cancel {
+    background-color: #cccccc;
+    color: #fff;
+    border:none;
+    font-weight: 700;
+    border-radius:10px;
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.cancel-ok {
+    background-color: #cccccc;
+    color: #fff;
+    border:none;
+    font-weight: 700;
+    border-radius:10px;
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.cancel-delete {
+    background-color: #cccccc;
+    color: #fff;
+    border:none;
+    font-weight: 700;
+    border-radius:10px;
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    text-align: center;
+    margin-right: 10px;
+
+}
+.cancel-cancel:hover {
+    background: black;
+}
+
+.cancel-delete:hover, .cancel-ok:hover {
+    background:#db2137;
+}

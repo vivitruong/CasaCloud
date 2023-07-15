@@ -5,7 +5,13 @@ import SignupFormPage from "./components/SignupFormPage";
 import { useDispatch } from "react-redux";
 import * as sessionActions from './store/session';
 import Navigation from './components/Navigation';
-
+import  AllSpots  from "./components/Spots";
+import { FilterSpotsPage } from "./components/Spots/FilterSpots";
+import { CreateSpots } from './components/CreateSpots/CreateSpot'
+import { SpotDetail } from "./components/SpotDetail/SpotDetail";
+import { HostingSpots } from "./components/HostSpots";
+import { UserProfile } from "./components/UserBook";
+import { Footer } from "./components/Footer";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -19,12 +25,34 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
       <Switch>
-        <Route path="/login">
+        <Route exact path='/'>
+          <AllSpots />
+          <Footer />
+        </Route>
+        <Route path='/spots/new'>
+              <CreateSpots />
+            </Route>
+        <Route path='/spots/:spotId'>
+              <SpotDetail />
+          </Route>
+        <Route path='/hosting'>
+          <HostingSpots />
+        </Route>
+        <Route path='/bookings'>
+          <UserProfile />
+        </Route>
+        <Route exact path="/login">
           <LoginFormPage />
         </Route>
-        <Route path="/signup">
+        <Route exact path="/signup">
           <SignupFormPage />
         </Route>
+        <Route exact path='/filtered-spots'>
+          <FilterSpotsPage/>
+          </Route>
+
+
+
       </Switch>
     )}
     </div>

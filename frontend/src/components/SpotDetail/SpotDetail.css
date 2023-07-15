@@ -1,0 +1,372 @@
+.spot-container {
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    margin-left: 8vw;
+    margin-top: 30px;
+
+}
+
+
+.spot-info {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+
+.spot-photo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 80vw;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.photo-one {
+    height: 600px;
+}
+
+.photo-four1 {
+    height: 295.2px;
+}
+
+.photo-one > img {
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+
+.photo-four {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+}
+.photo-border1 {
+    border-top-right-radius: 15px;
+}
+.photo-border2 {
+    border-bottom-right-radius: 15px;
+}
+.ss:hover{
+    cursor: pointer;
+}
+.fa-share {
+    margin-left: 90%;
+}
+.fa-share:hover,.fa-heart:hover {
+    background-color: #cccccc;
+    cursor: pointer;
+}
+.spot-detail-container {
+    margin-top: 20px;
+    cursor: pointer;
+
+}
+.spot-info-firstline {
+    display: flex;
+}
+.spot-info-secondline {
+    font-weight: bold;
+    font-size: 14px;
+
+}
+.spot-host-container {
+    display: flex;
+    justify-content: space-between;
+    width: 80vw;
+}
+.spot-host {
+    display: flex;
+    justify-content: space-between;
+     width: 47vw;
+}
+
+.spot-price {
+    font-size: 30px;
+    font-weight: 700;
+    box-sizing: border-box;
+    align-content: center;
+    padding:1vh;
+
+}
+.profile-photo {
+    border-radius: 80%;
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+}
+.spot-mockup {
+    box-sizing: border-box;
+    border-bottom: 1px solid #cccccc;
+    width: 47vw;
+}
+
+.spot-mockup1 {
+    box-sizing: border-box;
+    border-bottom: 1px solid #cccccc;
+    width: 47vw;
+    border-top: 1px solid #cccccc;
+
+}
+
+.mockup-item {
+    margin: 30px;
+    font-size: 16px;
+
+}
+.mockup-para {
+    font-size: 16px;
+}
+.spot-desc {
+    box-sizing: border-box;
+
+    margin-top: 10px;
+    margin-bottom: 20px;
+    max-width: 40vw;
+
+}
+.spot-desc-detail > p {
+    font-size: 16px;
+}
+.reviews-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.review-user-container {
+    max-width: 400px;
+    padding: 20px;
+}
+
+.user-profile {
+    object-fit: cover;
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+}
+.reviewer-info {
+    display: flex;
+    flex-direction: row;
+}
+.review-name{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    font-weight: 600;
+    font-size: 16px;
+}
+.review-date {
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    font-weight: 400;
+    font-size: 14px;
+    color: rgb(100, 95, 95);
+}
+
+.review-description {
+    padding-top: 10px;
+    padding-bottom: 20px;
+    font-size: 15px;
+}
+
+.btn-newreview {
+    margin-top: 20px;
+}
+.spot-review {
+
+    box-sizing: border-box;
+    border-top: 1px solid #cccccc;
+    width: 80vw;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .spot-container {
+        max-width: 600px;
+        min-width: 300px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .spot-info {
+        margin:0;
+        max-width: 600px;
+        display: flex;
+        flex-direction: column;
+        margin: 10px;
+    }
+
+    .spot-info-firstline {
+        font-size: 20px;
+    }
+
+    .spot-info-secondline {
+        font-size: 12px;
+    }
+
+
+    .spot-photo {
+        grid-gap: 10px;
+        border-radius: 10px;
+        box-sizing: border-box;
+        display: grid;
+        gap: 10px;
+        grid-template-columns: 1fr 1fr;
+        position: relative;
+        width: 80vw;
+    }
+
+    .photo-one {
+        width: 100%;
+        height: 300px;
+    }
+
+    .photo-one > img {
+        object-fit: cover;
+        border-radius: 15px;
+    }
+
+
+    .photo-four {
+        grid-gap: 10px;
+        display: grid;
+        gap: 10px;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+    .photo-border1 {
+        border-radius: 15px;
+    }
+
+
+
+    .spot-detail-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .spot-host-container {
+        display: flex;
+        max-width: 600px;
+        min-width: 300px;
+    }
+    .spot-host {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .host-name {
+        max-width: 400px;
+        min-width: 250px;
+    }
+
+    .host-name > h2 {
+        font-size: 18px;
+    }
+    .spot-price {
+        font-size: 20px;
+        font-weight: 700;
+        box-sizing: border-box;
+        align-content: center;
+        padding:1vh;
+    }
+    .profile-photo {
+        border-radius: 80%;
+        width: 55px;
+        height: 55px;
+        object-fit: cover;
+    }
+    .spot-mockup {
+        box-sizing: border-box;
+        border-bottom: 1px solid #cccccc;
+        width: 100%;
+    }
+
+    .spot-mockup1 {
+        box-sizing: border-box;
+        border-bottom: 1px solid #cccccc;
+        width: 100%;
+        border-top: 1px solid #cccccc;
+
+    }
+
+    .mockup-item {
+        margin: 30px;
+        font-size: 16px;
+    }
+    .mockup-para, .spot-desc-detail > p {
+        font-size: 16px;
+    }
+    .spot-desc {
+        box-sizing: border-box;
+        margin:0;
+        max-width: 100%;
+
+    }
+    .spot-desc-detail{
+        width: 100%;
+    }
+
+    .reviews-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .reviews-cards {
+       display: flex;
+       flex-direction: column;
+       margin: 0;
+    }
+    .review-user-container {
+        max-width: 400px;
+        padding: 20px;
+    }
+
+    .user-profile {
+        object-fit: cover;
+        border-radius: 100%;
+        width: 40px;
+        height: 40px;
+    }
+    .reviewer-info {
+        display: flex;
+        flex-direction: row;
+    }
+    .review-name {
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    .review-description {
+        padding-top: 10px;
+        padding-bottom: 20px;
+        font-size: 15px;
+    }
+
+    .btn-newreview {
+        margin-top: 20px;
+    }
+    .spot-review {
+
+        box-sizing: border-box;
+        border-top: 1px solid #cccccc;
+        width: 80vw;
+    }
+
+}
+@media only screen and (max-width: 1024px) and (min-width: 601px) {
+}
+.spot-h2{
+    display: flex;
+    align-items: start;
+
+}

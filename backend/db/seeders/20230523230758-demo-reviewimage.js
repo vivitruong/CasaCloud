@@ -11,15 +11,15 @@ module.exports = {
     await queryInterface.bulkInsert(options, [
     {
       reviewId: 1,
-      url: "https://imgur.com/gallery/m6K14CQ"
+      url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/A2.jpg"
     },
     {
       reviewId: 2,
-      url: "https://imgur.com/gallery/m6K1jgQ"
+      url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/B2.jpg"
     },
     {
       reviewId: 3,
-      url: "https://imgur.com/gallery/mf8kDCQ"
+      url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/C2.jpg"
     }
   ], {})
 },

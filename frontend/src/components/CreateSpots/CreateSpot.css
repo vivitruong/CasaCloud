@@ -1,0 +1,115 @@
+.createspot-whole {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+}
+h2 {
+    color: #e05c5c
+}
+h4{
+    color: rgb(85, 78, 78);
+    margin-left: 30px;
+
+}
+.small-detail {
+    font-size: 14px;
+    margin-top: -10px;
+    margin-left: 10px;
+}
+.createspot-video {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    margin: 100px;
+}
+
+.createspot-youtube > iframe {
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin: 10px
+}
+
+.createspot-headline > h3 {
+    margin: 5vw;
+    color: darkgrey;
+
+}
+
+.createspot-contain {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 0.8;
+}
+.italic-red {
+    color: rgb(216, 56, 56)
+}
+.createspot-form {
+
+    align-items: start;
+    max-width: 450px;
+
+}
+
+.createspot-detail {
+    margin: 8px
+}
+
+.input-field {
+    width: 28vw;
+    height: 20px;
+    border: 1px solid #cccccc;
+    color: black;
+    border-radius: 10px;
+    font-size: 14px;
+    padding: 8px
+}
+.createspot-welcome h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+textarea {
+    resize: none;
+}
+
+.createspot-form > button {
+    width: 30.5vw;
+    height: 30px;
+    border-radius: 8px;
+    color: #ffffff;
+    background: #e05c5c;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+.map-container {
+    width: 400px;
+    height: 300px;
+  }
+.createspot-form > button:hover {
+    background: #FF5A5F
+}
+.host-link {
+    display: flex;
+    align-items:center;
+      color: #FFFFFF;
+      height: 40px;
+      width: 170px;
+      border-radius:17px;
+
+      cursor: pointer;
+      text-decoration: none;
+}
+.host-link:hover {
+    background-color: #f3ebeb;
+  }
+.small-detail {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 20px;
+  }

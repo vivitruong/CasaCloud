@@ -14,7 +14,7 @@ const { handleValidationErrors,isOwner,validateQueryParameters, handleListValida
 const router = express.Router();
 
   //Get all review by a Spot id (done)
-  router.get('/:spotId/reviews', requireAuth, async (req, res, next) => {
+  router.get('/:spotId/reviews', async (req, res, next) => {
     const spotId = req.params.spotId;
     const spot = await Spot.findByPk(spotId);
     if (spot) {
@@ -133,9 +133,9 @@ router.post('/:spotId/bookings', requireAuth, isNotBelongToCurrSpot, async (req,
 
 
 //Get all booking fro a aspot base on spot id (doneneen)
-router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+router.get('/:spotId/bookings', async (req, res, next) => {
   const spotId = req.params.spotId;
-  const userId = req.user.id;
+  const userId = req?.user?.id || null;
   const spot = await Spot.findByPk(spotId);
 
   if (!spot) {
