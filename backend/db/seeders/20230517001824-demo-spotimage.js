@@ -11,7 +11,7 @@ module.exports = {
     await queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa10.webp",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/haven.jpg",
         preview: true
       },
       {
@@ -56,17 +56,17 @@ module.exports = {
       },
       {
         spotId: 10,
-        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/J1.jpg",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/harry+potter.jpg",
         preview: true
       },
       {
         spotId: 11,
-        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/L1.jpg",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/naruto_owpj5o.jpg",
         preview: true
       },
       {
         spotId: 12,
-        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/K1.jpg",
+        url: "https://casacloudpics.s3.us-east-2.amazonaws.com/casa1.webp",
         preview: true
       },
 

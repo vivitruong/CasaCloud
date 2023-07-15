@@ -12,19 +12,19 @@ module.exports = {
       {
         spotId: 1,
         userId: 1,
-        review: "I love this place would recommend",
+        review: "Me and my boyfriend broke up so we decided not to go to this place anymore",
         stars: 5
       },
       {
         spotId: 1,
         userId: 3,
-        review: "Yassss girl! Come here right now, this place is two beautiful",
+        review: "If you enjoy sleeping on mattresses that have more springs than a trampoline, this is the place for you!",
         stars: 5
       },
       {
         spotId: 2,
         userId: 3,
-        review: "Will comeback if I do visited this city again",
+        review: "I am too poor for this place but its beautiful!",
         stars: 4
       },
       {
@@ -36,7 +36,7 @@ module.exports = {
       {
         spotId: 1,
         userId: 4,
-        review: "Beautiful place, the wifi is a little slow",
+        review: "The hotel room was so tiny, I had to go outside to change my mind.",
         stars: 4
       },
       {
@@ -48,19 +48,19 @@ module.exports = {
       {
         spotId: 1,
         userId: 5,
-        review: "This place has the best view",
+        review: "The room is as cold as my crush's heart! :(",
         stars: 5
       },
       {
         spotId: 5,
         userId: 5,
-        review: "The host is very fast to response. Would recommend for my friend",
+        review: "I stayed at an Airbnb that had a 'rustic' feel, which apparently meant no Wi-Fi, a shower that dribbled water, and an enthusiastic squirrel roommate",
         stars: 5
       },
       {
         spotId: 6,
         userId: 2,
-        review: "WOW! The best experience I've ever had in my 24 years of living",
+        review: "The place's continental breakfast consisted of a single croissant and an existential crisis",
         stars: 5
       },
       {
@@ -72,13 +72,13 @@ module.exports = {
       {
         spotId: 8,
         userId: 6,
-        review: "Nice place but the view is not nice",
+        review: "The hotel had a stunning ocean view... from the bathroom window. I now have an intimate relationship with seagulls",
         stars: 4
       },
       {
         spotId: 10,
         userId: 4,
-        review: "Clean and quiet",
+        review: "This Airbnb was so cozy, I nearly forgot I wasn't in my own house... until I found a llama in the kitchen",
         stars: 5
       },
       {
@@ -90,7 +90,7 @@ module.exports = {
       {
         spotId: 11,
         userId: 5,
-        review: "I love this stay but the parking is little dirty",
+        review: "Staying at this Airbnb was a rollercoaster ride of emotions... mostly because the bed creaked every time I moved, and I felt like I was being launched into space.",
         stars: 4
       }
     ], {})
