@@ -88,13 +88,13 @@ export function SpotDetail() {
                         <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/J1.jpg' alt='spot'/>
                     </div>
                     <div className='photo-four1'>
-                         <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/H1.jpg' alt='spot' className="photo-border1"/>
+                         <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/D4.jpg' alt='spot' className="photo-border1"/>
                     </div>
                     <div className='photo-four1'>
                         <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/L2.jpg' alt='spot'/>
                     </div>
                     <div className='photo-four1'>
-                        <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/K3.jpg' alt='spot'className="photo-border2"/>
+                        <img src='https://casacloudpics.s3.us-east-2.amazonaws.com/casacloudpics/B2.jpg' alt='spot'className="photo-border2"/>
                     </div>
             </div>
         </div>
