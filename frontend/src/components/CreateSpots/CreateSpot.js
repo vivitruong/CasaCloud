@@ -18,8 +18,6 @@ export function CreateSpots() {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [country, setCountry] = useState('');
-    // const [lat, setLat] = useState('');
-    // const [lng, setLng] = useState('');
     const lat = 47.823;
     const lng = 123;
     const [url, setUrl] = useState('');
@@ -27,6 +25,7 @@ export function CreateSpots() {
     const preview = true;
     const history = useHistory();
     const sessionUser = useSelector((state) => state.session.user);
+
 
     // useEffect(() => {
     //     const loadGoogleMapsScript = () => {
@@ -49,22 +48,7 @@ export function CreateSpots() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setValidationErrors([]);
-        if (url.length > 256) setValidationErrors(['The length of URL must less than 256 characters'])
 
-        // let createdSpot;
-        // try {
-        //     createdSpot = await dispatch(spotsActions.createSpot({ name, description, price, address, country, city, state, lat, lng, url, preview }))
-        // } catch {
-        //     (e = async (res) => {
-        //         const data = await res.json();
-        //         console.log(`*************`, data)
-        //         if (data && data.error) {
-        //             console.log(`here`)
-        //             let error = Object.values(data.errors)
-        //             setValidationErrors(error);
-        //         }
-        //     })
-        // }
         let createdSpot = await dispatch(spotsAction.createSpot({ name, description, price, address, country, city, state, lat, lng, url, preview }))
             .catch(async res => {
                 const data = await res.json();
@@ -177,6 +161,7 @@ export function CreateSpots() {
                             className='input-field describe'
                              />
                         </label>
+                        <label className='error-description'>{validationErrors?.description}</label>
                     </div>
                             <div className='createspot-detail'>
                             <h4 >Create a title for your spot</h4>
