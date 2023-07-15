@@ -140,7 +140,14 @@ input:focus{
 }
 .booking-info-disabledbtn {
     width: 100%;
-    background-color: #FF385C;
+    background: rgba(0, 0, 0, 0)
+    linear-gradient(
+      to right,
+      rgb(230, 30, 77) 0%,
+      rgb(227, 28, 95) 50%,
+      rgb(215, 4, 102) 100%
+      )
+      repeat scroll 0% 0%;
     color: #dfd9da;
     font-size: 0.8rem;
     height: 40px;
@@ -153,7 +160,7 @@ input:focus{
     cursor: pointer;
 }
 .booking-info-disabledbtn:hover {
-  background-color: #0e0101;
+  background: #FF385C
 }
 
 .booking-info-cfstm {
