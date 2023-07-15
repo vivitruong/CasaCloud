@@ -12,6 +12,7 @@ export function HostingSpots() {
     const sessionUser = useSelector((state) => state.session.user);
     const dispatch = useDispatch();
     const spots = useSelector(state => Object.values(state.spots))
+    console.log(spots)
 
     useEffect(() => {
         dispatch(getUserSpots())
@@ -34,13 +35,13 @@ export function HostingSpots() {
                 </button>
                 </div>
             <div className='manage-page'>
-                {spots.length > 0 && spots.map(spot =>
+                {spots?.length > 0 && typeof spots[0] === 'object' && spots.map(spot =>
                     <div key={spot.id} className='manage-container'>
-                        {spot && spot.previewImage &&
+
                         <div className='spot-image'>
                           <img src={spot.previewImage} alt='spot' style={{height:"200px"}}></img>
                         </div>
-}
+
 
                         <div className='manage-name'>
                             <Link to={`/spots/${spot.id}`}>{spot.name}</Link>
@@ -76,3 +77,4 @@ export function HostingSpots() {
 )
 
 }
+//i always get the bug of whatever null reading(id, preview...) pls check the state to make sure its a type of === ''object'

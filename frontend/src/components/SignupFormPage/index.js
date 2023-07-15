@@ -27,6 +27,7 @@ export default function SignupFormPage({setShowModal}) {
         if (username.length < 4) return setValidationErrors(['Username must be 4 characters or more.'])
         if (password.length < 6) return setValidationErrors(['Password must be 6 characters or more.'])
         if(email.length === '') return setValidationErrors(['Email field is required.'])
+
         if (password === confirmPassword) {
             setValidationErrors([]);
             return dispatch(sessionActions.signup({ email, username, password, firstName, lastName }))

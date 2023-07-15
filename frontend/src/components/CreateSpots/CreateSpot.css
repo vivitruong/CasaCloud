@@ -101,12 +101,13 @@ textarea {
       height: 40px;
       width: 170px;
       border-radius:17px;
-
       cursor: pointer;
       text-decoration: none;
 }
 .host-link:hover {
-    background-color: #f3ebeb;
+    background-color: #DDDDDD;
+    border-radius: 21px;
+
   }
 .small-detail {
     font-size: 14px;
