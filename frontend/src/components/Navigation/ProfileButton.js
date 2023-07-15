@@ -3,10 +3,12 @@ import { useDispatch } from "react-redux";
 import * as sessionActions from '../../store/session';
 import { Link } from "react-router-dom";
 import './ProfileButton.css';
+import { useHistory } from "react-router-dom";
 
 export default function ProfileButton({ user, setLogin, setShowModal }) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
+    const history = useHistory()
 
     const onClickMenuButton = (e) => {
         e.stopPropagation();
@@ -35,6 +37,8 @@ export default function ProfileButton({ user, setLogin, setShowModal }) {
     const logout = (e) => {
         e.preventDefault();
         dispatch(sessionActions.userLogout());
+        setShowMenu(false);
+        history.push('/')
     };
     const handleDemoButton = (e) => {
         e.preventDefault();

@@ -8,6 +8,7 @@
 
 .navigation-logo {
     padding-left: 30px;
+    flex:1
 }
 .navigation-bar {
     display: flex;
@@ -121,10 +122,19 @@
         visibility: hidden;
     }
     .navigation-mid {
-        max-width: 600px;
-        min-width: 300px;
+        /* max-width: 600px;
+        min-width: 300px; */
         margin-left: 10px;
         font-size: 10px;
     }
+    .navigation-logo {
 
+        display: none;
+
+    }
+    .profile-btn {
+        display: none;
+        max-width: 600px;
+        min-width: 300px;
+    }
 }

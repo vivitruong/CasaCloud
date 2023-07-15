@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import * as spotsAction from '../../store/spots';
 import './EditSpot.css';
+import { useHistory } from 'react-router-dom';
 
 export function EditSpotForm(props) {
 
@@ -23,6 +24,7 @@ export function EditSpotForm(props) {
     const [validationErrors, setValidationErrors] = useState([]);
     const dispatch = useDispatch();
     const id = spot.id
+    const history = useHistory();
 
 
     const handleSubmit = async (e) => {
@@ -30,7 +32,11 @@ export function EditSpotForm(props) {
         setValidationErrors([]);
 
         dispatch(spotsAction.getEditSpot({id, name, description, price, address, country, city, state, lat, lng, url }))
-            .then(() => modal())
+            .then(() => {
+                modal();
+                history.push(`/spots/${id}`)
+
+    })
         .catch(async res => {
             console.log(res)
             const data = await res.json();
