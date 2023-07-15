@@ -11,8 +11,8 @@ module.exports = {
       {
         ownerId: 1,
         address: "5050 N Broadway Street",
-        city: "Chicago",
-        state: "Illinois",
+        city: "Heaven",
+        state: "Sky",
         country: "United States of America",
         lat: 24.431519,
         lng: -111.898428,
@@ -119,8 +119,8 @@ module.exports = {
       {
         ownerId: 3,
         address: "1403 Wood Street",
-        city: "Tahoe",
-        state: "California",
+        city: "Hogwart",
+        state: "Utopia",
         country: "United States of America",
         lat: 34.134570,
         lng: -11.330162,
@@ -131,8 +131,8 @@ module.exports = {
       {
         ownerId: 1,
         address: "33 Vivi Street",
-        city: "Santa Monica",
-        state: "California",
+        city: "Hidden Leaf",
+        state: "Konoha",
         country: "United States of America",
         lat: 37.594817,
         lng: -1.244873,
