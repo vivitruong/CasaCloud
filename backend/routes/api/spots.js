@@ -341,6 +341,7 @@ router.get('/:spotId',async (req, res, next) => {
     name: name,
     description: description,
     price: price,
+
   });
 
   res.status(201).json(spot);
