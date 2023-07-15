@@ -14,6 +14,9 @@ export default function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
     const [showModal, setShowModal] = useState(false);
     const [login, setLogin] = useState(true);
+    const handleProfileClick = e => {
+        e.stopPropagation();
+    }
 
     return (
         <div className="navigation">

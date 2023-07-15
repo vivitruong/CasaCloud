@@ -5,6 +5,9 @@ import * as spotActions from "../../store/spots.js";
 import './spots.css';
 import Spinner from "../GridLoad/index.js";
 import { Link } from 'react-router-dom';
+import { Tooltip } from 'react-tooltip';
+
+// import 'react-tooltip/dist/index.css';
 
 
 
@@ -27,6 +30,7 @@ function AllSpots () {
             { spotList?.length > 0 && typeof spotList[0] === 'object' && spotList.map(spot => (
                 <Link to={`/spots/${spot.id}`} key={spot.id}>
                     <div key={spot.id} className='spot-card'>
+                    {/* <Tooltip effect="solid" place="top" /> */}
                         <div className='spot-image'>
                             <img src={spot.previewImage} alt='spot'/>
                         </div>
@@ -44,9 +48,12 @@ function AllSpots () {
                         <div className='spot-name-info' style={{fontWeight:700}}>
                             ${spot.price} <span style={{fontWeight:300}}>night</span>
                         </div>
+
                     </div>
+
                 </Link>
             ))}
+
         </div>
         {
             spotList.length === 0 &&

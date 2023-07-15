@@ -19,6 +19,10 @@ function LoginFormPage() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setValidationErrors({});
+        if(credential.length < 4 || password.length < 6) {
+            setValidationErrors(['Username must be at least 4 characters long', 'Password must be at least 6 characters long'])
+            return;
+        }
         return dispatch(sessionActions.userLogin({ credential, password })).catch(
           async (res) => {
             const data = await res.json();
@@ -71,7 +75,7 @@ function LoginFormPage() {
                     </div>
                 </div>
                 <div className='login-button'>
-                    <button className='login-btn' type='submit'>Log in</button>
+                    <button className='login-btn' type='submit' disabled={credential.length < 4 || password.length < 6}>Log in</button>
                 </div>
             </form>
         </div>
