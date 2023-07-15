@@ -80,7 +80,7 @@ const BookingCalendar = ({ avgRating, reviews, price, id, spotBooking, user }) =
                         ) : (
                             <div>
                             <i className="fa-solid fa-star"></i>
-                            <span>{avgRating} -</span>
+                            <span>{avgRating} •</span>
                             <span style={{ paddingLeft: "0.3rem" }}>
                                 {reviews} {reviews === 1 ? 'review' : 'reviews'}
                             </span>
@@ -189,7 +189,7 @@ const BookingCalendar = ({ avgRating, reviews, price, id, spotBooking, user }) =
                                 </div>
                             <div className="booking-price-total">
                                 <span>
-                                    Total before taxes
+                                    Total after taxes:
                                 </span>
                                 <span>
                                     ${+price + 50 + 66 + 33}

@@ -50,10 +50,31 @@
     cursor: pointer;
 }
 
+.btn-create:hover{
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0)
+    linear-gradient(
+      to right,
+      rgb(230, 30, 77) 0%,
+      rgb(227, 28, 95) 50%,
+      rgb(215, 4, 102) 100%
+      )
+      repeat scroll 0% 0%;
 
+}
+.btn-create {
+    background: rgba(0, 0, 0, 0)
+    linear-gradient(
+      to right,
+      rgb(230, 30, 77) 0%,
+      rgb(227, 28, 95) 50%,
+      rgb(215, 4, 102) 100%
+      )
+      repeat scroll 0% 0%;
 
+}
 .btn-post:hover{
-    background-color: lightgray;
+    background: #FF385c
 }
 .star {
     display: inline-block;
