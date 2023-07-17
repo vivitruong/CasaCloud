@@ -21,14 +21,15 @@
     display: flex;
 }
 .createspot-form-but > button{
-    width: 100%;
-    height: 26px;
-    border-radius: 8px;
+    width: 50%;
+    height: 30px;
+    border-radius: 5px;
     color: #ffffff;
     background: #e05c5c;
     cursor: pointer;
     border: none;
     outline: none;
+
 }
 .createspot-form-but > button:hover {
     background-color: #b82d2d;
