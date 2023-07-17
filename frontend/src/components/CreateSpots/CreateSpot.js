@@ -83,6 +83,7 @@ export function CreateSpots() {
           <div className='createspot-headline'>
             <h4 style={{color:'lightcoral', fontSize:20}}>Create a New Spot</h4>
             <h4>Where's your place located?</h4>
+
             <p className='small-detail'>Guests will only get your exact address once they book a reservation.</p>
           </div>
           <form onSubmit={handleSubmit} className='createspot-form'>
