@@ -141,7 +141,7 @@ export function SpotDetail() {
                 </div>
                 <div className="spot-desc">
                     <div className="spot-h2">
-                        <h2>About this spot</h2>
+                        <h2>What this place offers</h2>
                     </div>
                     <div className="spot-desc-detail">
                         <p>

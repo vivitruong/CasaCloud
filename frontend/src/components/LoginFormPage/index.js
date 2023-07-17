@@ -31,6 +31,8 @@ function LoginFormPage() {
         );
       };
 
+
+
     return (
         <div className='login-container'>
             <div className='login-header'>
@@ -73,10 +75,12 @@ function LoginFormPage() {
                             />
                         </label>
                     </div>
+
                 </div>
                 <div className='login-button'>
                     <button className='login-btn' type='submit' disabled={credential.length < 4 || password.length < 6}>Log in</button>
                 </div>
+
             </form>
         </div>
     )

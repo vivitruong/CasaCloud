@@ -2,6 +2,7 @@ footer {
     box-sizing: border-box;
     height: 80px;
     background-color: #ecd6d6;
+    display: block;
 }
 
 .footer-container {
@@ -45,7 +46,7 @@ footer {
         align-items: center;
         justify-content: space-around;
         width: 100%;
-        /* margin: 10px 10px 10px 80px;  */
+
     }
 
     .footer-right {
@@ -72,14 +73,7 @@ footer {
         justify-content: space-around;
     }
 
-    .personal-link > a {
-        text-decoration: none;
-    }
 
-    .personal-link>a:hover {
-        color: #FF5A5F;
-        font-weight: 700;
-    }
     a:visited {
         text-decoration: none;
         color: black

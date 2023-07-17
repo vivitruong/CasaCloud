@@ -40,6 +40,7 @@
     flex-direction: row;
     width: 21vw;
     margin-top: 5px;
+    text-decoration: none;
 }
 
 .spot-name {

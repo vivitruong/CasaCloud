@@ -136,10 +136,17 @@
 
         display: none;
 
+
+    }
+    .logo-img {
+        position: fixed;
+        top: 20px;
+        right: 20px
     }
     .profile-btn {
         display: none;
-        max-width: 600px;
-        min-width: 300px;
+        /* max-width: 600px;
+        min-width: 300px; */
+        position: fixed;
     }
 }
