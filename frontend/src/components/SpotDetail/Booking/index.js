@@ -67,9 +67,9 @@ const BookingCalendar = ({ avgRating, reviews, price, id, spotBooking, user }) =
         <div className="booking-container">
             <div className="booking-title">
                 <div className="booking-title-left">
-                    <span>$ </span>
-                    <span style={{fontSize:"1.2rem", fontWeight:"700"}}> {price} </span>
-                    <span> night</span>
+                    <span style={{fontSize: '1rem'}}>$ </span>
+                    <span style={{fontSize:"1.2rem", fontWeight:"700"}}> {price}</span>
+                    <span style={{fontWeight: 400}}> /night </span>
                 </div>
                 <div className="booking-title-right">
                         {reviews === 0 ? (
@@ -81,7 +81,7 @@ const BookingCalendar = ({ avgRating, reviews, price, id, spotBooking, user }) =
                             <div>
                             <i className="fa-solid fa-star"></i>
                             <span>{avgRating} •</span>
-                            <span style={{ paddingLeft: "0.3rem" }}>
+                            <span style={{ paddingLeft: "0.4rem" }}>
                                 {reviews} {reviews === 1 ? 'review' : 'reviews'}
                             </span>
                             </div>
@@ -109,7 +109,9 @@ const BookingCalendar = ({ avgRating, reviews, price, id, spotBooking, user }) =
                             startDate={start}
                             startDateId="startDate"
                             endDate={end}
+                            startDatePlaceholderText="check-in"
                             endDateId="endDate"
+                            endDatePlaceholderText="check-out"
                             onDatesChange={({ startDate, endDate }) => {
                                 setStart(startDate);
                                 setEnd(endDate);
@@ -140,7 +142,7 @@ const BookingCalendar = ({ avgRating, reviews, price, id, spotBooking, user }) =
                     }
 
                     <div className="booking-info-cfstm">
-                        <span>You won't be charge yet</span>
+                        <span>You won't be charged yet</span>
                     </div>
                     <div className="booking-price">
                         {

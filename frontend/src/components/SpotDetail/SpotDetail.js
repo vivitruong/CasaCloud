@@ -55,11 +55,12 @@ export function SpotDetail() {
      <div className="spot-container">
         <div className="spot-info">
             <h2 className="spot-info-firstline">{spot.name}</h2>
+
             <div className="spot-info-secondline">
             {spotReviews.length > 0 ? (
         <>
             <i className="fa-solid fa-star"> </i>
-            {avgRating}. {spotReviews.length} reviews.
+            {avgRating}. {spotReviews.length} reviews .
         </>
     ) : (
         <>
@@ -68,7 +69,7 @@ export function SpotDetail() {
 
         </>
     )}
-    {spot.city}, {spot.state}, {spot.country}
+    <span> SuperHost ! </span>{spot.city}, {spot.state}, {spot.country}
 
             <i className="fas fa-share"></i>
                 <span className='ss'style={{textDecoration:'underline'}}>Share</span>
