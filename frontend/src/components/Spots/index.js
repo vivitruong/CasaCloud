@@ -34,6 +34,9 @@ function AllSpots () {
                         <div className='spot-image'>
                             <img src={spot.previewImage} alt='spot'/>
                         </div>
+                        {/* <div className='heart-likes'>
+                        <i class="fa-regular fa-heart"></i>
+                        </div> */}
                         <div className='spot-name-row'>
                             <div className='spot-name'>{spot.city}, {spot.state}</div>
                             <div style={{fontSize:14}}>

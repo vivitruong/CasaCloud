@@ -16,6 +16,13 @@
     color: black;
     margin-top: 30px
 }
+.heart-likes {
+    cursor: pointer;
+    position: absolute;
+
+
+
+}
 
 .spot-card {
     display: flex;
@@ -30,6 +37,7 @@
     height: 180px;
     object-fit: cover;
     border-radius: 5px;
+    position: relative
 }
 
 .spot-image > img {

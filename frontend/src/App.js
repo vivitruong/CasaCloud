@@ -13,6 +13,7 @@ import { HostingSpots } from "./components/HostSpots";
 import { UserProfile } from "./components/UserBook";
 import { Footer } from "./components/Footer";
 import DarkMode from "./components/DarkMode/DarkMode";
+import UserAccount from "./components/User/UserProfile";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -51,6 +52,9 @@ function App() {
         </Route>
         <Route exact path='/filtered-spots'>
           <FilterSpotsPage/>
+          </Route>
+          <Route path="/users/account/:userId">
+            <UserAccount/>
           </Route>
 
       </Switch>

@@ -72,7 +72,12 @@ export default function ProfileButton({ user, setLogin, setShowModal }) {
                             <Link to='/hosting' className="hosting">Manage Listings</Link>
                         </div>
                         <div className="dropdown-link">
-                            <Link to='/bookings' className="hosting">My Trips</Link>
+                            <Link to='/bookings' className="hosting">My Bookings</Link>
+                        </div>
+                        <div className="dropdown-link drop-down-account"
+                            onClick={() => history.push(`/users/account/${user.id}`)}
+                        >
+                            Account
                         </div>
 
                         <div className="dropdown-link">
