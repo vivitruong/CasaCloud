@@ -4,9 +4,22 @@
     align-items: center;
     width: 100%;
 }
+:root {
+    --body_background: #fafafa;
+    --body_color: black;
+    --link_color: navy
+}
+[data-theme="dark"] {
+    --body_background:#412525;
+    --body_color: #b1a1a1;
+    --link_color: cyan;
 
+}
 body {
     font-family: 'Montserrat', sans-serif;
+    background-color: var(--body_background);
+    color: var(--body_color)
+
 }
 .not-found {
     display: flex;
@@ -15,9 +28,7 @@ body {
     margin-top: 20px;
 }
 
-a {
-    /* font-size: 16px; */
-}
+
 .page-container {
     width: 100vw;
     height: 100vh;

@@ -7,7 +7,6 @@ import Spinner from "../GridLoad/index.js";
 import { Link } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 
-// import 'react-tooltip/dist/index.css';
 
 
 
@@ -20,6 +19,7 @@ function AllSpots () {
     useEffect(() => {
         dispatch(spotActions.getAllSpots())
     }, [dispatch])
+
 
     return (
         <>

@@ -8,7 +8,12 @@
 
 .navigation-logo {
     padding-left: 30px;
-    flex:1
+    flex:1;
+
+}
+.logo-img {
+    border-radius:78% 22% 50% 50% / 75% 25% 75% 25%
+
 }
 .navigation-bar {
     display: flex;

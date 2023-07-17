@@ -12,6 +12,7 @@ import { SpotDetail } from "./components/SpotDetail/SpotDetail";
 import { HostingSpots } from "./components/HostSpots";
 import { UserProfile } from "./components/UserBook";
 import { Footer } from "./components/Footer";
+import DarkMode from "./components/DarkMode/DarkMode";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -22,6 +23,7 @@ function App() {
   }, [dispatch]);
   return (
     <div className="page-container">
+      <DarkMode />
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
       <Switch>
@@ -51,10 +53,9 @@ function App() {
           <FilterSpotsPage/>
           </Route>
 
-
-
       </Switch>
     )}
+
     </div>
   );
 }
