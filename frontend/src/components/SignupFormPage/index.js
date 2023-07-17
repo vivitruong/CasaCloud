@@ -49,7 +49,7 @@ export default function SignupFormPage({setShowModal}) {
         <div className='signup-container'>
             <div className='signup-header'>
                 <h2>Create An Account</h2>
-                <p>It's quick and easy!</p>
+                <p>It's quick and easy with CasaCloud!</p>
             </div>
             <form onSubmit={handleSubmit} className='signup-form'>
                 {
