@@ -5,7 +5,8 @@
     color: #222;
     background: #ffffff;
     padding: 20px;
-    width: 50vw;
+    width: 40vw;
+    border-radius: 10px;
 }
 
 .signup-header > p {
@@ -47,6 +48,7 @@
 
 .signup-btn {
     margin: 10px;
+
 }
 
 .signup-btn > button {
@@ -56,6 +58,7 @@
     color: #ffffff;
     background: #e05358;
     cursor: pointer;
+    border: none
 }
 
 .signup-btn > button:hover {
