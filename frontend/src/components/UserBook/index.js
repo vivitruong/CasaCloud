@@ -22,7 +22,8 @@ export function UserProfile() {
                 <>
                     <div className='bookings-container'>
                         <div className='booking-trips'>
-                            <h2>Your Upcoming Trips!</h2>
+                            <h2>Your Trips!</h2>
+
                             <div className='booking-trips-info'>
                                 {
                                     Object.values(userBooking).length > 0 && Object.values(userBooking).map(booking => (

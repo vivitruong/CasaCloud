@@ -49,7 +49,7 @@ export function CancelTrip(props) {
                 }
                 {
                     validationErrors &&
-                    <button onClick={handleCancelButton}className='cancel-ok'>Ok
+                    <button onClick={handleCancelButton} className='cancel-ok'>Ok
                     </button>
                 }
 

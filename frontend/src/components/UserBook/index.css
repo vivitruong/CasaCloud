@@ -19,8 +19,9 @@
 }
 .booking-trip-img {
     width: 15vw;
-    height: 100px;
+    height: 120px;
     object-fit: cover;
+    padding: 5px
 }
 
 .booking-trip-content {

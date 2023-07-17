@@ -37,26 +37,24 @@ export function HostingSpots() {
             <div className='manage-page'>
                 {spots?.length > 0 && typeof spots[0] === 'object' && spots.map(spot =>
                     <div key={spot.id} className='manage-container'>
+                        <Link to={`/spots/${spot.id}`} key={spot.id}>
 
-                        <div className='spot-image'>
-                          <img src={spot.previewImage} alt='spot' style={{height:"200px"}}></img>
-                        </div>
+                        <div key={spot.id} className='spot-card'>
+                            <div className='spot-image'>
+                                <img src={spot.previewImage} alt='spot'/>
+                            </div>
+                            <div className='spot-name-row'>
+                                <div className='spot-name'>{spot.city}, {spot.state}</div>
+                                <div style={{fontSize:14}}>
+                                <i className="fa-solid fa-star"></i>{spot.AvgRating ? spot.AvgRating : "New"}
+                                </div>
+                            </div>
 
-
-                        <div className='manage-name'>
-                            <Link to={`/spots/${spot.id}`}>{spot.name}</Link>
-                        </div>
-
-                        <div className='spot-name-row'>
-                            <div className='spot-name'>{spot.city}, {spot.state}</div>
-                            <div style={{fontSize:14}}>
-
-                            <i className="fa-solid fa-star"></i>{spot.AvgRating ? spot.AvgRating : "New"}
+                            <div className='spot-name-info' style={{fontWeight:700}}>
+                                ${spot.price} <span style={{fontWeight:300}}>night</span>
                             </div>
                         </div>
-                        <div className='spot-name-info' style={{fontWeight:700}}>
-                            ${spot.price} <span style={{fontWeight:300}}>night</span>
-                        </div>
+                        </Link>
 
                         <div className='manage-change'>
                             <div className='update'>
