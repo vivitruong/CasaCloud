@@ -11,8 +11,8 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     flex-direction: row;
     place-items: center;
-    gap: 30px;
-    margin-top: 30px;
+    gap: 65px;
+    margin-top: 40px;
 
 }
 
@@ -122,4 +122,5 @@
 }
 .img-card-list {
     border-radius: 5px;
+
 }
