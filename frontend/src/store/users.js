@@ -14,7 +14,7 @@ export const getAllUsers = () => async (dispatch) => {
   });
   if (response.ok) {
     const data = await response.json();
-    console.log('hit the backend', data)
+    // console.log('hit the backend', data)
     dispatch(getUsers(data.users));
     return data
   }
