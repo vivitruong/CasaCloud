@@ -12,7 +12,7 @@ export function HostingSpots() {
     const sessionUser = useSelector((state) => state.session.user);
     const dispatch = useDispatch();
     const spots = useSelector(state => Object.values(state.spots))
-    // console.log(spots)
+    console.log(spots)
 
     useEffect(() => {
         dispatch(getUserSpots())
